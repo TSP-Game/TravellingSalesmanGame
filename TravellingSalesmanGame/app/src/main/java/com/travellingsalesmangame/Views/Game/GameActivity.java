@@ -2,18 +2,21 @@ package com.travellingsalesmangame.Views.Game;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
+import com.travellingsalesmangame.Controllers.Game.CostsSetter;
 import com.travellingsalesmangame.Controllers.Game.Stage;
 import com.travellingsalesmangame.Models.Game.Core;
 import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
 import com.travellingsalesmangame.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameActivity extends Activity {
@@ -29,20 +32,21 @@ public class GameActivity extends Activity {
 
     private void init(){
 
+        screenSettings=new ScreenSettings(GameActivity.this);
+        selectedButtons=new ArrayList<>();
+
         gameActivity=findViewById(R.id.gameActivity);
         layoutDraw=findViewById(R.id.layoutDraw);
 
-        core = Examples.getCores()[levelClicked][stateClicked];
-
-        screenSettings=new ScreenSettings(this);
-
-        Intent intent=getIntent();
+        intent=getIntent();
         levelSaved = intent.getIntExtra("levelSaved",0);
         levelClicked = intent.getIntExtra("levelClicked",0);
         stateSaved = intent.getIntExtra("stateSaved",0);
         stateClicked = intent.getIntExtra("stateClicked",0);
 
-        stage = new Stage(this); //seviye atlama işlemi için gerekli
+        core = Examples.getCores()[levelClicked][stateClicked];
+
+
     }
 
     @Override
@@ -52,7 +56,7 @@ public class GameActivity extends Activity {
 
         init();
         createLayout();
-        setLayout();
+        stage = new Stage(this); //seviye atlama işlemi için gerekli
     }
 
 
@@ -71,13 +75,102 @@ public class GameActivity extends Activity {
                                                         screenSettings);
         buttonCreater.create(35); //35 tane button oluşturacak
         buttons=buttonCreater.getGameButonList();//Tüm oluşan butonları aldım.
-    }
 
-
-    private void setLayout() {
         DrawView.setVisible(buttons,core.getCities());
+        CostsSetter.setCosts(this, buttons, layoutDraw, core.getCosts());
     }
 
-    private void action(ImageButton v) {
+    private void action(ImageButton button) {
+
+        if(selectedButtons.contains(button))
+            DisplayMessage.show(this,"Uyarı","Seçili Şehre Tıkladınız",null);
+
+        else {
+
+            if(oldButton==null){
+                oldButton=button;
+                selectedButtons.add(button);
+                button.setImageResource(R.mipmap.home1);
+                click_count++;
+            }
+            else {
+                int pathCost=Examples.PathCosts(core.getCosts(),buttons.indexOf(oldButton),buttons.indexOf(button));
+                if(pathCost>0){
+
+                    if(click_count != 1){
+                        removeLayoutCosts(oldButton);
+                        oldButton.setImageResource(R.mipmap.home2);
+                    }
+
+                    totalScore+=pathCost;
+                    click_count++;
+
+                    DrawView drawView = new DrawView(this,oldButton,button,R.color.dark_orchid,10);
+                    layoutDraw.addView(drawView);
+
+                    if(click_count==core.getCities().length)
+                        selectedButtons.remove(0);
+
+                    showLayoutCosts(button);
+
+                    oldButton=button;
+                    button.setImageResource(R.mipmap.home3);
+                    selectedButtons.add(button);
+
+                    if (click_count==core.getCities().length+1)
+                    {
+                        if((levelSaved == levelClicked) && (stateSaved == stateClicked))    //son levelin son sorusu oynandı ise seviye arttır
+                            stage.up();
+
+                        if(stateClicked == Examples.getCores()[levelClicked].length-1)                          //oynanan oyun levelin son oyunu ise levelmenuye değilse statemenuye dön
+                            intent = new Intent(GameActivity.this,LevelMenuActivity.class);      //levelmenuye geri dön.
+                        else {
+                            intent = new Intent(GameActivity.this,StateMenuActivity.class);      //statemenuye geri dön.
+                            intent.putExtra("levelSaved",levelSaved);        //katıtlı level, kullanıcının en son geldigi level
+                            intent.putExtra("levelClicked",levelClicked);  //tiklanan level, kullanıcının oynamak için seçtiği level, kayıtlı ve secili level esit ise 2. aktivite ona gore olusturulacak.
+                        }
+
+                        DisplayMessage.show(this,"Oyun","Skorunuz :  "+totalScore+"  Gerçek Skor :  "+core.getSolution(),intent);  //intent = level menu olmalı, display methodunu kodla önce.
+                    }
+                }
+                else
+                    DisplayMessage.show(this,"Uyarı","Yol Yoktur",null);
+            }
+
+        }
+
+    }
+
+    private void removeLayoutCosts(ImageButton oldButton){
+
+        for (CostsSetter.Draw draw : CostsSetter.drawList){
+            if(buttons.get(buttons.indexOf(oldButton)).equals(draw.drawView.getStartView())
+                    || buttons.get(buttons.indexOf(oldButton)).equals(draw.drawView.getEndView())) {
+
+                layoutDraw.removeView(draw.drawView);
+                layoutDraw.removeView(draw.textView);
+            }
+        }
+    }
+
+    private void showLayoutCosts(ImageButton button) {
+
+        for (CostsSetter.Draw draw: CostsSetter.drawList) {
+
+            if(buttons.get(buttons.indexOf(button)).equals(draw.drawView.getStartView()) || buttons.get(buttons.indexOf(button)).equals(draw.drawView.getEndView())) {
+
+                if(draw.drawView.getParent() != null && draw.drawView.getStartView() != selectedButtons.get(0)) {
+                    layoutDraw.removeView(draw.drawView);
+                    layoutDraw.removeView(draw.textView);
+                    draw.drawView.setColor(getResources().getColor(R.color.deep_pink));
+                    draw.drawView.setWidth(10);
+                    draw.textView.setTextColor(getResources().getColor(R.color.black));
+                    draw.textView.setTextSize(20);
+                    draw.textView.setTypeface(null, Typeface.BOLD);
+                    layoutDraw.addView(draw.drawView);
+                    layoutDraw.addView(draw.textView);
+                }
+            }
+        }
     }
 }

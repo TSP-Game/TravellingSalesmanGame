@@ -22,9 +22,9 @@ public class Core {
 
     public int[] getCities() { return cities; }
 
-    protected int[][] getCosts() { return costs; }
+    public int[][] getCosts() { return costs; }
 
-    protected int getSolution() {
+    public int getSolution() {
         return solution;
     }
 

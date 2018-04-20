@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
 import com.travellingsalesmangame.R;
@@ -116,8 +117,8 @@ public class LoginActivity extends Activity {
         }
         return true;
     }
-/*
-    public void login_login_onclick(View view) {
+
+    /*public void login_login_onclick(View view) {
 
         email = String.valueOf(et_email.getText());
         password = String.valueOf(et_password.getText());
@@ -128,8 +129,8 @@ public class LoginActivity extends Activity {
             salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
             users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
         }
-    }
-*/
+    }*/
+
 
     //Asıl fonksiyon yukarısı, burası test için otomatik giriş
     public void login_login_onclick(View view) {
