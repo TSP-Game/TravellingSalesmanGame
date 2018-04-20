@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--    iconlar bu sekilde ekleniyor
+            android:icon="@mipmap/ic_profile"   -->
+
+
+    <item
+        android:title="Profile"
+        android:id="@+id/profile"
+        android:showAsAction="ifRoom"/>
+
+    <item
+        android:title="Setting"
+        android:id="@+id/setting"
+        android:showAsAction="ifRoom"/>
+
+    <item
+        android:title="About"
+        android:id="@+id/about"
+        android:showAsAction="never"
+        android:orderInCategory="100"/>
+
+</menu>
