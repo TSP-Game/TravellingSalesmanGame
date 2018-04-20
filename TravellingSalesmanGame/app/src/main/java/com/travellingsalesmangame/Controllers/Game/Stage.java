@@ -21,7 +21,7 @@ public class Stage {
         state = prefs.getInt("state",0);
     }
 
-    void up() {                  //seviye atlama işlevi,
+    public void up() {                  //seviye atlama işlevi,
 
         prefsEditor = prefs.edit();
 

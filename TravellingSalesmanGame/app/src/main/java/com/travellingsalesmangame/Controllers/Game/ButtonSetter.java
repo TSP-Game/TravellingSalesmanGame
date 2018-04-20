@@ -25,19 +25,19 @@ public class ButtonSetter {
         }
         else if (screenView.getDensity() > 3.0 && screenView.getDensity()<=4.0) {
             //return "xxhdpi";
-            constX=30;constY=30; width=280; height=280; x=constX;y=constY;
+            constX=30;constY=30; width=280; height=280; x=constX; y=constY;
         }
         else if (screenView.getDensity() > 2.0 && screenView.getDensity()<=3.0) {
             //"xhdpi";
-            constX=30;constY=30; width=200; height=200; x=constX;y=constY;
+            constX=30;constY=30; width=200; height=200; x=constX; y=constY;
         }
         else if (screenView.getDensity() > 1.5  && screenView.getDensity()<=2.0) {
             //return "hdpi";
-            constX=30;constY=30; width=120; height=120; x=constX;y=constY;
+            constX=30;constY=30; width=120; height=120; x=constX; y=constY;
         }
         else if (screenView.getDensity() >= 1.0 && screenView.getDensity()<=1.5) {
             // return "mdpi";
-            constX=30;constY=30; width=62; height=62; x=constX;y=constY;
+            constX=30;constY=30; width=62; height=62; x=constX; y=constY;
         }
         //return "ldpi";
     }
@@ -49,24 +49,22 @@ public class ButtonSetter {
         }
         else if (screenView.getDensity() > 3.0 && screenView.getDensity()<=4.0) {
             //return "xxhdpi";
-            constX=70;constY=70; width=280; height=280; x=constX;y=constY;
+            constX=70;constY=70; width=280; height=280; x=constX; y=constY;
         }
         else if (screenView.getDensity() > 2.0 && screenView.getDensity()<=3.0) {
             //"xhdpi";
-            constX=50;constY=50; width=200; height=200; x=constX;y=constY;
+            constX=50;constY=50; width=200; height=200; x=constX; y=constY;
         }
         else if (screenView.getDensity() > 1.5  && screenView.getDensity()<=2.0) {
             //return "hdpi";
-            constX=30;constY=30; width=150; height=150; x=constX;y=constY;
+            constX=30;constY=30; width=150; height=150; x=constX; y=constY;
         }
         else if (screenView.getDensity() >= 1.0 && screenView.getDensity()<=1.5) {
             // return "mdpi";
-            constX=30;constY=30; width=80; height=80; x=constX;y=constY;
+            constX=30;constY=30; width=80; height=80; x=constX; y=constY;
         }
         //return "ldpi";
     }
-
-
 
 
     //Her button oluştuğunda çağırıyor.

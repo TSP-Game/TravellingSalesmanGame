@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
+import com.travellingsalesmangame.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,8 @@ public class ButtonCreater {
 
             ImageButton button = new ImageButton(context);
             buttonSetter.setView(1,button);
-            //button.setVisibility(View.INVISIBLE);
-            //button.setImageResource(R.mipmap.home0);
+            button.setVisibility(View.INVISIBLE);
+            button.setImageResource(R.mipmap.home0);
             button.setBackground(null);
             button.setPadding(0,0,0,0);
             button.setElevation(24);
