@@ -33,17 +33,9 @@ public class DrawView extends View {
                         endView.getY()+endView.getHeight()/2,paint);
     }
 
-    protected static void setVisible(List<ImageButton> buttons, int[] coreList){
-
-        for (int cities : coreList)
-            buttons.get(cities).setVisibility(View.VISIBLE);
-    }
-
-
     protected View getStartView() { return startView; }
 
     protected View getEndView() { return endView; }
-
 
     protected void setColor(int color) { paint.setColor(color); }
 

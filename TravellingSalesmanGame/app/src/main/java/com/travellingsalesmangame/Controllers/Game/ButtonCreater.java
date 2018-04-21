@@ -59,7 +59,7 @@ public class ButtonCreater {
     }
 
     @SuppressLint("NewApi") /////game aktivitesi icin methot
-    public void create(int size){
+    public void create(int size, int[] cities){
 
         gameButonList=new ArrayList<>();
         ButtonSetter buttonSetter=new ButtonSetter(1,settings);
@@ -76,6 +76,10 @@ public class ButtonCreater {
             layout.addView(button);
             gameButonList.add(button);
         }
+
+        for (int city : cities)
+            gameButonList.get(city).setVisibility(View.VISIBLE);
+
     }
 
 
