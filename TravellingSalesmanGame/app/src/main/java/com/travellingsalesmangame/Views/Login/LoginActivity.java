@@ -3,6 +3,7 @@ package com.travellingsalesmangame.Views.Login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,11 +18,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
+import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 import com.travellingsalesmangame.Views.Game.LevelMenuActivity;
+
+import java.util.prefs.Preferences;
 
 //Bu aktivite kullanici giris aktivitesidir.
 
@@ -74,6 +79,14 @@ public class LoginActivity extends Activity {
                     err_password.setVisibility(View.VISIBLE);
                 }
                 else {
+                    SharedPreferences  prefs = getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor prefsEditor = prefs.edit();
+                    Gson gson = new Gson();
+                    User user = new User((String)dataSnapshot.child("userName").getValue(),email,password);
+                    String json = gson.toJson(user);
+                    prefsEditor.putString("User", json);
+                    prefsEditor.apply();
+
                     Toast.makeText(LoginActivity.this,"Giriş Başarılı", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this,LevelMenuActivity.class);
                     startActivity(intent);
@@ -94,6 +107,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+        readIfAlreadyLogin();
     }
 
     @Override
@@ -119,7 +133,23 @@ public class LoginActivity extends Activity {
     }
 
 
-    /*
+    private void readIfAlreadyLogin(){
+
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString("User","");
+        User user;
+
+        if(!json.equals("")){
+
+            user = gson.fromJson(json, User.class);
+            et_email.setText(user.getEmail());
+            et_password.setText(user.getPassword());
+            login_login_onclick(new View(this));
+        }
+    }
+
+
     public void login_login_onclick(View view) {
 
         email = String.valueOf(et_email.getText());
@@ -131,17 +161,8 @@ public class LoginActivity extends Activity {
             salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
             users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
         }
-    }*/
-
-
-    //Asıl fonksiyon yukarısı, burası test için otomatik giriş
-    public void login_login_onclick(View view) {
-
-        Toast.makeText(LoginActivity.this,"Giriş Başarılı", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this,LevelMenuActivity.class);
-        startActivity(intent);
-        finish();
     }
+
 
     private boolean ruleChecker() {
 
