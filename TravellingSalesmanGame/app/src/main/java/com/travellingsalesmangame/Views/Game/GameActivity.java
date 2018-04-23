@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -166,8 +167,43 @@ public class GameActivity extends Activity {
     public void game_Qplay_onclick(View view) {
 
         ComputerPlay comPlay = new ComputerPlay(core);
-        comPlay.learn(100000);
 
+
+
+        try {
+            Thread.sleep(1000);
+            action(buttons.get(core.getCities()[0]));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(1000);
+            action(buttons.get(core.getCities()[1]));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(1000);
+            action(buttons.get(core.getCities()[2]));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+/*
+        for (Integer i: comPlay.getPath()) {
+
+            //action(buttons.get(core.getCities()[i]));
+
+            try {
+                Thread.sleep(1000);
+                action(buttons.get(core.getCities()[i]));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+*/
         /*
         List<Integer> cities = new ArrayList<>();
 

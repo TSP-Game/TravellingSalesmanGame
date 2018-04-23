@@ -11,6 +11,7 @@ public class ButtonSetter {
     private int constX,constY;
     private Point point;
 
+
     //Her activity için bir kere çalışıyor.
     public ButtonSetter(int i, ScreenSettings screenView){
         point=screenView.getPoint();
@@ -18,10 +19,11 @@ public class ButtonSetter {
         if(i==1) imageButtonSetter(screenView);
     }
 
+
     private void imageButtonSetter(ScreenSettings screenView) {
 
         if (screenView.getDensity() > 4.0) {
-            //return "xxxhd-ğipi";
+            //return "xxxhdpi";
         }
         else if (screenView.getDensity() > 3.0 && screenView.getDensity()<=4.0) {
             //return "xxhdpi";
@@ -41,6 +43,7 @@ public class ButtonSetter {
         }
         //return "ldpi";
     }
+
 
     private void levelStateSetter(ScreenSettings screenView){
 
@@ -73,7 +76,6 @@ public class ButtonSetter {
         if(i==1) gameButtonView(button);
     }
 
-
     private void gameButtonView(View button) {
 
         button.setX(x);
@@ -87,6 +89,7 @@ public class ButtonSetter {
             y+=constY+height;
         }
     }
+
 
     private void levelStateSetView(View button) {
 

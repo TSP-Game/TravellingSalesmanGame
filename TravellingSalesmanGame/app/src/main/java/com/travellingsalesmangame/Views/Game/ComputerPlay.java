@@ -12,7 +12,7 @@ public class ComputerPlay {
 
     private Core core;
     private List<Integer> cities,citiesBackup;
-    private double[][] q;
+    private int[][] q;
 
 
     private void init() {
@@ -31,7 +31,7 @@ public class ComputerPlay {
         citiesBackup.add(core.getCities()[0]);
 
         int size = cities.size()+1;
-        q = new double[size][size];
+        q = new int[size][size];
     }
 
     ComputerPlay(Core core){
@@ -54,6 +54,8 @@ public class ComputerPlay {
 
             learnOneTime();
         }
+
+        List<Integer> qq = new ArrayList<>(getPath());
     }
 
     //bir iterasyonluk öğrenme
@@ -66,5 +68,32 @@ public class ComputerPlay {
 
         for(int i=0;i<upper;i++)
             q[citiesBackup.indexOf(cities.get(i))][citiesBackup.indexOf(cities.get(i+1))] += cost;
+    }
+
+
+    List<Integer> getPath(){
+
+        int row = q.length-1,column = q[0].length,pivotRow=0, maxColumn=0, max;
+        List<Integer> Path = new ArrayList<>();
+        Path.add(0);
+
+        for(int i=0;i<row;i++){
+
+            max = Integer.MAX_VALUE ;
+
+            for(int j=0;j<column;j++){
+
+                if(q[pivotRow][j] < max && !Path.contains(j)){
+
+                    max = q[pivotRow][j];
+                    maxColumn = j;
+                }
+            }
+            pivotRow = maxColumn;
+            Path.add(pivotRow);
+        }
+
+        Path.add(0);
+        return Path;
     }
 }
