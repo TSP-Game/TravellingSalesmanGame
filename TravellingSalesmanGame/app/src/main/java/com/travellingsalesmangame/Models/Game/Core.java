@@ -14,7 +14,7 @@ public class Core {
     }
 
     //Her bir sorunun tanımlanacağı Constructor
-    protected Core(int[] cities, int[][] costs, int solution){
+    Core(int[] cities, int[][] costs, int solution){
         this.cities=cities;
         this.costs=costs;
         this.solution=solution;

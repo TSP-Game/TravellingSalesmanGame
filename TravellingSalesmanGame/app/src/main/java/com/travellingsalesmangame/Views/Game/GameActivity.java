@@ -61,7 +61,7 @@ public class GameActivity extends Activity {
         buttonCreater.create(35,core.getCities()); //35 tane button oluşturacak
         buttons=buttonCreater.getGameButonList();//Tüm oluşan butonları aldım.
 
-        drawList = CostsSetter.getDrawList(this, buttons, core.getCosts());
+        drawList = CostsSetter.getDrawList(this, buttons, core.getCosts(), layoutDraw);
     }
 
     @Override
@@ -162,4 +162,30 @@ public class GameActivity extends Activity {
                 layoutDraw.addView(draw.textView);
             }
         }
+
+    public void game_Qplay_onclick(View view) {
+
+        ComputerPlay comPlay = new ComputerPlay(core);
+        comPlay.learn(100000);
+
+        /*
+        List<Integer> cities = new ArrayList<>();
+
+        int[] cities1 = core.getCities();
+        for (int i1 = 1, cities1Length = cities1.length; i1 < cities1Length; i1++) {
+            Integer i = cities1[i1];
+            cities.add(i);
+        }
+
+        action(buttons.get(core.getCities()[0]));
+
+        Collections.shuffle(cities);
+
+        for (Integer i: cities) {
+            action(buttons.get(i));
+        }
+
+        action(buttons.get(core.getCities()[0]));
+        */
+    }
 }

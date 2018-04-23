@@ -8,6 +8,14 @@
     tools:context=".Views.Game.GameActivity"
     android:id="@+id/gameActivity">
 
+    <Button
+        android:id="@+id/game_Qplay"
+        android:text="@string/qplay"
+        android:onClick="game_Qplay_onclick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
     <RelativeLayout
         android:id="@+id/layoutDraw"
         android:layout_width="match_parent"
