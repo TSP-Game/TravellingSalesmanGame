@@ -118,7 +118,9 @@ public class LoginActivity extends Activity {
         return true;
     }
 
-    /*public void login_login_onclick(View view) {
+
+    /*
+    public void login_login_onclick(View view) {
 
         email = String.valueOf(et_email.getText());
         password = String.valueOf(et_password.getText());
