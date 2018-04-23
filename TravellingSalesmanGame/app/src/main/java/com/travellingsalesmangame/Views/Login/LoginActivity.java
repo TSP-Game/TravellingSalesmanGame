@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,7 @@ public class LoginActivity extends Activity {
     private EditText et_email,et_password;
     private TextView tv_error,err_email,err_password;
     private String email,password;
-    private ValueEventListener listenerUser,listenerSalt;
+    private ValueEventListener listenerUser,listenerSalt,listenerCookie;
     private String salt = "";
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
@@ -79,10 +80,10 @@ public class LoginActivity extends Activity {
                     err_password.setVisibility(View.VISIBLE);
                 }
                 else {
-                    SharedPreferences  prefs = getPreferences(MODE_PRIVATE);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor prefsEditor = prefs.edit();
                     Gson gson = new Gson();
-                    User user = new User((String)dataSnapshot.child("userName").getValue(),email,password);
+                    User user = new User((String)dataSnapshot.child("userName").getValue(),(String)dataSnapshot.child("email").getValue(),(String)dataSnapshot.child("password").getValue());
                     String json = gson.toJson(user);
                     prefsEditor.putString("User", json);
                     prefsEditor.apply();
@@ -107,7 +108,6 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        readIfAlreadyLogin();
     }
 
     @Override
@@ -130,23 +130,6 @@ public class LoginActivity extends Activity {
             return true;
         }
         return true;
-    }
-
-
-    private void readIfAlreadyLogin(){
-
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = prefs.getString("User","");
-        User user;
-
-        if(!json.equals("")){
-
-            user = gson.fromJson(json, User.class);
-            et_email.setText(user.getEmail());
-            et_password.setText(user.getPassword());
-            login_login_onclick(new View(this));
-        }
     }
 
 
