@@ -28,4 +28,6 @@
     <string name="error_database_read">Sunucu hatası. Veri alınamadı!!</string>
     <string name="error_network">Ağ hatası! İnternetinizi kontrol ediniz!</string>
     <string name="error">!</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

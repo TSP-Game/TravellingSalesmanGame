@@ -33,11 +33,11 @@ public class DrawView extends View {
                         endView.getY()+endView.getHeight()/2,paint);
     }
 
-    protected View getStartView() { return startView; }
+    public View getStartView() { return startView; }
 
-    protected View getEndView() { return endView; }
+    public View getEndView() { return endView; }
 
-    protected void setColor(int color) { paint.setColor(color); }
+    public void setColor(int color) { paint.setColor(color); }
 
-    protected void setWidth(int width) { paint.setStrokeWidth(width); }
+    public void setWidth(int width) { paint.setStrokeWidth(width); }
 }

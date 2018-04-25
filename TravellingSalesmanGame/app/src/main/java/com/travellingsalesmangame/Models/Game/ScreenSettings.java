@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.view.Display;
 
+import com.travellingsalesmangame.LevelMenu_Fragment;
+
 public class ScreenSettings {
 
     //Aslında bir MODEL, ekranın çözünürlüğünü alarak istediğimiz gibi kullanmamızı sağlar.
@@ -13,7 +15,6 @@ public class ScreenSettings {
 
     private float density;
     private Point point;
-
 
     public Point getPoint() {
         return point;
@@ -29,6 +30,7 @@ public class ScreenSettings {
     public void setDensity(float density) {
         this.density = density;
     }
+
 
 
     public ScreenSettings(Activity context){

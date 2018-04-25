@@ -1,10 +1,14 @@
-package com.travellingsalesmangame.Views.Game;
+package com.travellingsalesmangame;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
@@ -14,72 +18,67 @@ import com.travellingsalesmangame.Controllers.Game.Stage;
 import com.travellingsalesmangame.Models.Game.Core;
 import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
-import com.travellingsalesmangame.R;
+import com.travellingsalesmangame.Views.Game.DisplayMessage;
+import com.travellingsalesmangame.Views.Game.DrawView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameActivity extends Activity {
+public class GameActivity_Fragment extends Fragment {
 
     private RelativeLayout gameActivity,layoutDraw;
     private Core core;
     private Stage stage;
-    private Intent intent;
     private List<ImageButton> buttons,selectedButtons;
     private List<CostsSetter.Draw> drawList;
     private ImageButton oldButton;
     private ScreenSettings screenSettings;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction transaction;
+    private DisplayMessage message;
+
+    private View view;
     private int levelSaved,levelClicked,stateSaved,stateClicked,click_count=0,totalScore=0;
 
-    private void init(){
 
-        screenSettings=new ScreenSettings(GameActivity.this);
+    private void init() {
+        message=new DisplayMessage();
+        screenSettings=new ScreenSettings(getActivity());
         selectedButtons=new ArrayList<>();
 
-        gameActivity=findViewById(R.id.gameActivity);
-        layoutDraw=findViewById(R.id.layoutDraw);
+        gameActivity=view.findViewById(R.id.gameActivity);
+        layoutDraw=view.findViewById(R.id.layoutDraw);
 
-        intent=getIntent();
-        levelSaved = intent.getIntExtra("levelSaved",0);
-        levelClicked = intent.getIntExtra("levelClicked",0);
-        stateSaved = intent.getIntExtra("stateSaved",0);
-        stateClicked = intent.getIntExtra("stateClicked",0);
+        Bundle bundle=getArguments();
+        levelSaved=bundle.getInt("levelSaved",0);
+        levelClicked=bundle.getInt("levelClicked",0);
+        stateSaved=bundle.getInt("stateSaved",0);
+        stateClicked=bundle.getInt("stateClicked",0);
 
-        core = Examples.getCores()[levelClicked][stateClicked];
+        core= Examples.getCores()[levelClicked][stateClicked];
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+        View.OnClickListener onClickListener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                action((ImageButton) v);
+                action((ImageButton)v);
             }
         };
-
-        ButtonCreater buttonCreater=new ButtonCreater(this,
-                gameActivity,
-                onClickListener,
-                screenSettings);
+        ButtonCreater buttonCreater=new ButtonCreater(getActivity(),
+                                                        gameActivity,
+                                                        onClickListener,
+                                                        screenSettings);
         buttonCreater.create(35,core.getCities()); //35 tane button oluşturacak
         buttons=buttonCreater.getGameButonList();//Tüm oluşan butonları aldım.
 
-        drawList = CostsSetter.getDrawList(this, buttons, core.getCosts());
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-
-        init();
-        //createLayout();
-        stage = new Stage(this); //seviye atlama işlemi için gerekli
+        drawList = CostsSetter.getDrawList(getActivity(), buttons, core.getCosts());
     }
 
     private void action(ImageButton button) {
 
-       /* if(selectedButtons.contains(button))
-            DisplayMessage.show(this,"Uyarı","Seçili Şehre Tıkladınız",null);
-*/
-        {
+        if(selectedButtons.contains(button))
+            message.show(this,"Uyarı","Seçili Şehre Tıkladınız");
+
+        else {
 
             if(oldButton==null){
                 showLayoutCosts(button);
@@ -96,7 +95,7 @@ public class GameActivity extends Activity {
                     totalScore+=pathCost;
                     click_count++;
 
-                    DrawView drawView = new DrawView(this,oldButton,button,R.color.dark_orchid,10);
+                    DrawView drawView = new DrawView(getActivity(),oldButton,button,R.color.dark_orchid,10);
                     layoutDraw.addView(drawView);
 
                     if(click_count==core.getCities().length)
@@ -115,21 +114,48 @@ public class GameActivity extends Activity {
                         if((levelSaved == levelClicked) && (stateSaved == stateClicked))    //son levelin son sorusu oynandı ise seviye arttır
                             stage.up();
 
-                        if(stateClicked == Examples.getCores()[levelClicked].length-1)                          //oynanan oyun levelin son oyunu ise levelmenuye değilse statemenuye dön
-                            intent = new Intent(GameActivity.this,LevelMenuActivity.class);      //levelmenuye geri dön.
-                        else {
-                            intent = new Intent(GameActivity.this,StateMenuActivity.class);      //statemenuye geri dön.
-                            intent.putExtra("levelSaved",levelSaved);        //kayıtlı level, kullanıcının en son geldigi level
-                            intent.putExtra("levelClicked",levelClicked);  //tiklanan level, kullanıcının oynamak için seçtiği level, kayıtlı ve secili level esit ise 2. aktivite ona gore olusturulacak.
-                        }
+                        if(stateClicked == Examples.getCores()[levelClicked].length-1)  //oynanan oyun levelin son oyunu ise levelmenuye değilse statemenuye dön
+                        {
+                            LevelMenu_Fragment level=new LevelMenu_Fragment();
 
-                     // DisplayMessage.show(this,"Oyun","Skorunuz :  "+totalScore+"  Gerçek Skor :  "+core.getSolution(),intent);  //intent = level menu olmalı, display methodunu kodla önce.
+                            fragmentManager=getFragmentManager();
+                            transaction=fragmentManager.beginTransaction();
+                            transaction.replace(R.id.context_main,level);
+                            transaction.commit();
+                        }
+                        else {
+
+                            StateMenu_Fragment state=new StateMenu_Fragment();
+
+                            Bundle bundle=new Bundle();
+                            bundle.putInt("levelSaved",levelSaved);
+                            bundle.putInt("levelClicked",levelClicked);
+
+
+                            state.setArguments(bundle);
+                            fragmentManager=getFragmentManager();
+                            transaction=fragmentManager.beginTransaction();
+                            transaction.replace(R.id.context_main,state);
+                            transaction.commit();
+
+                        }
+                       message.show(this,"Oyun","Skorunuz :  "+totalScore+"  Gerçek Skor :  "+core.getSolution());
+                        //intent = level menu olmalı, display methodunu kodla önce.
                     }
                 }
-              //  else
-                    //DisplayMessage.show(this,"Uyarı","Yol Yoktur",null);
+                else
+                    message.show(this,"Uyarı","Yol Yoktur");
             }
         }
+
+    }
+
+    @Override @Nullable
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        view=inflater.inflate(R.layout.activity_game,container,false);
+        init();
+        stage=new Stage(view.getContext());
+        return view;
     }
 
     private void removeLayoutCosts(ImageButton oldButton){
@@ -161,5 +187,5 @@ public class GameActivity extends Activity {
                 layoutDraw.addView(draw.drawView);
                 layoutDraw.addView(draw.textView);
             }
-        }
+    }
 }

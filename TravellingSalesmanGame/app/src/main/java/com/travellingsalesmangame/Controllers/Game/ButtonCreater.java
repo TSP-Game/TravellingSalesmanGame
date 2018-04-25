@@ -31,6 +31,8 @@ public class ButtonCreater {
         this.layout=layout;
         this.onClickListener=onClickListener;
         this.settings=settings;
+
+        this.layout.setClipToPadding(false);
     }
 
 
@@ -71,7 +73,7 @@ public class ButtonCreater {
             button.setImageResource(R.mipmap.home0);
             button.setBackground(null);
             button.setPadding(0,0,0,0);
-            button.setElevation(24);
+            //button.setElevation(24);
             button.setOnClickListener(onClickListener);
             layout.addView(button);
             gameButonList.add(button);
