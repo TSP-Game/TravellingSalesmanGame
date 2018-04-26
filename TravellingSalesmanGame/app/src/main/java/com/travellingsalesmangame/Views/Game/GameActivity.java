@@ -167,7 +167,7 @@ public class GameActivity extends Activity {
     public void game_Qplay_onclick(View view) {
 
         ComputerPlay comPlay = new ComputerPlay(core);
-        comPlay.learn(100000);
+        comPlay.learn(10000);
 
         for (Integer i: comPlay.getPath())
             action(buttons.get(core.getCities()[i]));

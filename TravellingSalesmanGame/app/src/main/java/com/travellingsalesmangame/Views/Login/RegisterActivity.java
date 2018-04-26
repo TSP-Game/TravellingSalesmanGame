@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,9 @@ import java.util.Random;
 
 public class RegisterActivity extends Activity {
 
+    private ImageView profileImage;
+    private Uri resultUri;
+
     private EditText et_userName,et_email,et_password,et_passwordConfirm;                 //veri girisi yapilan editText'ler
     private TextView tv_error,err_userName,err_email,err_password,err_passwordConfirm;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
@@ -37,7 +42,29 @@ public class RegisterActivity extends Activity {
     private User new_user;
     private String passwordConfirm;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            final Uri imageUri = data.getData();
+            resultUri = imageUri;
+            profileImage.setImageURI(resultUri);
+        }
+    }
+
     private void init(){
+
+        profileImage = findViewById(R.id.profileImage);
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("Image/*");
+                startActivityForResult(intent,1);
+            }
+        });
+
 
         et_userName = findViewById(R.id.reg_userName);
         et_email = findViewById(R.id.reg_email);

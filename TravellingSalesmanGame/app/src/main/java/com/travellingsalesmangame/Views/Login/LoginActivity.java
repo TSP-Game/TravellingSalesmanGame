@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +38,11 @@ public class LoginActivity extends Activity {
     private EditText et_email,et_password;
     private TextView tv_error,err_email,err_password;
     private String email,password;
-    private ValueEventListener listenerUser,listenerSalt,listenerCookie;
+    private ValueEventListener listenerUser,listenerSalt;
     private String salt = "";
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
+
 
     void init(){
 
@@ -83,7 +86,7 @@ public class LoginActivity extends Activity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor prefsEditor = prefs.edit();
                     Gson gson = new Gson();
-                    User user = new User((String)dataSnapshot.child("userName").getValue(),(String)dataSnapshot.child("email").getValue(),(String)dataSnapshot.child("password").getValue());
+                    User user = new User((String)dataSnapshot.child("user0Name").getValue(),(String)dataSnapshot.child("email").getValue(),(String)dataSnapshot.child("password").getValue());
                     String json = gson.toJson(user);
                     prefsEditor.putString("User", json);
                     prefsEditor.apply();
