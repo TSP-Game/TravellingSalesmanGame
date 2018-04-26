@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Views.Game.Master_layout">
+        <activity android:name=".Views.Game.Master_layout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +22,7 @@
         <activity
             android:name=".Views.Login.RegisterActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".PopActivity"></activity>
     </application>
 
 </manifest>
