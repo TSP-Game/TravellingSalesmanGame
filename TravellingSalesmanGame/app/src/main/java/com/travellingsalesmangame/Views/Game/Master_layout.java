@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
+import com.travellingsalesmangame.Test;
 import com.travellingsalesmangame.Views.Login.LoginActivity;
 
 
@@ -116,12 +117,25 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
         if(id==R.id.oyun){
             LevelMenu_Fragment fragmentA= new LevelMenu_Fragment();
             transaction=manager.beginTransaction();
-
             transaction.replace(R.id.context_main,fragmentA,"Fragment A");
             transaction.commit();
         }
         if(id==R.id.cikis)
             login_out();
+
+        if(id==R.id.konuAnlatimi){
+            activity_pop_menu popActivity=new activity_pop_menu();
+            transaction=manager.beginTransaction();
+            transaction.replace(R.id.context_main,popActivity,"Konu Anlatımı");
+            transaction.commit();
+        }
+
+        if (id==R.id.test){
+            Test test=new Test();
+            transaction=manager.beginTransaction();
+            transaction.replace(R.id.context_main,test,"Test");
+            transaction.commit();
+        }
 
         master_layout.closeDrawer(GravityCompat.START);
         return false;

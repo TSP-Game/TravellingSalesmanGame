@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    tools:context=".Test">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTintMode="screen"
+            android:max="60"
+            android:min="0"
+            android:progressBackgroundTint="@android:color/white"
+            android:progressTint="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/txtSure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0/60" />
+
+        <TextView
+            android:id="@+id/txtviewSkor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Skor  : 0"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txtSoru"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_background"
+        android:gravity="left|center_vertical"
+        android:padding="3dp"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/A"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape"
+        android:gravity="left|center_vertical"
+        android:padding="3dp"
+        android:text="Button"
+        android:onClick="A_btn_click"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        tools:ignore="OnClick" />
+
+    <Button
+        android:id="@+id/B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape"
+        android:gravity="left|center_vertical"
+        android:padding="3dp"
+        android:onClick="B_btn_click"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/C"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape"
+        android:onClick="C_btn_click"
+        android:gravity="left|center_vertical"
+        android:padding="3dp"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/D"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape"
+        android:onClick="D_btn_click"
+        android:gravity="left|center_vertical"
+        android:padding="3dp"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/SonrakiSoru"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="Sonraki Soru"
+            android:background="@drawable/shape_background"
+            android:textSize="10dp"
+            android:onClick="sonraki_click"
+            android:padding="3dp"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+
+</LinearLayout>

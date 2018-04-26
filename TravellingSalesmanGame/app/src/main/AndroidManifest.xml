@@ -22,7 +22,10 @@
         <activity
             android:name=".Views.Login.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".PopActivity"></activity>
+        <activity android:name=".Views.Game.PopActivity" />
+        <activity android:name=".Views.Game.activity_pop_menu" />
+        <activity android:name=".Test" />
+        <activity android:name=".Test_sonuc"></activity>
     </application>
 
 </manifest>
