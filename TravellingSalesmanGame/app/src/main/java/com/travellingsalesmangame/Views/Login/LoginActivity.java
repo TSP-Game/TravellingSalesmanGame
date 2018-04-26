@@ -1,10 +1,12 @@
 package com.travellingsalesmangame.Views.Login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +19,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
+import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
-import com.travellingsalesmangame.Views.Game.LevelMenuActivity;
+import com.travellingsalesmangame.Views.Game.Master_layout;
 
-//Bu aktivite kullanici giris aktivitesidir.
-
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email,et_password;
     private TextView tv_error,err_email,err_password;
@@ -35,7 +37,7 @@ public class LoginActivity extends Activity {
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
 
-    void init(){
+    private void init(){
 
         et_email = findViewById(R.id.login_email);
         et_password = findViewById(R.id.login_password);
@@ -68,16 +70,30 @@ public class LoginActivity extends Activity {
 
                 String saltedHashedPassword = myHash.hash(myHash.hash(password)+salt);
 
+                //Giriş butonuna basınca kontrol ediyor.
                 if(!dataSnapshot.exists() || !dataSnapshot.child("password").exists() || !dataSnapshot.child("password").getValue().equals(saltedHashedPassword) || salt.equals("")) {                                            //login_onclick ile editboxtan gelen verinin veri tabaninda olmama durumu
                     tv_error.setText(R.string.error_wrong_password);
                     err_email.setVisibility(View.VISIBLE);
                     err_password.setVisibility(View.VISIBLE);
                 }
                 else {
+
+                    SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor preEditor=pref.edit();
+                    Gson gson=new Gson();
+                    User user=new User((String)dataSnapshot.child("userName").getValue(),
+                                       (String)dataSnapshot.child("email").getValue(),
+                                       (String)dataSnapshot.child("password").getValue());
+
+                    String json=gson.toJson(user);
+                    preEditor.putString("user",json);
+                    preEditor.apply();
+
                     Toast.makeText(LoginActivity.this,"Giriş Başarılı", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this,LevelMenuActivity.class);
+                    Intent intent = new Intent(LoginActivity.this,Master_layout.class);
                     startActivity(intent);
                     finish();
+
                 }
             }
 
@@ -96,13 +112,13 @@ public class LoginActivity extends Activity {
         init();
     }
 
-    @Override
+    @Override  //Settings
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.login_actionbar,menu);
         return true;
     }
 
-    @Override
+    @Override //Settings
     public boolean onOptionsItemSelected(MenuItem item){
 
         int id = item.getItemId();
@@ -116,31 +132,6 @@ public class LoginActivity extends Activity {
             return true;
         }
         return true;
-    }
-
-
-    /*
-    public void login_login_onclick(View view) {
-
-        email = String.valueOf(et_email.getText());
-        password = String.valueOf(et_password.getText());
-
-        if(ruleChecker()){
-
-            tv_error.setText("");
-            salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
-            users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
-        }
-    }*/
-
-
-    //Asıl fonksiyon yukarısı, burası test için otomatik giriş
-    public void login_login_onclick(View view) {
-
-        Toast.makeText(LoginActivity.this,"Giriş Başarılı", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this,LevelMenuActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private boolean ruleChecker() {
@@ -188,8 +179,20 @@ public class LoginActivity extends Activity {
         finish();
     }
 
-    public void login_cancel_onclick(View view) {
+    public void login_onclick(View view) {
 
+        email = String.valueOf(et_email.getText());
+        password = String.valueOf(et_password.getText());
+
+        if(ruleChecker()){
+
+            tv_error.setText("");
+            salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
+            users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
+        }
+    }
+
+    public void cancel_onclick(View view) {
         finish();
     }
 }

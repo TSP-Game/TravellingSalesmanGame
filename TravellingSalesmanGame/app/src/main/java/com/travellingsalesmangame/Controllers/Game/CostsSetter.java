@@ -3,13 +3,10 @@ package com.travellingsalesmangame.Controllers.Game;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travellingsalesmangame.Views.Game.DrawView;
-import com.travellingsalesmangame.Views.Game.GameActivity;
 
 import java.util.ArrayList;
 import java.util.List;

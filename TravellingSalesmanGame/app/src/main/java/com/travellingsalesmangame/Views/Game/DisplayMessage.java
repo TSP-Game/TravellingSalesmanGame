@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 
-import com.travellingsalesmangame.GameActivity_Fragment;
 import com.travellingsalesmangame.R;
 
 public class DisplayMessage extends Fragment {

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Master_layout">
+            android:name=".Views.Game.Master_layout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,17 +21,9 @@
             android:name=".Views.Login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Views.Game.StateMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Views.Game.GameActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Views.Login.RegisterActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name =".Views.Game.LevelMenuActivity"
-            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

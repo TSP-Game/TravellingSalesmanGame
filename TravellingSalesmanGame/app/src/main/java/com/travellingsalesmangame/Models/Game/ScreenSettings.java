@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.view.Display;
 
-import com.travellingsalesmangame.LevelMenu_Fragment;
-
 public class ScreenSettings {
 
     //Aslında bir MODEL, ekranın çözünürlüğünü alarak istediğimiz gibi kullanmamızı sağlar.

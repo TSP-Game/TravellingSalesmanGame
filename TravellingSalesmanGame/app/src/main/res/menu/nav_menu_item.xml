@@ -20,4 +20,9 @@
         android:id="@+id/oyun"
         android:title="Oyun"
         android:icon="@drawable/ic_game_black_24dp"/>
+
+    <item
+        android:id="@+id/cikis"
+        android:title="Çıkış"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"/>
 </menu>

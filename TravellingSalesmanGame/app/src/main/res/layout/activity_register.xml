@@ -136,17 +136,15 @@
 
             <Button
                 android:layout_weight="1"
-                android:id="@+id/reg_bt_cancel"
                 android:text="@string/cancel"
-                android:onClick="reg_cancel_onclick"
+                android:onClick="cancel_onclick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:layout_weight="1"
-                android:id="@+id/reg_bt_register"
                 android:text="@string/Sign_up"
-                android:onClick="reg_register_onclick"
+                android:onClick="register_onclick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

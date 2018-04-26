@@ -1,10 +1,10 @@
 package com.travellingsalesmangame.Views.Login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +25,8 @@ import com.travellingsalesmangame.R;
 
 import java.util.Random;
 
-//Bu aktivite kullanici kayit aktivitesidir.
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_userName,et_email,et_password,et_passwordConfirm;                 //veri girisi yapilan editText'ler
     private TextView tv_error,err_userName,err_email,err_password,err_passwordConfirm;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
@@ -60,7 +59,7 @@ public class RegisterActivity extends Activity {
                 }
                 else {
 
-                    String salt = createRandomSalt();           //rastgele 48 karakter tuz uretiyoruz
+                    String salt = createRandomSalt(); //rastgele 48 karakter tuz uretiyoruz
                     MyHash myHash = new MyHash();
 
                     //Asagida once parolanin hashini aliyoruz, sonra tuzu ile hashlenmis parolaya ekliyoruz, sonra birlestirilmis bu verinin bir daha hash'ini aliyoruz
@@ -117,18 +116,6 @@ public class RegisterActivity extends Activity {
         }
         return true;
     }
-    public void reg_register_onclick(View view) {       //kayit Ol tusu tiklama olayi
-
-        passwordConfirm = String.valueOf(et_passwordConfirm.getText());
-        new_user = new User(String.valueOf(et_userName.getText()), String.valueOf(et_email.getText()), String.valueOf(et_password.getText()));
-
-        if(ruleChecker()){
-
-            tv_error.setText("");
-            users.child(Encode.encode(new_user.getEmail())).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
-        }
-    }
-
     //rastgele tuz üretimi; 16'lik sistemde 48 karakter (farkli da olabilirdi, hash ciktim ile ayni olsun istedim)
     private String createRandomSalt() {
 
@@ -195,8 +182,19 @@ public class RegisterActivity extends Activity {
         return result;
     }
 
-    public void reg_cancel_onclick(View view) {     //iptal tusu tiklama olayi, giris sayfasina dönme islemi
+    public void register_onclick(View view) {
 
+        passwordConfirm = String.valueOf(et_passwordConfirm.getText());
+        new_user = new User(String.valueOf(et_userName.getText()), String.valueOf(et_email.getText()), String.valueOf(et_password.getText()));
+
+        if(ruleChecker()){
+
+            tv_error.setText("");
+            users.child(Encode.encode(new_user.getEmail())).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
+        }
+    }
+
+    public void cancel_onclick(View view) {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
         finish();
