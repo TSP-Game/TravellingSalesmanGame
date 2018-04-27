@@ -16,7 +16,7 @@
     <string name="cancel">İptal</string>
     <string name="error_symbol">!</string>
 
-    //about errors
+    <!-- about errors -->
     <string name="error_no_password">Lütfen parolanızı giriniz!</string>
     <string name="error_invalid_email">Email geçersiz veya desteklenmiyor!</string>
     <string name="error_invalid_password">Parola 6 ile 20 karakter arasında olmalıdır!</string>
@@ -30,4 +30,9 @@
     <string name="error">!</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <!-- Uygulama Master_Layout -->
+    <string name="login_msg">Çıkış yapmak istediğinizden emin misiniz?</string>
+    <string name="login_evet">Evet</string>
+    <string name="login_hayir">Hayır</string>
 </resources>

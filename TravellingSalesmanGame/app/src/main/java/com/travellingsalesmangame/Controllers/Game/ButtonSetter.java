@@ -7,7 +7,7 @@ import com.travellingsalesmangame.Models.Game.ScreenSettings;
 
 public class ButtonSetter {
 
-    private int x,y,width,height;
+    private int x,y,width,height,count=0;
     private int constX,constY;
     private Point point;
 
@@ -90,16 +90,18 @@ public class ButtonSetter {
 
     private void levelStateSetView(View button) {
 
+        count++;
         button.setX(x);
         button.setY(y);
-        if(constX*2+width+x<point.x){
+        if(/*constX*2+width+x<point.x &&*/ count <2){
             x+=constX+width;
         }
         else{
+
+            count=0;
             x=constX;
             y+=constY+height;
         }
-
     }
 
 }

@@ -1,7 +1,9 @@
 package com.travellingsalesmangame.Views.Game;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -42,6 +44,7 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
     private final DatabaseReference users= FirebaseDatabase.getInstance().getReference("User");
 
     private SharedPreferences prefs;
+
 
     private void init(){
 
@@ -90,8 +93,6 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
             users.child(Encode.encode(user.getEmail())).addValueEventListener(listenerCookie);
         }
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,18 +144,34 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
     private void login_in(){
 
+        prefs=PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefEditor=prefs.edit();
+        prefEditor.putString("user","");
+        prefEditor.apply();
+
         Intent intent=new Intent(Master_layout.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void login_out() {
-        prefs=PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefEditor=prefs.edit();
-        prefEditor.putString("user","");
-        prefEditor.apply();
 
-        login_in();
+        AlertDialog.Builder builder=new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        builder.setTitle(R.string.logout).setMessage(R.string.login_msg).setIcon(R.mipmap.information);
+        builder.setNegativeButton(R.string.login_hayir, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.login_evet, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                login_in();
+            }
+        });
+        builder.show();
+
     }
 
     //@Override

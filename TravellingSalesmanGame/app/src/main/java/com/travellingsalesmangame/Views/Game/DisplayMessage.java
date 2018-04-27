@@ -3,7 +3,6 @@ package com.travellingsalesmangame.Views.Game;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
-
 import com.travellingsalesmangame.R;
 
 public class DisplayMessage extends Fragment {
