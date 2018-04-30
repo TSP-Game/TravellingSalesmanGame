@@ -28,8 +28,8 @@ import java.util.Random;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText et_userName,et_email,et_password,et_passwordConfirm;                 //veri girisi yapilan editText'ler
-    private TextView tv_error,err_userName,err_email,err_password,err_passwordConfirm;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
+    private EditText et_userName,et_email,et_password,et_passwordConfirm;   //veri girisi yapilan editText'ler
+    private TextView reg_error;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
     private ValueEventListener listenerUser;
@@ -42,20 +42,14 @@ public class RegisterActivity extends AppCompatActivity {
         et_email = findViewById(R.id.reg_email);
         et_password = findViewById(R.id.reg_password);
         et_passwordConfirm = findViewById(R.id.reg_passwordConfirm);
-        tv_error = findViewById(R.id.reg_error);
-
-        err_userName = findViewById(R.id.reg_userName_err);
-        err_email = findViewById(R.id.reg_email_err);
-        err_password = findViewById(R.id.reg_password_err);
-        err_passwordConfirm = findViewById(R.id.reg_passwordConfirm_err);
+        reg_error = findViewById(R.id.reg_error);
 
         listenerUser = new ValueEventListener() {       //veri tabanı dinleyicisi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.exists()) {                                               //kayit olmak istenilen email adresin zaten kullanilmis olma durumu
-                    tv_error.setText(R.string.error_registered_email);
-                    err_email.setVisibility(View.VISIBLE);
+                    reg_error.setText(R.string.error_registered_email);
                 }
                 else {
 
@@ -83,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                tv_error.setText(R.string.error_database_read);
+                reg_error.setText(R.string.error_database_read);
             }
         };
     }
@@ -137,46 +131,33 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(cm.getActiveNetworkInfo() == null) {
 
-            tv_error.setText(R.string.error_network);
+            reg_error.setText(R.string.error_network);
             result = false;
         }
         else{
 
-            err_userName.setVisibility(View.INVISIBLE);
-            err_email.setVisibility(View.INVISIBLE);
-            err_password.setVisibility(View.INVISIBLE);
-            err_passwordConfirm.setVisibility(View.INVISIBLE);
+            if(new_user.getPassword() == null || new_user.getPassword().equals("")) { //sifrenin bos olma durumu
 
-
-            if(new_user.getPassword() == null || new_user.getPassword().equals("")) {                   //sifrenin bos olma durumu
-
-                tv_error.setText(getString(R.string.error_no_password));
-                err_password.setVisibility(View.VISIBLE);
-                err_passwordConfirm.setVisibility(View.VISIBLE);
+                reg_error.setText(getString(R.string.error_no_password));
                 result = false;
             }
             else {
 
-                if(!UserRules.check_password(new_user.getPassword())){                        //sifrenin kurallara uymama durumu
-                    tv_error.setText(getString(R.string.error_invalid_password));
-                    err_password.setVisibility(View.VISIBLE);
+                if(!UserRules.check_password(new_user.getPassword())){ //sifrenin kurallara uymama durumu
+                    reg_error.setText(getString(R.string.error_invalid_password));
                     result = false;
                 }
                 if(!new_user.getPassword().equals(passwordConfirm)) {     //parola ve parolaonaylanin farkli olma durumu
-                    tv_error.setText(R.string.error_wrong_passwordConfirm);
-                    err_passwordConfirm.setVisibility(View.VISIBLE);
-                    err_password.setVisibility(View.VISIBLE);
+                    reg_error.setText(R.string.error_wrong_passwordConfirm);
                     result = false;
                 }
             }
-            if(!UserRules.check_email(new_user.getEmail())) {                                 //girilen mail adresin desteklenmemesi olma durumu
-                tv_error.setText(R.string.error_invalid_email);
-                err_email.setVisibility(View.VISIBLE);
+            if(!UserRules.check_email(new_user.getEmail())) { //girilen mail adresin desteklenmemesi olma durumu
+                reg_error.setText(R.string.error_invalid_email);
                 result = false;
             }
-            if(!UserRules.check_name(new_user.getUserName())) {                                         //kullanici adinin kurallara uymama durumu
-                tv_error.setText(R.string.error_invalid_username);
-                err_userName.setVisibility(View.VISIBLE);
+            if(!UserRules.check_name(new_user.getUserName())) {     //kullanici adinin kurallara uymama durumu
+                reg_error.setText(R.string.error_invalid_username);
             }
         }
         return result;
@@ -189,7 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(ruleChecker()){
 
-            tv_error.setText("");
+            reg_error.setText("");
             users.child(Encode.encode(new_user.getEmail())).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
         }
     }
@@ -197,6 +178,12 @@ public class RegisterActivity extends AppCompatActivity {
     public void cancel_onclick(View view) {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 }

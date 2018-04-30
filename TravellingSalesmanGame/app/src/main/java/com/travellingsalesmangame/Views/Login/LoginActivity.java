@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,7 +28,7 @@ import com.travellingsalesmangame.Views.Game.Master_layout;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email,et_password;
-    private TextView tv_error,err_email,err_password;
+    private TextView login_error;
     private String email,password;
     private ValueEventListener listenerUser,listenerSalt;
     private String salt = "";
@@ -41,9 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         et_email = findViewById(R.id.login_email);
         et_password = findViewById(R.id.login_password);
-        tv_error = findViewById(R.id.login_error);
-        err_email = findViewById(R.id.login_email_err);
-        err_password = findViewById(R.id.login_password_err);
+        login_error = findViewById(R.id.login_error);
 
         final MyHash myHash = new MyHash();
 
@@ -59,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                tv_error.setText(R.string.error_database_read);
+                login_error.setText(R.string.error_database_read);
             }
         };
 
@@ -72,9 +68,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Giriş butonuna basınca kontrol ediyor.
                 if(!dataSnapshot.exists() || !dataSnapshot.child("password").exists() || !dataSnapshot.child("password").getValue().equals(saltedHashedPassword) || salt.equals("")) {                                            //login_onclick ile editboxtan gelen verinin veri tabaninda olmama durumu
-                    tv_error.setText(R.string.error_wrong_password);
-                    err_email.setVisibility(View.VISIBLE);
-                    err_password.setVisibility(View.VISIBLE);
+                    login_error.setText(R.string.error_wrong_password);
+                    //et_email.setVisibility(View.VISIBLE);
+                    //err_password.setVisibility(View.VISIBLE);
                 }
                 else {
 
@@ -82,8 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor preEditor=pref.edit();
                     Gson gson=new Gson();
                     User user=new User((String)dataSnapshot.child("userName").getValue(),
-                                       (String)dataSnapshot.child("email").getValue(),
-                                       (String)dataSnapshot.child("password").getValue());
+                            (String)dataSnapshot.child("email").getValue(),
+                            (String)dataSnapshot.child("password").getValue());
 
                     String json=gson.toJson(user);
                     preEditor.putString("user",json);
@@ -100,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                tv_error.setText(R.string.error_database_read);
+                login_error.setText(R.string.error_database_read);
             }
         };
     }
@@ -112,28 +108,6 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
 
-    @Override  //Settings
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.login_actionbar,menu);
-        return true;
-    }
-
-    @Override //Settings
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        int id = item.getItemId();
-
-        if(id==R.id.setting){
-
-            return true;
-        }
-        if(id==R.id.about){
-
-            return true;
-        }
-        return true;
-    }
-
     private boolean ruleChecker() {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -142,30 +116,30 @@ public class LoginActivity extends AppCompatActivity {
 
         if(cm.getActiveNetworkInfo() == null) {
 
-            tv_error.setText(R.string.error_network);
+            login_error.setText(R.string.error_network);
             result = false;
         }
         else{
 
-            err_email.setVisibility(View.INVISIBLE);
-            err_password.setVisibility(View.INVISIBLE);
+            //err_email.setVisibility(View.INVISIBLE);
+            //err_password.setVisibility(View.INVISIBLE);
 
             if(password == null || password.equals("")) {                   //sifrenin bos olma durumu
 
-                tv_error.setText(getString(R.string.error_no_password));
-                err_password.setVisibility(View.VISIBLE);
+                login_error.setText(getString(R.string.error_no_password));
+                //err_password.setVisibility(View.VISIBLE);
                 result = false;
             }
             else if(!UserRules.check_password(password)){                        //sifrenin kurallara uymama durumu (kurala uymuyorsa veri tabanına gitmesine gerek yok)
-                tv_error.setText(getString(R.string.error_wrong_password));
-                err_password.setVisibility(View.VISIBLE);
-                err_email.setVisibility(View.VISIBLE);
+                login_error.setText(getString(R.string.error_wrong_password));
+                //err_password.setVisibility(View.VISIBLE);
+                //err_email.setVisibility(View.VISIBLE);
                 result = false;
             }
             if(!UserRules.check_email(email)) {                                 //girilen mail adresin desteklenmemesi olma durumu
-                tv_error.setText(R.string.error_invalid_email);
-                err_email.setVisibility(View.VISIBLE);
-                err_password.setVisibility(View.VISIBLE);
+                login_error.setText(R.string.error_invalid_email);
+                //err_email.setVisibility(View.VISIBLE);
+                //err_password.setVisibility(View.VISIBLE);
                 result = false;
             }
         }
@@ -186,13 +160,15 @@ public class LoginActivity extends AppCompatActivity {
 
         if(ruleChecker()){
 
-            tv_error.setText("");
+            login_error.setText("");
             salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
             users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
         }
     }
 
-    public void cancel_onclick(View view) {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 }

@@ -24,10 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
+import com.travellingsalesmangame.Views.Login.LoginActivity;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 import com.travellingsalesmangame.Test;
-import com.travellingsalesmangame.Views.Login.LoginActivity;
 
 
 public class Master_layout extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -136,6 +136,13 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
             transaction=manager.beginTransaction();
             transaction.replace(R.id.context_main,test,"Test");
             transaction.commit();
+        }
+
+        if (id==R.id.profil){
+            /*LoginActivity test=new LoginActivity();
+            transaction=manager.beginTransaction();
+            transaction.replace(R.id.context_main,test,"fdsf");
+            transaction.commit();*/
         }
 
         master_layout.closeDrawer(GravityCompat.START);

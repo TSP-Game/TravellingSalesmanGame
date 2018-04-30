@@ -18,10 +18,13 @@
         </activity>
         <activity
             android:name=".Views.Login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".Views.Login.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
         <activity android:name=".Views.Game.PopActivity" />
         <activity android:name=".Views.Game.activity_pop_menu" />
         <activity android:name=".Test" />

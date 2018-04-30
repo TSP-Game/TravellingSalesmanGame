@@ -3,11 +3,12 @@
     <string name="app_title_name">Oyun</string>
 
     //about Login UI
-    <string name="email">email</string>
-    <string name="password">parola</string>
+    <string name="email">E-mail Giriniz</string>
+    <string name="password">Şifrenizi Giriniz</string>
+    <string name="again_password">Şifrenizi Tekrar Giriniz</string>
     <string name="login">Giriş Yap</string>
     <string name="register">Kayıt Ol!</string>
-    <string name="name">kullanıcı adı</string>
+    <string name="name">Kullanıcı Adı Giriniz</string>
     <string name="country">ülke</string>
     <string name="age">yaş</string>
     <string name="confirm_password">parolayı onayla</string>
@@ -19,12 +20,12 @@
     <!-- about errors -->
     <string name="error_no_password">Lütfen parolanızı giriniz!</string>
     <string name="error_invalid_email">Email geçersiz veya desteklenmiyor!</string>
-    <string name="error_invalid_password">Parola 6 ile 20 karakter arasında olmalıdır!</string>
+    <string name="error_invalid_password">Şifre 6 ile 20 karakter arasında olmalıdır!</string>
     <string name="error_invalid_username">Kullanıcı adı 6 ile 20 karakter olmalıdır!</string>
     <string name="error_unregistered_email">Kayıtlı olmayan email. Lütfen kayıt olunuz!</string>
     <string name="error_registered_email">Bu emaile ait bir hesap zaten mevcut!</string>
     <string name="error_wrong_password">Yanlış email veya parola!</string>
-    <string name="error_wrong_passwordConfirm">Parolalar uyuşmamaktadır. Lütfen kontrol ediniz!</string>
+    <string name="error_wrong_passwordConfirm">Parolalar uyuşmamaktadır!</string>
     <string name="error_database_read">Sunucu hatası. Veri alınamadı!!</string>
     <string name="error_network">Ağ hatası! İnternetinizi kontrol ediniz!</string>
     <string name="error">!</string>
@@ -35,4 +36,6 @@
     <string name="login_msg">Çıkış yapmak istediğinizden emin misiniz?</string>
     <string name="login_evet">Evet</string>
     <string name="login_hayir">Hayır</string>
+    <string name="reg_kaydet">Kaydet</string>
+    <string name="reg_iptal">İptal</string>
 </resources>
