@@ -175,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
 
             login_error.setText("");
             salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);
-            users.child(Encode.encode(email)).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
         }
     }
 
