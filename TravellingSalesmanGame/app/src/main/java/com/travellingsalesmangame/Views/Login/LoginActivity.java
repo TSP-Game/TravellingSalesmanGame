@@ -31,9 +31,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView login_error;
     private String email,password;
     private ValueEventListener listenerUser,listenerSalt;
-    private String salt = "";
-    private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
-    private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
+    private String salt;
+    private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
+    private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
+    private User user;
 
     private void init(){
 
@@ -48,8 +49,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists())
+                if(dataSnapshot.exists()){
+
                     salt = dataSnapshot.getValue(String.class);
+
+                    if(salt != null && salt.length() == 48)
+                        users.child(Encode.encode(email)).addValueEventListener(listenerUser);
+                    else
+                        login_error.setText(R.string.error_wrong_password);
+                }
+                else
+                    login_error.setText(R.string.error_wrong_password);
             }
 
             @Override
@@ -66,28 +76,41 @@ public class LoginActivity extends AppCompatActivity {
 
                 String saltedHashedPassword = myHash.hash(myHash.hash(password)+salt);
 
-                //Giriş butonuna basınca kontrol ediyor.
-                if(!dataSnapshot.exists() || !dataSnapshot.child("password").exists() || !dataSnapshot.child("password").getValue().equals(saltedHashedPassword) || salt.equals("")) {                                            //login_onclick ile editboxtan gelen verinin veri tabaninda olmama durumu
-                    login_error.setText(R.string.error_wrong_password);
+                if(dataSnapshot.child("password").exists()
+                        && dataSnapshot.child("password").getValue() != null
+                        && dataSnapshot.child("password").getValue(String.class).length() == 48
+                        ){                                                                          //geçerli kullanıcı olup olmama durumu
+
+                    user = new User();
+                    user.setEmail(dataSnapshot.child("email").getValue(String.class));
+                    user.setUserName(dataSnapshot.child("userName").getValue(String.class));
+                    user.setPassword(dataSnapshot.child("password").getValue(String.class));
+
+                    if(user.getPassword().equals(saltedHashedPassword)) {//şifrelerin eşleşmeme durumu
+
+                        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor preEditor = pref.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(user);
+                        preEditor.putString("user", json);
+                        preEditor.apply();
+
+                        //bellekteki verileri silme, güvenlik için
+                        user = new User();
+                        saltedHashedPassword = null;
+
+                        Toast.makeText(LoginActivity.this, "Giriş Başarılı", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, Master_layout.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        login_error.setText(R.string.error_wrong_password);
+                        user = new User();
+                    }
                 }
                 else {
-
-                    SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor preEditor=pref.edit();
-                    Gson gson=new Gson();
-                    User user=new User((String)dataSnapshot.child("userName").getValue(),
-                            (String)dataSnapshot.child("email").getValue(),
-                            (String)dataSnapshot.child("password").getValue());
-
-                    String json=gson.toJson(user);
-                    preEditor.putString("user",json);
-                    preEditor.apply();
-
-                    Toast.makeText(LoginActivity.this,"Giriş Başarılı", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this,Master_layout.class);
-                    startActivity(intent);
-                    finish();
-
+                    login_error.setText(R.string.error_wrong_password);
                 }
             }
 

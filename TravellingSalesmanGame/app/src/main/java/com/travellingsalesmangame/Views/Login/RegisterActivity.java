@@ -30,8 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_userName,et_email,et_password,et_passwordConfirm;   //veri girisi yapilan editText'ler
     private TextView reg_error;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
-    private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User");
-    private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt");
+    private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
+    private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
     private ValueEventListener listenerUser;
     private User new_user;
     private String passwordConfirm;
@@ -60,13 +60,15 @@ public class RegisterActivity extends AppCompatActivity {
                     //Bu bizim veri tabaninda gorunecek parolamiz oluyor
                     new_user.setPassword(myHash.hash(myHash.hash(new_user.getPassword())+salt));
 
-                    //veritabanina kayit islemleri
-                    users.child(Encode.encode(new_user.getEmail())).child("email").setValue(new_user.getEmail());
-                    users.child(Encode.encode(new_user.getEmail())).child("userName").setValue(new_user.getUserName());
-                    users.child(Encode.encode(new_user.getEmail())).child("password").setValue(new_user.getPassword());                     //kullaniciyi veri tabanina kayit etme
+                    users.child(Encode.encode(new_user.getEmail())).setValue(new_user);
                     salts.child(Encode.encode(new_user.getEmail())).setValue(salt);                                             //tuzu da ekliyoruz veri tabanimiza (kendi tablosuna)
 
                     users.child(Encode.encode(new_user.getEmail())).removeEventListener(listenerUser);                      //isimiz bittiten sonra dinleyiciyi silip giris ekranina geri donuyoruz
+
+                    //Bellekteki verileri silme, güvenlik için
+                    new_user = new User();
+                    salt = null;
+
                     Toast.makeText(RegisterActivity.this,"Kayıt Başarılı", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                     startActivity(intent);
@@ -88,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         init();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.register_actionbar,menu);
@@ -110,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
+*/
     //rastgele tuz üretimi; 16'lik sistemde 48 karakter (farkli da olabilirdi, hash ciktim ile ayni olsun istedim)
     private String createRandomSalt() {
 
@@ -120,7 +123,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         return salt.toString();
     }
-
 
     private boolean ruleChecker() {
 

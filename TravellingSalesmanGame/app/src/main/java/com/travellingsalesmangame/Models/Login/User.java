@@ -6,6 +6,8 @@ public class User {
 
     private String email,name,password;
 
+    public User() {}
+
     public User(User user) {
         this.email=user.email;
         this.name=user.name;
@@ -30,10 +32,8 @@ public class User {
     }
 
     //Kullanici degerleri degisirse diye, bu projede kullanilmayacak.
-    void setEmail(String email) {
-        this.email = email;
-    }
-    void setUserName(String name) {
+    public void setEmail(String email) { this.email = email; }
+    public void setUserName(String name) {
         this.name = name;
     }
     public void setPassword(String password) {

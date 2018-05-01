@@ -41,7 +41,7 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
     private User user;
     private ValueEventListener listenerCookie ;                          //Tablo adı
-    private final DatabaseReference users= FirebaseDatabase.getInstance().getReference("User");
+    private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
 
     private SharedPreferences prefs;
 
@@ -70,8 +70,9 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
                 if(!dataSnapshot.exists() ||
                         !dataSnapshot.child("password").exists() ||
-                        !dataSnapshot.child("password").getValue().equals(user.getPassword()))
-                    login_out();
+                        dataSnapshot.child("password").getValue(String.class) == null ||
+                        !dataSnapshot.child("password").getValue(String.class).equals(user.getPassword()))
+                    login_in();
             }
 
             @Override
