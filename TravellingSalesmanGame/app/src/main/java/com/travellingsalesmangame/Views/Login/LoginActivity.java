@@ -69,8 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 //Giriş butonuna basınca kontrol ediyor.
                 if(!dataSnapshot.exists() || !dataSnapshot.child("password").exists() || !dataSnapshot.child("password").getValue().equals(saltedHashedPassword) || salt.equals("")) {                                            //login_onclick ile editboxtan gelen verinin veri tabaninda olmama durumu
                     login_error.setText(R.string.error_wrong_password);
-                    //et_email.setVisibility(View.VISIBLE);
-                    //err_password.setVisibility(View.VISIBLE);
                 }
                 else {
 
@@ -121,25 +119,17 @@ public class LoginActivity extends AppCompatActivity {
         }
         else{
 
-            //err_email.setVisibility(View.INVISIBLE);
-            //err_password.setVisibility(View.INVISIBLE);
-
             if(password == null || password.equals("")) {                   //sifrenin bos olma durumu
 
                 login_error.setText(getString(R.string.error_no_password));
-                //err_password.setVisibility(View.VISIBLE);
                 result = false;
             }
             else if(!UserRules.check_password(password)){                        //sifrenin kurallara uymama durumu (kurala uymuyorsa veri tabanına gitmesine gerek yok)
                 login_error.setText(getString(R.string.error_wrong_password));
-                //err_password.setVisibility(View.VISIBLE);
-                //err_email.setVisibility(View.VISIBLE);
                 result = false;
             }
             if(!UserRules.check_email(email)) {                                 //girilen mail adresin desteklenmemesi olma durumu
                 login_error.setText(R.string.error_invalid_email);
-                //err_email.setVisibility(View.VISIBLE);
-                //err_password.setVisibility(View.VISIBLE);
                 result = false;
             }
         }

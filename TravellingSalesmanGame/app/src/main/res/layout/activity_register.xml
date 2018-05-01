@@ -7,20 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#5fb0c9"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".Views.Login.RegisterActivity"
     android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
-    <TextView
-        android:id="@+id/login_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
-        android:text="Kayıt Ekranı"
-        android:textColor="#fff"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"

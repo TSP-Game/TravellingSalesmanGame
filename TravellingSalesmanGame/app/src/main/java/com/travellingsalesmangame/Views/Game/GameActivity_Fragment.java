@@ -139,7 +139,6 @@ public class GameActivity_Fragment extends Fragment {
 
                         }
                        message.show(this,"Oyun","Skorunuz :  "+totalScore+"  Gerçek Skor :  "+core.getSolution());
-                        //intent = level menu olmalı, display methodunu kodla önce.
                     }
                 }
                 else

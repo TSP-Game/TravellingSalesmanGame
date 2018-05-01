@@ -8,6 +8,17 @@
     tools:context=".Views.Game.GameActivity_Fragment"
     android:id="@+id/gameActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Süre   :"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/layoutDraw"
         android:layout_width="match_parent"

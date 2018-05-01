@@ -114,12 +114,11 @@ public class RegisterActivity extends AppCompatActivity {
     private String createRandomSalt() {
 
         Random rand = new Random();
-        String salt = "";
-
+        StringBuilder salt=new StringBuilder();
         for(int i=0; i<48; i++)
-                salt += Integer.toHexString(rand.nextInt(16));
+             salt.append(Integer.toHexString(rand.nextInt(16)));
 
-        return salt;
+        return salt.toString();
     }
 
 

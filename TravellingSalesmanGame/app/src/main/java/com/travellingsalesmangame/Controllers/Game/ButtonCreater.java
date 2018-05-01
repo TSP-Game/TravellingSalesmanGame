@@ -65,7 +65,7 @@ public class ButtonCreater {
 
         gameButonList=new ArrayList<>();
         ButtonSetter buttonSetter=new ButtonSetter(1,settings);
-        for(int i=0;i<size;i++) {
+        for(int i=0;i<size+10;i++) {
 
             ImageButton button = new ImageButton(context);
             buttonSetter.setView(1,button);
@@ -73,7 +73,7 @@ public class ButtonCreater {
             button.setImageResource(R.mipmap.home0);
             button.setBackground(null);
             button.setPadding(0,0,0,0);
-            //button.setElevation(24);
+            button.setElevation(24);
             button.setOnClickListener(onClickListener);
             layout.addView(button);
             gameButonList.add(button);

@@ -70,7 +70,7 @@ public class CostsSetter {
             textView.setTextColor(Color.BLACK);
             textView.setPadding(30,18,0,0);
             textView.setBackground(null);
-            //textView.setElevation(24);
+            textView.setElevation(24);
             textView.setX((buttons.get(cost[0]).getX() + buttons.get(cost[1]).getX()) / 2);
             textView.setY((buttons.get(cost[0]).getY() + buttons.get(cost[1]).getY()) / 2);
 
