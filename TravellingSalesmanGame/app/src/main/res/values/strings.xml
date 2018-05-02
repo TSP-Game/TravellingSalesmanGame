@@ -20,7 +20,7 @@
     <!-- about errors -->
     <string name="error_no_password">Lütfen parolanızı giriniz!</string>
     <string name="error_invalid_email">Email geçersiz veya desteklenmiyor!</string>
-    <string name="error_invalid_password">Şifre 6 ile 20 karakter arasında olmalıdır!</string>
+    <string name="error_invalid_password">Şifre 8 ile 20 karakter arasında olmalıdır!</string>
     <string name="error_invalid_username">Kullanıcı adı 6 ile 20 karakter olmalıdır!</string>
     <string name="error_unregistered_email">Kayıtlı olmayan email. Lütfen kayıt olunuz!</string>
     <string name="error_registered_email">Bu emaile ait bir hesap zaten mevcut!</string>
