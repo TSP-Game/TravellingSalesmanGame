@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
@@ -82,9 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                         ){                                                                          //geçerli kullanıcı olup olmama durumu
 
                     user = new User();
-                    user.setEmail(dataSnapshot.child("email").getValue(String.class));
-                    user.setUserName(dataSnapshot.child("userName").getValue(String.class));
-                    user.setPassword(dataSnapshot.child("password").getValue(String.class));
+
+                    user = dataSnapshot.getValue(User.class);
 
                     if(user.getPassword().equals(saltedHashedPassword)) {//şifrelerin eşleşmeme durumu
 

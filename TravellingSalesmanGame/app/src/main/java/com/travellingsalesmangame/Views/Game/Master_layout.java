@@ -16,6 +16,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,10 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Views.Login.LoginActivity;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 import com.travellingsalesmangame.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Master_layout extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,10 +44,15 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
     private DrawerLayout master_layout;
     private NavigationView nav_view;
     private ActionBarDrawerToggle toggle;
+    private TextView nameTxt;
+    private TextView emailTxt;
 
     private User user;
+    private GameInfo gameInfo;
     private ValueEventListener listenerCookie ;                          //Tablo adı
+    private ValueEventListener listenerGameInfo ;
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
 
     private SharedPreferences prefs;
 
@@ -73,6 +84,27 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
                         dataSnapshot.child("password").getValue(String.class) == null ||
                         !dataSnapshot.child("password").getValue(String.class).equals(user.getPassword()))
                     login_in();
+                else{
+
+                    games.child(Encode.encode(user.getEmail())).addValueEventListener(listenerGameInfo);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        listenerGameInfo=new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(!dataSnapshot.exists())
+                    login_in();
+                else{
+                    gameInfo = dataSnapshot.getValue(GameInfo.class);
+                }
             }
 
             @Override
@@ -102,6 +134,17 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
         initListener();
         readIfAlreadyLogin();
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View view = View.inflate(this,R.layout.nav_header_item,nav_view);
+        nameTxt = view.findViewById(R.id.nameTxt);
+        emailTxt = view.findViewById(R.id.emailTxt);
+        nameTxt.setText(user.getUserName());
+        emailTxt.setText(user.getEmail());
     }
 
     @Override

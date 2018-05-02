@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
@@ -32,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView reg_error;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
+
     private ValueEventListener listenerUser;
     private User new_user;
     private String passwordConfirm;
@@ -59,9 +62,11 @@ public class RegisterActivity extends AppCompatActivity {
                     //Asagida once parolanin hashini aliyoruz, sonra tuzu ile hashlenmis parolaya ekliyoruz, sonra birlestirilmis bu verinin bir daha hash'ini aliyoruz
                     //Bu bizim veri tabaninda gorunecek parolamiz oluyor
                     new_user.setPassword(myHash.hash(myHash.hash(new_user.getPassword())+salt));
+                    GameInfo gameInfo = new GameInfo();
 
                     users.child(Encode.encode(new_user.getEmail())).setValue(new_user);
-                    salts.child(Encode.encode(new_user.getEmail())).setValue(salt);                                             //tuzu da ekliyoruz veri tabanimiza (kendi tablosuna)
+                    salts.child(Encode.encode(new_user.getEmail())).setValue(salt);//tuzu da ekliyoruz veri tabanimiza (kendi tablosuna)
+                    games.child(Encode.encode(new_user.getEmail())).setValue(gameInfo);
 
                     users.child(Encode.encode(new_user.getEmail())).removeEventListener(listenerUser);                      //isimiz bittiten sonra dinleyiciyi silip giris ekranina geri donuyoruz
 
