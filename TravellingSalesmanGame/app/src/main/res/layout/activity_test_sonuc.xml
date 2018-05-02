@@ -5,19 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Test_sonuc"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:gravity="center">
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Skor : "
-        android:textSize="20dp"/>
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
 
-    <TextView
-        android:id="@+id/txtView"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skor : "
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/txtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Çözülen Soru Sayısı : "
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/txtCozulen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+
 </LinearLayout>

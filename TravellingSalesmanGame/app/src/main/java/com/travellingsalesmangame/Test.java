@@ -1,21 +1,24 @@
 package com.travellingsalesmangame;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.travellingsalesmangame.Views.Game.StateMenu_Fragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,9 +35,9 @@ public class Test extends Fragment implements View.OnClickListener{
     private List<String[]> list;
     private TextView txtSkor, txtSoru, txtSure;
     private ProgressBar progressBar;
-    private Button A, B, C, D;
-    private int progressStatus = 60, txtPuanInt = 0, sayac = 0,Soru=0;
-    private boolean suspended = false;
+    private Button A, B, C, D,sonrakiSoru;
+    private int progressStatus = 60, txtPuanInt = 0, sayac = 0,Soru=0,SoruSayisi=0,durdurma=0;
+    private boolean suspended = false,cozme=false;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -49,32 +52,22 @@ public class Test extends Fragment implements View.OnClickListener{
         B = view.findViewById(R.id.B);
         C = view.findViewById(R.id.C);
         D = view.findViewById(R.id.D);
-        //sonrakiSoru = view.findViewById(R.id.SonrakiSoru);
+        sonrakiSoru = view.findViewById(R.id.SonrakiSoru);
     }
 
     private void oyunuBaslat() {
-        btnVarsayılan();
-
-        if (Soru>9) {
-
-            Test_sonuc sonuc=new Test_sonuc();
-
-            Bundle bundle=new Bundle();
-            bundle.putInt("test_sonucu",txtPuanInt);
-
-            sonuc.setArguments(bundle);
-
-            fragmentManager=getFragmentManager();
-            transaction=fragmentManager.beginTransaction();
-            transaction.replace(R.id.context_main,sonuc);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        if(Soru==10){
+            durdurma=1;
         }
-        txtSoru.setText(list.get(Soru)[0]);
-        A.setText("A ) " + list.get(Soru)[1]);
-        B.setText("B ) " + list.get(Soru)[3]);
-        C.setText("C ) " + list.get(Soru)[5]);
-        D.setText("D ) " + list.get(Soru)[7]);
+        else {
+            btnVarsayılan();
+            txtSoru.setText(list.get(Soru)[0]);
+            A.setText("A ) " + list.get(Soru)[1]);
+            B.setText("B ) " + list.get(Soru)[3]);
+            C.setText("C ) " + list.get(Soru)[5]);
+            D.setText("D ) " + list.get(Soru)[7]);
+
+        }
     }
 
     private void btnVarsayılan(){
@@ -138,83 +131,120 @@ public class Test extends Fragment implements View.OnClickListener{
 
 
     public void A_btn_click(View view) {
-        if (list.get(sayac)[2].equals("1")) {
-            A.setBackgroundColor(Color.GREEN);
+        if (list.get(Soru)[2].equals("1")) {
+            A.setBackgroundResource(R.drawable.dogru);
             txtPuanInt += 10;
             txtSkor.setText("Skor  : " + txtPuanInt);
+            SoruSayisi+=1;
             suspended = true;
             click_false();
-            sayac++;
+            cozme=true;
+
         }
         else {
-            A.setBackgroundColor(Color.RED);
+            A.setBackgroundResource(R.drawable.yanlis);
             txtPuanInt += 0;
             txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
             click_false();
-            sayac++;
+            SoruSayisi+=1;
+            cozme=true;
         }
 
     }
     public void B_btn_click(View view) {
-        if (list.get(sayac)[4].equals("1")) {
-            B.setBackgroundColor(Color.GREEN);
-            txtPuanInt += 10;
-            txtSkor.setText("Skor  : " + txtPuanInt);
-            sayac++;
+        if (list.get(Soru)[4].equals("1")) {
+            B.setBackgroundResource(R.drawable.dogru);
+            txtPuanInt += 10;txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
+            SoruSayisi+=1;
             click_false();
+            cozme=true;
+
         } else {
-            B.setBackgroundColor(Color.RED);
+            B.setBackgroundResource(R.drawable.yanlis);
             txtPuanInt += 0;
             txtSkor.setText("Skor  : " + txtPuanInt);
-            sayac++;
             suspended=true;
+            SoruSayisi+=1;
             click_false();
+            cozme=true;
         }
     }
     public void C_btn_click(View view) {
-        if ( list.get(sayac)[6].equals("1")) {
-            C.setBackgroundColor(Color.GREEN);
+        if ( list.get(Soru)[6].equals("1")) {
+            C.setBackgroundResource(R.drawable.dogru);
             txtPuanInt += 10;
             txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
             click_false();
-            sayac++;
+            SoruSayisi+=1;
+            cozme=true;
+
         }
         else {
-            C.setBackgroundColor(Color.RED);
+            C.setBackgroundResource(R.drawable.yanlis);
             txtPuanInt += 0;
             txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
             click_false();
-            sayac++;
+            SoruSayisi+=1;
+            cozme=true;
         }
     }
     public void D_btn_click(View view) {
-        if ( list.get(sayac)[8].equals("1")) {
-            D.setBackgroundColor(Color.GREEN);
+        if ( list.get(Soru)[8].equals("1")) {
+            D.setBackgroundResource(R.drawable.dogru);
             txtPuanInt += 10;
             txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
             click_false();
-            sayac++;
+            SoruSayisi+=1;
+            cozme=true;
 
         } else {
-            D.setBackgroundColor(Color.RED);
+            D.setBackgroundResource(R.drawable.yanlis);
             txtPuanInt += 0;
             txtSkor.setText("Skor  : " + txtPuanInt);
             suspended=true;
+            SoruSayisi+=1;
             click_false();
-            sayac++;
+            cozme=true;
         }
     }
 
     public void sonraki_click(View view) {
+        if(cozme==true) {
+            suspended = false;
+            Soru++;
+            oyunuBaslat();
+            cozme=false;
+        }
+        else{
+            dialog();
+        }
 
-        suspended=false;
-        oyunuBaslat();
-        Soru++;
+    }
+
+    public void dialog() {
+        new AlertDialog.Builder(view.getContext()).
+                setTitle("Uyarı").
+                setMessage("Soru Çözmediniz! Bir sonraki soruya geçmek istediğinize emin misiniz?").
+                setNegativeButton("Evet", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                suspended = false;
+                Soru++;
+                oyunuBaslat();
+                cozme=false;
+            }
+            })
+                .setPositiveButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        oyunuBaslat();
+                    }
+                }).create().show();
     }
 
     public void click_false(){
@@ -248,6 +278,7 @@ public class Test extends Fragment implements View.OnClickListener{
         // Start long running operation in a background thread
         new Thread(new Runnable() {
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             public void run() {
                 while (progressStatus >0) {
                     while (suspended) { //Eğer kronometre durdurulduysa bekle
@@ -268,13 +299,14 @@ public class Test extends Fragment implements View.OnClickListener{
                         }
                     });
 
-                    if (progressStatus == 0) {
+                    if (progressStatus == 0 || durdurma==1) {
 
+                        progressStatus=0;
                         Test_sonuc sonuc=new Test_sonuc();
 
                         Bundle bundle=new Bundle();
                         bundle.putInt("test_sonucu",txtPuanInt);
-
+                        bundle.putInt("soru_sayisi",SoruSayisi);
                         sonuc.setArguments(bundle);
 
                         fragmentManager=getFragmentManager();
@@ -283,6 +315,7 @@ public class Test extends Fragment implements View.OnClickListener{
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
+
 
                     try {
                         // Sleep for 500 milliseconds.
