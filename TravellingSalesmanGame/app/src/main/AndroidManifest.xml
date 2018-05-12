@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.travellingsalesmangame">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.Game.Master_layout"
+        <activity
+            android:name=".Views.Game.Master_Main"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,16 +25,22 @@
         <activity
             android:name=".Views.Login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Views.Login.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".Views.Game.PopActivity" />
-        <activity android:name=".Views.Game.activity_pop_menu" />
         <activity android:name=".Test" />
-        <activity android:name=".Test_sonuc"></activity>
+        <activity android:name=".Test_sonuc" />
+        <activity android:name=".Views.Game.Game_result" />
+        <activity android:name=".Master_Acilis" />
+        <activity android:name=".Kategori_Secimi" />
+        <activity android:name=".Views.Game.Istatistik" />
+        <activity android:name=".Profil" />
+        <activity android:name=".Views.Game.Hikaye" />
+        <activity android:name=".Oyun_Turu" />
+        <activity android:name=".Bilgisayar_Karsi"></activity>
     </application>
 
 </manifest>

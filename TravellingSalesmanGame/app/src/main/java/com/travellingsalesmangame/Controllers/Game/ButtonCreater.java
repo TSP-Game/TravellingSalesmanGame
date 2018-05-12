@@ -65,7 +65,7 @@ public class ButtonCreater {
 
         gameButonList=new ArrayList<>();
         ButtonSetter buttonSetter=new ButtonSetter(1,settings);
-        for(int i=0;i<size+10;i++) {
+        for(int i=0;i<size+5;i++) {
 
             ImageButton button = new ImageButton(context);
             buttonSetter.setView(1,button);
@@ -91,3 +91,4 @@ public class ButtonCreater {
     }
 
 }
+

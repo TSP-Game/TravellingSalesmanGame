@@ -1,5 +1,6 @@
 package com.travellingsalesmangame.Controllers.Game;
 
+
 import android.graphics.Point;
 import android.view.View;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
@@ -22,21 +23,21 @@ public class ButtonSetter {
         if (screenView.getDensity() > 4.0) {
             //return "xxxhdpi";
         }
-        else if (screenView.getDensity() > 3.0 && screenView.getDensity()<=4.0) {
+        else if (screenView.getDensity() >3.0 && screenView.getDensity()<=4.0) {  //Tmmdır
             //return "xxhdpi";
-            constX=30;constY=85; width=248; height=210; x=constX; y=constY;
+            constX=30;constY=200; width=248; height=200; x=constX; y=constY;
         }
-        else if (screenView.getDensity() > 2.0 && screenView.getDensity()<=3.0) {
+        else if (screenView.getDensity() > 2.0 && screenView.getDensity()<=3.0) {  //Tmmdır
             //"xhdpi";
-            constX=30;constY=70; width=175; height=150; x=constX; y=constY;
+            constX=30;constY=155; width=175; height=145; x=constX; y=constY;
         }
-        else if (screenView.getDensity() > 1.5  && screenView.getDensity()<=2.0) {
+        else if (screenView.getDensity() > 1.5  && screenView.getDensity()<=2.0) { //Tmmdir
             //return "hdpi";
-            constX=30;constY=42; width=115; height=105; x=constX; y=constY;
+            constX=30;constY=117; width=115; height=100; x=constX; y=constY;
         }
-        else if (screenView.getDensity() >= 1.0 && screenView.getDensity()<=1.5) {
+        else if (screenView.getDensity() >= 1.0 && screenView.getDensity()<=1.5) {  //Tmmdır
             // return "mdpi";
-            constX=30;constY=35; width=58; height=60; x=constX; y=constY;
+            constX=30;constY=80; width=58; height=55; x=constX; y=constY;
         }
         //return "ldpi";
     }
@@ -97,10 +98,4 @@ public class ButtonSetter {
         if(i==0) levelStateSetView(button);
         if(i==1) gameButtonView(button);
     }
-
-
-
-
-
-
 }

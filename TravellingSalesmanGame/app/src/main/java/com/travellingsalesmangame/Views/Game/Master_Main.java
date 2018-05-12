@@ -6,6 +6,10 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,26 +21,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
+import com.travellingsalesmangame.Master_Acilis;
 import com.travellingsalesmangame.Models.Game.GameInfo;
+import com.travellingsalesmangame.Profil;
 import com.travellingsalesmangame.Views.Login.LoginActivity;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
-import com.travellingsalesmangame.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class Master_layout extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
+public class Master_Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager manager;
     private FragmentTransaction transaction;
@@ -47,6 +59,8 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
     private TextView nameTxt;
     private TextView emailTxt;
 
+    private ImageView profileImageView;
+
     private User user;
     private GameInfo gameInfo;
     private ValueEventListener listenerCookie ;                          //Tablo adı
@@ -56,6 +70,7 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
     private SharedPreferences prefs;
 
+    private FirebaseStorage fStorage;
 
     private void init(){
 
@@ -118,7 +133,7 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
         Gson gson=new Gson();
         String json=prefs.getString("user","");
         if(json.equals(""))
-           login_in();
+            login_in();
 
         else
         {
@@ -129,22 +144,63 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master_layout);
+        setContentView(R.layout.activity_master_main);
         initListener();
         readIfAlreadyLogin();
         init();
+
+        Master_Acilis fragmentA= new Master_Acilis();
+        transaction=manager.beginTransaction();
+        transaction.replace(R.id.context_main,fragmentA);
+        transaction.commit();
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        Gson gson=new Gson();
+        String json=prefs.getString("user","");
+        user=new User(gson.fromJson(json,User.class));
+
         View view = View.inflate(this,R.layout.nav_header_item,nav_view);
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
         nameTxt.setText(user.getUserName());
         emailTxt.setText(user.getEmail());
+
+        profileImageView=view.findViewById(R.id.profileImageView);
+        fStorage = FirebaseStorage.getInstance();
+        StorageReference storageRef = fStorage.getReference().child("images").child(user.getEmail());
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+            @Override
+            public void onSuccess(Uri uri) {
+
+                try {
+                    URL url = new URL(uri.toString());
+                    Bitmap bitImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    profileImageView.setImageBitmap(bitImage);
+                }
+                catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     @Override
@@ -155,38 +211,31 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id=item.getItemId();
-        if(id==R.id.oyun){
-            LevelMenu_Fragment fragmentA= new LevelMenu_Fragment();
+        if (id== R.id.anasayfa){
+            Master_Acilis fragmentA= new Master_Acilis();
             transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,fragmentA,"Fragment A");
+            transaction.replace(R.id.context_main,fragmentA);
             transaction.commit();
         }
-        if(id==R.id.cikis)
+
+        if(id== R.id.cikis)
             login_out();
 
-        if(id==R.id.konuAnlatimi){
-            activity_pop_menu popActivity=new activity_pop_menu();
+        if(id== R.id.istatistik){
+            Istatistik istatistik=new Istatistik();
             transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,popActivity,"Konu Anlatımı");
+            transaction.replace(R.id.context_main,istatistik);
             transaction.commit();
         }
 
-        if (id==R.id.test){
-            Test test=new Test();
+        if (id== R.id.profil){
+            Profil profil=new Profil();
             transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,test,"Test");
+            transaction.replace(R.id.context_main,profil);
             transaction.commit();
-        }
-
-        if (id==R.id.profil){
-            /*LoginActivity test=new LoginActivity();
-            transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,test,"fdsf");
-            transaction.commit();*/
         }
 
         master_layout.closeDrawer(GravityCompat.START);
@@ -200,7 +249,7 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
         prefEditor.putString("user","");
         prefEditor.apply();
 
-        Intent intent=new Intent(Master_layout.this, LoginActivity.class);
+        Intent intent=new Intent(Master_Main.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
@@ -225,9 +274,9 @@ public class Master_layout extends AppCompatActivity implements NavigationView.O
 
     }
 
-    //@Override
-   /* public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         //super.onBackPressed();
-        master_layout.closeDrawer(GravityCompat.START);
-    }*/
+        finish();
+    }
 }

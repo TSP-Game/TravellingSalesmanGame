@@ -5,9 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +42,7 @@ public class Test extends Fragment implements View.OnClickListener{
 
     private void init() {
 
+        getActivity().setTitle("Test");
         txtSure = view.findViewById(R.id.txtSure);
         txtSkor = view.findViewById(R.id.txtviewSkor);
         txtSoru = view.findViewById(R.id.txtSoru);
@@ -112,23 +111,30 @@ public class Test extends Fragment implements View.OnClickListener{
         view.findViewById(R.id.C).setOnClickListener(this);
         view.findViewById(R.id.D).setOnClickListener(this);
         view.findViewById(R.id.SonrakiSoru).setOnClickListener(this);
-        return view;
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         init();
         readFile();
-        super.onActivityCreated(savedInstanceState);
+
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        timeStart();
-        oyunuBaslat();
+        AlertDialog.Builder alertMessage = new AlertDialog.Builder(getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        alertMessage.setTitle("Bilgi").
+                setMessage("Toplam 10 soru ve 60 saniye süreniz bulunmaktadır. İyi eğlenceler").
+                setCancelable(false).
+                setIcon(R.mipmap.information); // icon atanacak
+        alertMessage.setPositiveButton("Teşekkürler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                timeStart();
+                oyunuBaslat();
+            }
+        });
+        alertMessage.show();
     }
-
 
     public void A_btn_click(View view) {
         if (list.get(Soru)[2].equals("1")) {
@@ -315,16 +321,20 @@ public class Test extends Fragment implements View.OnClickListener{
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
-
-
                     try {
                         // Sleep for 500 milliseconds.
-                        Thread.sleep(600);
+                        Thread.sleep(800);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        progressStatus = -1;
     }
 }

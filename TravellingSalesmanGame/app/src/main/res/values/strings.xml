@@ -2,7 +2,7 @@
     <string name="app_name">TravellingSalesmanGame</string>
     <string name="app_title_name">Oyun</string>
 
-    //about Login UI
+    <!-- UI About-->
     <string name="email">E-mail Giriniz</string>
     <string name="password">Şifrenizi Giriniz</string>
     <string name="again_password">Şifrenizi Tekrar Giriniz</string>
@@ -38,4 +38,6 @@
     <string name="login_hayir">Hayır</string>
     <string name="reg_kaydet">Kaydet</string>
     <string name="reg_iptal">İptal</string>
+    <string name="aciklama">\tEğlenerek öğrenebileceğiniz \"Gezgin Satıcı Problemi\" Oyununa Hoşgeldiniz.
+                            \n\n\tHem konuyu öğrenebilecek hemde oyun oynayıp puan kazanabileceksiniz.</string>
 </resources>

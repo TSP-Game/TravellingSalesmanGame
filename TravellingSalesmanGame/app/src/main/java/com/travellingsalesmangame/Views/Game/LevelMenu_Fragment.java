@@ -31,6 +31,7 @@ public class LevelMenu_Fragment extends Fragment {
 
     private void init(){
 
+        getActivity().setTitle("Oyun");
         screenSettings=new ScreenSettings(getActivity());
         levelMenuActivity=view.findViewById(R.id.levelMenuActivity);
         prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());

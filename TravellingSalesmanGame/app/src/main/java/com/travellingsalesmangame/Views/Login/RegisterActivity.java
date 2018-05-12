@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -95,36 +93,14 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         init();
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.register_actionbar,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        int id = item.getItemId();
-
-        if(id==R.id.profile){
-
-            return true;
-        }
-        if(id==R.id.setting){
-
-            return true;
-        }
-        return true;
-    }
-*/
     //rastgele tuz üretimi; 16'lik sistemde 48 karakter (farkli da olabilirdi, hash ciktim ile ayni olsun istedim)
     private String createRandomSalt() {
 
         Random rand = new Random();
         StringBuilder salt=new StringBuilder();
         for(int i=0; i<48; i++)
-             salt.append(Integer.toHexString(rand.nextInt(16)));
+            salt.append(Integer.toHexString(rand.nextInt(16)));
 
         return salt.toString();
     }

@@ -1,11 +1,11 @@
 package com.travellingsalesmangame.Views.Game;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -13,11 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.travellingsalesmangame.Kategori_Secimi;
 import com.travellingsalesmangame.R;
+import com.travellingsalesmangame.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -97,18 +98,33 @@ public class PopActivity extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         int id=v.getId();
-        if(id==R.id.btn_ileri) {
+        if(id== R.id.btn_ileri) {
             if(sayac==5){
-                activity_pop_menu pop_menu=new activity_pop_menu();
-                manager=getFragmentManager();
-                transaction=manager.beginTransaction();
-                transaction.replace(R.id.context_main,pop_menu);
-                transaction.commit();
 
-                SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-                SharedPreferences.Editor edit=pref.edit();
-                edit.putInt("konuanlatimi",1);
-                edit.commit();
+                AlertDialog.Builder alertMessage = new AlertDialog.Builder(getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                alertMessage.setTitle("Bilgi").
+                             setMessage("Eğitiminiz tamamlanmıştır. Test kısmına geçerek puan kazanmak ister misiniz?").
+                             setCancelable(false).
+                             setIcon(R.mipmap.information); // icon atanacak
+                alertMessage.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        manager=getFragmentManager();
+                        transaction=manager.beginTransaction();
+                        transaction.replace(R.id.context_main,new Test());
+                        transaction.commit();
+                    }
+                });
+                alertMessage.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        manager=getFragmentManager();
+                        transaction=manager.beginTransaction();
+                        transaction.replace(R.id.context_main,new Kategori_Secimi());
+                        transaction.commit();
+                    }
+                });
+                alertMessage.show();
             }
             else{
                 sayac++;
@@ -116,7 +132,7 @@ public class PopActivity extends Fragment implements View.OnClickListener{
             }
         }
 
-        if(id==R.id.btn_geri){
+        if(id== R.id.btn_geri){
             if(sayac==0){
                 textView.setText(list.get(sayac)[0].toString());}
             else{
