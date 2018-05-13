@@ -1,0 +1,14 @@
+﻿1) Gezgi Satıcı Problemi her şehri kaç kez ziyaret etmeyi amaçlar?;0;0;1;1;2;0;3;0
+2) Aşağıdakilerden hangisi Hamilton turunun tanımıdır?;Tüm ayrıtları birbirinden ayrı olan ayrıt dizisidir.;0;Bir çizgenin tüm ayrıtlarını bir kere içeren kapalı bir yoldur.;0;Bir çizge üzerinde her ayrıttan sadece bir kez geçen ve başladığı tepeye geri dönen turdur.;0;Bir çizge üzerindeki her tepeden sadece bir kez geçen ve başladığı tepede biten turdur.;1
+3) Bugüne kadar çözülen en büyük gezgin satıcı problemi hangi ülke için çözülmüştür?;Türkiye;0;Almanya;0;Fransa;0;İsveç;1
+4) Problemde her bir tepe GSP için neyi temsil etmektedir?;Şehirler;1;Yön;0;Mesafe;0;Renk;0
+5) Problemde her bir bir ayrıt GSP için neyi temsil etmektedir?;Yön;0;Boyut;0;Renk;0;Maliyet;1
+6) GSP hangi problem sınıfına aittir?;P;0;NP;0;NP-Zor;1;NP-Tam;0
+7) 4 şehir içeren bir tam graf GSP kaç ayrıt barındırır?;4;0;5;0;6;1;7;0
+8) 4 şehir içeren bir GSP için bulunması gereken toplam tur sayısı kaçtır?;12;0;3;1;6;0;18;0
+9) Aşağıdakilerden hangisi GSP’nin çeşitlerinden değildir?;Simetrik GSP;0;Asimetrik GSP;0;Çinli Postacı Problemi;1;Açık GSP;0
+10) Aşağıdakilerden hangisi GSP’nin sezgisel çözüm yöntemlerinden değldir?;En yakın komşu algoritması;0;Açgözlü tekniği;0;En Ucuz Ekleme Sezgiseli;0;Dal ve Sınır Yöntemi;1;
+
+
+
+

@@ -14,7 +14,6 @@ public class ScreenSettings {
     private float density;
     private Point point;
 
-
     public Point getPoint() {
         return point;
     }

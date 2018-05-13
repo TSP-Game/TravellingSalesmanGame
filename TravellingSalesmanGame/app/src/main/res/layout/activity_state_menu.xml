@@ -5,5 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.StateMenuActivity"
-    android:id="@+id/stateMenuActivity"/>
+    tools:context=".Views.Game.StateMenu_Fragment"
+    android:id="@+id/stateMenuActivity"
+    android:paddingTop="30dp"
+    android:alpha=".9"
+    android:background="@drawable/level_state"/>
