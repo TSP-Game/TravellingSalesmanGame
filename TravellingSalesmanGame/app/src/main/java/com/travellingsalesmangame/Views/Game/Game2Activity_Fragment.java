@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
 import com.travellingsalesmangame.Controllers.Game.CostsSetter;
 import com.travellingsalesmangame.Controllers.Game.Stage;
+import com.travellingsalesmangame.Models.Game.ComPlay;
 import com.travellingsalesmangame.Models.Game.Core;
 import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.Result;
@@ -97,6 +99,15 @@ public class Game2Activity_Fragment extends Fragment {
         drawList = CostsSetter.getDrawList(getActivity(), buttons, core.getCosts());
     }
 
+    private void computerPlay(){
+
+        ComPlay comPlay = new ComPlay(core);
+        comPlay.learn(10000);
+
+        for (Integer i: comPlay.getPath())
+            action(buttons.get(core.getCities()[i]));
+    }
+
     private void action(ImageButton button) {
 
         if(selectedButtons.contains(button))
@@ -140,7 +151,6 @@ public class Game2Activity_Fragment extends Fragment {
                     message.show(gameActivity,"Uyarı","Yol Yoktur");
             }
         }
-
     }
 
     private void levelStateBelirle(){
@@ -190,6 +200,7 @@ public class Game2Activity_Fragment extends Fragment {
                                 result.setSureTxt(txtTimeSpan.getText().toString());
                                 result.setLevelSaved(levelSaved);
                                 result.setLevelClicked(levelClicked);
+                                result.setStateClicked(stateClicked);
                                 result.setLevel_state_durum(level_state_belirle);
 
                                 if (core.getSolution()==totalScore)

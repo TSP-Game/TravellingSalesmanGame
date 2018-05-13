@@ -35,7 +35,7 @@ public class StateMenu_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                GameActivity_Fragment game=new GameActivity_Fragment();
+                Game2Activity_Fragment game=new Game2Activity_Fragment();
 
                 Bundle bundle=new Bundle();
                 bundle.putInt("levelSaved",levelSaved);

@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class Result implements Serializable {
 
-
     private boolean oyun_durumu; //Kazandınız kaybettiniz (true - false)
     private int puan;            // Kullanıcının kazandığı puan
     private long sure;           //Kullanıcı ne kadar sureden çözdü? (milisaniye)
     private String sureTxt;      //Kullanıcı ne kadar sureden çözdü? (Text formatında) (0 : 0: 0)
     private int levelSaved;      //Kayıtlı level
-    private int levelClicked;    //kayıtlı state
+    private int levelClicked;    //Tıklanan level
+    private int stateClicked;    //Tıklanan state
     private boolean level_state_durum;  //Level mi State mi gitsin.
 
     public boolean isLevel_state_durum() {
@@ -35,6 +35,14 @@ public class Result implements Serializable {
 
     public void setLevelClicked(int levelClicked) {
         this.levelClicked = levelClicked;
+    }
+
+    public int getStateClicked() {
+        return stateClicked;
+    }
+
+    public void setStateClicked(int stateClicked) {
+        this.stateClicked = stateClicked;
     }
 
     public int getPuan() {

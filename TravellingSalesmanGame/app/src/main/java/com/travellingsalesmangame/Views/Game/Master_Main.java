@@ -156,8 +156,6 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
         transaction=manager.beginTransaction();
         transaction.replace(R.id.context_main,fragmentA);
         transaction.commit();
-
-
     }
 
     @Override

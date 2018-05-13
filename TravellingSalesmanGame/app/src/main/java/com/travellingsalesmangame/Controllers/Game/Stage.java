@@ -4,9 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Models.Game.Examples;
+import com.travellingsalesmangame.Models.Login.User;
 
 public class Stage {
+
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
+
     private static int level,state;
 
     private SharedPreferences prefs;
@@ -32,6 +40,7 @@ public class Stage {
             state++;
             prefsEditor.putInt("state",state);
             prefsEditor.apply();
+            writeDatabase();
         }
     }
 
@@ -44,9 +53,20 @@ public class Stage {
             prefsEditor.putInt("state",state);
             prefsEditor.putInt("level",level);
             prefsEditor.apply();
+            writeDatabase();
         }
         if(level == Examples.getCores().length) //bütün oyunun bitme durumu.
             isFinished = true;
+    }
+
+    private void writeDatabase(){
+
+        Gson gson=new Gson();
+        String json=prefs.getString("user","");
+        User user = new User(gson.fromJson(json,User.class));
+
+        games.child(Encode.encode(user.getEmail())).child("level").setValue(level);
+        games.child(Encode.encode(user.getEmail())).child("state").setValue(state);
     }
 
     public boolean isFinished() {   //***get metodu yerine tebrikler yazan aktivite çağırılabilinir.****

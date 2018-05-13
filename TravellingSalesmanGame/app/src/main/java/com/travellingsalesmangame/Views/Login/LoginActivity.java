@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Controllers.Login.UserRules;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Hash192.MyHash;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
@@ -30,11 +32,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_email,et_password;
     private TextView login_error;
     private String email,password;
-    private ValueEventListener listenerUser,listenerSalt;
+    private ValueEventListener listenerUser,listenerSalt,listenerGameInfo;
     private String salt;
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
     private User user;
+    private GameInfo gameInfo;
 
     private void init(){
 
@@ -43,6 +47,37 @@ public class LoginActivity extends AppCompatActivity {
         login_error = findViewById(R.id.login_error);
 
         final MyHash myHash = new MyHash();
+
+        // Read salt from the database
+        listenerGameInfo = new ValueEventListener() {       //veri tabanı dinleyicisi
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+
+                    gameInfo = new GameInfo();
+                    gameInfo = dataSnapshot.getValue(GameInfo.class);
+
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor prefsEditor = prefs.edit();
+
+                    prefsEditor.putInt("state",gameInfo.getState());
+                    prefsEditor.putInt("level",gameInfo.getLevel());
+                    prefsEditor.apply();
+
+                    Toast.makeText(LoginActivity.this, "Giriş Başarılı", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, Master_Main.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                login_error.setText(R.string.error_database_read);
+            }
+        };
 
         // Read salt from the database
         listenerSalt = new ValueEventListener() {       //veri tabanı dinleyicisi
@@ -98,10 +133,8 @@ public class LoginActivity extends AppCompatActivity {
                         user = new User();
                         saltedHashedPassword = null;
 
-                        Toast.makeText(LoginActivity.this, "Giriş Başarılı", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, Master_Main.class);
-                        startActivity(intent);
-                        finish();
+                        games.child(Encode.encode(email)).addValueEventListener(listenerGameInfo);
+
                     }
                     else{
                         login_error.setText(R.string.error_wrong_password);

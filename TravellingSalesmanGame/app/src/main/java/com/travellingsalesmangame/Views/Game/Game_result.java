@@ -3,7 +3,10 @@ package com.travellingsalesmangame.Views.Game;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +15,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Models.Game.Result;
+import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
-import com.travellingsalesmangame.Views.Game.LevelMenu_Fragment;
-import com.travellingsalesmangame.Views.Game.StateMenu_Fragment;
 
 public class Game_result extends Fragment {
+
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
 
     private View view;
     private ImageView imgView;
@@ -29,6 +38,9 @@ public class Game_result extends Fragment {
 
     private Button btn_Oyun;
     private Result result;
+
+    private ValueEventListener listenerGameInfo;
+
     private void init(){
 
         getActivity().setTitle("Oyun Skorunuz");
@@ -41,6 +53,8 @@ public class Game_result extends Fragment {
 
         Bundle bundle =getArguments();
         result= (Result) bundle.getSerializable("result");
+
+        scoreWrite();
 
         if(result.isOyun_durumu())
             txtYorum.setText("Tebrikler! Görevi başarılı bir şekilde tamamladınız");
@@ -59,6 +73,21 @@ public class Game_result extends Fragment {
         else
             imgView.setImageResource(R.drawable.odul_kayip);
 
+    }
+
+    private void scoreWrite() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        Gson gson=new Gson();
+        String json=prefs.getString("user","");
+
+        User user = new User(gson.fromJson(json,User.class));
+
+        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+                .child(String.valueOf(result.getStateClicked())).child("0").setValue(55);
+
+        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+                .child(String.valueOf(result.getStateClicked())).child("1").setValue(result.getPuan());
     }
 
     @Override
