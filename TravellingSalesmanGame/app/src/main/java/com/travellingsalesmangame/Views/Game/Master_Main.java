@@ -90,6 +90,7 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
     private void initListener(){
 
         prefs= PreferenceManager.getDefaultSharedPreferences(this);
+
         listenerCookie=new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -8,10 +8,19 @@ public class Result implements Serializable {
     private long sure;           //Kullanıcı ne kadar sureden çözdü? (milisaniye)
     private String sureTxt;      //Kullanıcı ne kadar sureden çözdü? (Text formatında) (0 : 0: 0)
     private int levelSaved;      //Kayıtlı level
-    private int levelClicked;    //kayıtlı state
+    private int levelClicked;    //Tıklanan level
     private boolean level_state_durum;  //Level mi State mi gitsin.
     private int pc_skor;         //Bilgisayarın skoru
     private int user_skor;       //Kullanıcının skoru
+    private int stateClicked;    //Tıklanan level
+
+    public int getStateClicked() {
+        return stateClicked;
+    }
+
+    public void setStateClicked(int stateClicked) {
+        this.stateClicked = stateClicked;
+    }
 
     public int getPc_skor() {
         return pc_skor;

@@ -45,7 +45,7 @@ public class GameActivity_Fragment extends Fragment {
     private View view;
     private int levelSaved,levelClicked,stateSaved,stateClicked,click_count=0;
     private double totalScore=0;
-
+    private long milisaniye=0;
     private Calendar startDate,endDate;
     private Handler handler=new Handler();
     private boolean sureDoldu=false,stop=false;
@@ -168,7 +168,6 @@ public class GameActivity_Fragment extends Fragment {
                     handler.post(new Runnable() {
                         public void run() {
 
-                            long milisaniye = 0;
                             if(!sureDoldu){
                                 endDate=Calendar.getInstance();
                                 milisaniye=endDate.getTimeInMillis()-startDate.getTimeInMillis();
@@ -193,7 +192,8 @@ public class GameActivity_Fragment extends Fragment {
                                 result.setLevelClicked(levelClicked);
                                 result.setLevel_state_durum(level_state_belirle);
                                 result.setUser_skor((int) totalScore);
-                                result.setPc_skor(core.getSolution());//Aslında oyunun gerçek skoru
+                                result.setPc_skor(core.getSolution());//Aslında oyunun gerçek skoru  ******
+                                result.setStateClicked(stateClicked);
 
                                 Bundle bundle=new Bundle();
                                 bundle.putSerializable("result", result);

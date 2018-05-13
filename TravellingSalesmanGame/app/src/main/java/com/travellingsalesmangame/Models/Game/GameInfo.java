@@ -33,7 +33,6 @@ public class GameInfo{
     }
 
     public GameInfo() {
-
         init();
     }
 

@@ -3,7 +3,10 @@ package com.travellingsalesmangame.Views.Game;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +15,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Models.Game.Result;
+import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 
 public class Game_Result extends Fragment {
+
+    private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
 
     private View view;
     private ImageView imgView;
@@ -27,6 +37,7 @@ public class Game_Result extends Fragment {
 
     private Button btn_Oyun;
     private Result result;
+
     private void init(){
 
         getActivity().setTitle("Oyun Skorunuz");
@@ -39,6 +50,8 @@ public class Game_Result extends Fragment {
 
         Bundle bundle =getArguments();
         result= (Result) bundle.getSerializable("result");
+
+        writeDatabase();
 
         if(result.getUser_skor()>result.getPc_skor())
             txtYorum.setText("Üzgünüm! Görev tamamlanmadı.");
@@ -89,6 +102,22 @@ public class Game_Result extends Fragment {
                 }
             }
         });
+    }
+
+    private void writeDatabase() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        Gson gson=new Gson();
+        String json=prefs.getString("user","");
+
+        User user = new User(gson.fromJson(json,User.class));
+
+        String time=String.valueOf(result.getSure());
+        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+                .child(String.valueOf(result.getStateClicked())).child("0").setValue(Integer.valueOf(time));
+
+        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+                .child(String.valueOf(result.getStateClicked())).child("1").setValue(result.getPuan());
     }
 
     @Nullable
