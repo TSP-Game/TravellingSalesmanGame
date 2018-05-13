@@ -18,7 +18,7 @@ import com.travellingsalesmangame.Models.Game.ScreenSettings;
 import com.travellingsalesmangame.R;
 
 
-public class StateMenu_Fragment extends Fragment {
+public class StateMenu2_Fragment extends Fragment {
 
     private int levelSaved,levelClicked,stateSaved;
     private RelativeLayout stateMenuActivity;
@@ -35,7 +35,7 @@ public class StateMenu_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                GameActivity_Fragment game=new GameActivity_Fragment();
+                GameActivity2_Fragment game=new GameActivity2_Fragment();
 
                 Bundle bundle=new Bundle();
                 bundle.putInt("levelSaved",levelSaved);
@@ -69,7 +69,7 @@ public class StateMenu_Fragment extends Fragment {
 
         Bundle bundle=getArguments();
 
-        stateMenuActivity=view.findViewById(R.id.stateMenuActivity);
+        stateMenuActivity=view.findViewById(R.id.state2MenuActivity);
         prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
         screenSettings=new ScreenSettings(getActivity());
 
@@ -77,7 +77,6 @@ public class StateMenu_Fragment extends Fragment {
         levelClicked=bundle.getInt("levelClicked",0);   //tiklanan level
 
         stateSaved=prefs.getInt("state",0);
-
         int seviye=levelClicked+1;
         getActivity().setTitle("Level : "+ seviye);
     }
@@ -86,7 +85,7 @@ public class StateMenu_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_state_menu,container,false);
+        view=inflater.inflate(R.layout.activity_state2_menu,container,false);
         return view;
     }
 

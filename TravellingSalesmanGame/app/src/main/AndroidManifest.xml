@@ -33,7 +33,7 @@
         <activity android:name=".Views.Game.PopActivity" />
         <activity android:name=".Test" />
         <activity android:name=".Test_sonuc" />
-        <activity android:name=".Views.Game.Game_result" />
+        <activity android:name=".Views.Game.Game_Result" />
         <activity android:name=".Master_Acilis" />
         <activity android:name=".Kategori_Secimi" />
         <activity android:name=".Views.Game.Istatistik" />

@@ -1,12 +1,15 @@
 package com.travellingsalesmangame.Views.Game;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
 import com.travellingsalesmangame.Controllers.Game.CostsSetter;
 import com.travellingsalesmangame.Controllers.Game.Stage;
+import com.travellingsalesmangame.Models.Game.ComPlay;
 import com.travellingsalesmangame.Models.Game.Core;
 import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.Result;
@@ -29,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class GameActivity_Fragment extends Fragment {
+public class GameActivity2_Fragment extends Fragment {
 
     private RelativeLayout gameActivity,layoutDraw;
     private Core core;
@@ -44,7 +48,6 @@ public class GameActivity_Fragment extends Fragment {
 
     private View view;
     private int levelSaved,levelClicked,stateSaved,stateClicked,click_count=0;
-    private double totalScore=0;
 
     private Calendar startDate,endDate;
     private Handler handler=new Handler();
@@ -52,8 +55,11 @@ public class GameActivity_Fragment extends Fragment {
     private ProgressBar progressBar;
 
     private TextView txtTimeSpan,txtSkorPuan;
-    private boolean level_state_belirle=false;  //Eğer False ise Level Menuye Geri Dön
-                                                //Eğer True ise State Menuye Geri Dön
+    private boolean level_state_belirle=false;  //Eğer False ise Level Menuye Geri Dön   //Eğer True ise State Menuye Geri Dön
+
+    private double totalScore=0,user_skor=0,pc_skor=0;
+    private boolean bilgisayarOyna=false;
+    private long milisaniye=0;
 
     private void init() {
 
@@ -89,13 +95,76 @@ public class GameActivity_Fragment extends Fragment {
             }
         };
         ButtonCreater buttonCreater=new ButtonCreater(getActivity(),
-                                                        gameActivity,
-                                                        onClickListener,
-                                                        screenSettings);
+                gameActivity,
+                onClickListener,
+                screenSettings);
         buttonCreater.create(35,core.getCities()); //35 tane button oluşturacak
         buttons=buttonCreater.getGameButonList();//Tüm oluşan butonları aldım.
 
         drawList = CostsSetter.getDrawList(getActivity(), buttons, core.getCosts());
+    }
+
+    private void computerPlay(){
+
+        final ComPlay comPlay = new ComPlay(core);
+        comPlay.learn(200000);
+        new Thread(new Runnable() {
+
+            public void run() {
+
+                   for (final Integer i: comPlay.getPath()) {
+
+                       try {
+                           Thread.sleep(100);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       handler.post(new Runnable() {
+                           public void run() {
+                               action(buttons.get(core.getCities()[i]));
+                               int maliyet= (int) (core.getSolution()-totalScore);
+                               progressBar.setProgress(maliyet);
+                               txtSkorPuan.setText(String.valueOf("Benzin Miktarı : "+maliyet));
+                           }
+                       });
+                       try {
+                           Thread.sleep(900);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                   }
+                pc_skor=totalScore;
+                Result result=new Result();
+                result.setSure(milisaniye);
+                result.setSureTxt(txtTimeSpan.getText().toString());
+                result.setLevelSaved(levelSaved);
+                result.setLevelClicked(levelClicked);
+                result.setLevel_state_durum(level_state_belirle);
+                result.setPc_skor((int) totalScore);
+                result.setUser_skor((int) user_skor);
+
+                totalScore=core.getSolution(); //gerçek yol
+
+                if (user_skor > pc_skor)
+                    user_skor=(pc_skor/user_skor)*(totalScore/user_skor)*100;
+
+                else
+                    user_skor=totalScore/user_skor*100;
+
+                result.setPuan((int) user_skor);
+
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("result", result);
+
+                Game2_Result gameResult=new Game2_Result();
+                gameResult.setArguments(bundle);
+
+                fragmentManager=getFragmentManager();
+                transaction=fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main,gameResult);
+                transaction.commit();
+
+            }}).start();
     }
 
     private void action(ImageButton button) {
@@ -141,22 +210,21 @@ public class GameActivity_Fragment extends Fragment {
                     message.show(gameActivity,"Uyarı","Yol Yoktur");
             }
         }
-
     }
 
     private void levelStateBelirle(){
 
-            if((levelSaved == levelClicked) && (stateSaved == stateClicked))    //son levelin son sorusu oynandı ise seviye arttır
-                stage.up();
+        if((levelSaved == levelClicked) && (stateSaved == stateClicked) && stop)    //son levelin son sorusu oynandı ise seviye arttır
+            stage.up();
 
-            //oynanan oyun levelin son oyunu ise levelmenuye değilse statemenuye dön
-            if(stateClicked == Examples.getCores()[levelClicked].length-1)
-                   level_state_belirle=false;  //Level Menuye dön
+        //oynanan oyun levelin son oyunu ise levelmenuye değilse statemenuye dön
+        if(stateClicked == Examples.getCores()[levelClicked].length-1)
+            level_state_belirle=false;  //Level Menuye dön
 
-            else
-                level_state_belirle=true; //State Menuye dön
+        else
+            level_state_belirle=true; //State Menuye dön
 
-            sureDoldu=true;
+        sureDoldu=true;
     }
 
     private void timeStart(){
@@ -167,8 +235,11 @@ public class GameActivity_Fragment extends Fragment {
 
                     handler.post(new Runnable() {
                         public void run() {
+                            int maliyet= (int) (core.getSolution()-totalScore);
+                            progressBar.setProgress(maliyet);
+                            txtSkorPuan.setText(String.valueOf("Mesafe : "+maliyet));
 
-                            long milisaniye = 0;
+                            //Süreyi ekrana yazan if durumu
                             if(!sureDoldu){
                                 endDate=Calendar.getInstance();
                                 milisaniye=endDate.getTimeInMillis()-startDate.getTimeInMillis();
@@ -179,32 +250,37 @@ public class GameActivity_Fragment extends Fragment {
                                 sp.append(span.getSeconds());
                                 txtTimeSpan.setText(String.valueOf(sp));
                             }
-                            int maliyet= (int) (core.getSolution()-totalScore);
-                            progressBar.setProgress(maliyet);
-                            txtSkorPuan.setText(String.valueOf("Mesafe : "+maliyet));
 
                             if(sureDoldu){
+                                sureDoldu=false;
+                                bilgisayarOyna=true;
+                            }
+                            if(bilgisayarOyna){
                                 stop=true;
-                                Result result=new Result();
-                                result.setPuan((int) (core.getSolution()/totalScore*100));
-                                result.setSure(milisaniye);
-                                result.setSureTxt(txtTimeSpan.getText().toString());
-                                result.setLevelSaved(levelSaved);
-                                result.setLevelClicked(levelClicked);
-                                result.setLevel_state_durum(level_state_belirle);
-                                result.setUser_skor((int) totalScore);
-                                result.setPc_skor(core.getSolution());//Aslında oyunun gerçek skoru
 
-                                Bundle bundle=new Bundle();
-                                bundle.putSerializable("result", result);
+                                AlertDialog alertMessage = new AlertDialog.Builder(getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).create();
+                                alertMessage.setTitle("Oyun");
+                                alertMessage.setMessage("Oyunu tamamladınız. Şimdi sıra Pc'de.");
+                                alertMessage.setCancelable(false);
+                                alertMessage.setIcon(R.mipmap.information); // icon atanacak
+                                alertMessage.setButton("Tamam", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                Game_Result gameResult=new Game_Result();
-                                gameResult.setArguments(bundle);
+                                        layoutDraw.removeAllViews(); //Yolları temizle
+                                        selectedButtons.clear();   //seçili butonari temizle
+                                        oldButton=null;
+                                        click_count=0;
+                                        user_skor=totalScore;   //Kullanıcının skoru
+                                        totalScore=0;
+                                        progressBar.setMax(core.getSolution());
+                                        for (int i:core.getCities())
+                                            buttons.get(i).setImageResource(R.mipmap.home0);
 
-                                fragmentManager=getFragmentManager();
-                                transaction=fragmentManager.beginTransaction();
-                                transaction.replace(R.id.context_main,gameResult);
-                                transaction.commit();
+                                        computerPlay();
+                                    }
+                                });
+                                alertMessage.show();
                             }
                         }
                     });
@@ -212,14 +288,14 @@ public class GameActivity_Fragment extends Fragment {
                     catch (InterruptedException e) { e.printStackTrace(); }
                 }
             }
-
         }).start();
     }
 
-    @Override   // timeStart();
+    @Override
     public void onResume() {
         super.onResume();
         timeStart();
+        //computerPlay();
     }
 
     @Override @Nullable
@@ -253,7 +329,7 @@ public class GameActivity_Fragment extends Fragment {
                 layoutDraw.removeView(draw.textView);
                 draw.drawView.setColor(getResources().getColor(R.color.deep_pink));
                 draw.drawView.setWidth(10);
-                draw.textView.setTextColor(getResources().getColor(R.color.black));
+                draw.textView.setTextColor(getResources().getColor(R.color.white));
                 draw.textView.setTextSize(20);
                 draw.textView.setTypeface(null, Typeface.BOLD);
                 layoutDraw.addView(draw.drawView);

@@ -17,7 +17,7 @@ import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
 import com.travellingsalesmangame.R;
 
-public class LevelMenu_Fragment extends Fragment {
+public class LevelMenu2_Fragment extends Fragment {
 
     private RelativeLayout levelMenuActivity;
     private SharedPreferences prefs;
@@ -33,7 +33,7 @@ public class LevelMenu_Fragment extends Fragment {
 
         getActivity().setTitle("Level");
         screenSettings=new ScreenSettings(getActivity());
-        levelMenuActivity=view.findViewById(R.id.levelMenuActivity);
+        levelMenuActivity=view.findViewById(R.id.level2MenuActivity);
         prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
         level=prefs.getInt("level",0);
     }
@@ -43,17 +43,17 @@ public class LevelMenu_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                StateMenu_Fragment stateMenuFragment=new StateMenu_Fragment();
+                StateMenu2_Fragment state2=new StateMenu2_Fragment();
 
                 Bundle bundle=new Bundle();
                 bundle.putInt("levelSaved",level);
                 bundle.putInt("levelClicked",v.getId());
 
-                stateMenuFragment.setArguments(bundle);
+                state2.setArguments(bundle);
 
                 fragmentManager=getFragmentManager();
                 transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,stateMenuFragment);
+                transaction.replace(R.id.context_main,state2);
                 transaction.commit();
 
             }
@@ -66,7 +66,7 @@ public class LevelMenu_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-       view=inflater.inflate(R.layout.activity_level_menu,container,false);
+       view=inflater.inflate(R.layout.activity_level2_menu,container,false);
        return view;
     }
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.GameActivity_Fragment"
+    tools:context=".Views.Game.GameActivity2_Fragment"
     android:id="@+id/gameActivity"
     android:background="@drawable/game"
     android:alpha=".9">

@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.Game_Result"
+    tools:context=".Views.Game.Hikaye2"
     android:orientation="vertical"
-    android:background="@color/colorAccent">
+    android:background="@color/pale_violet_red">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,10 +15,9 @@
         android:padding="24dp"
         android:gravity="center">
         <ImageView
-            android:id="@+id/imgView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/odul_kayip"/>
+            android:src="@drawable/star"/>
     </LinearLayout>
 
     <LinearLayout
@@ -34,27 +33,7 @@
             android:textSize="24sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"/>
-
-        <TextView
-            android:paddingTop="25dp"
-            android:id="@+id/txtSure_Sonuc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:text="Süre : 00 : 00 : 00"/>
-
-        <TextView
-            android:paddingTop="10dp"
-            android:id="@+id/txtPuan_Sonuc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:text="Kazanılan Puan : 100"/>
+            android:text="Hikaye kısmı buraya yazılacak (PC)\n"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,10 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:padding="25dp"
-                android:text="Oyuna Dönmek İçin Tıklayınız "/>
+                android:text="Oyuna Başlamak İçin Tıklayınız "/>
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 </LinearLayout>

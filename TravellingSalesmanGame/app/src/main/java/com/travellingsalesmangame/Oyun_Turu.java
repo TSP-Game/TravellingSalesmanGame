@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.travellingsalesmangame.Views.Game.Hikaye;
+import com.travellingsalesmangame.Views.Game.Hikaye2;
+import com.travellingsalesmangame.Views.Game.LevelMenu2_Fragment;
 
 public class Oyun_Turu extends Fragment {
 
@@ -39,10 +41,10 @@ public class Oyun_Turu extends Fragment {
         btn_bilgisayar_karsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bilgisayar_Karsi bilgisayar=new Bilgisayar_Karsi();
+                Hikaye2 hikaye2=new Hikaye2();
                 fragmentManager=getFragmentManager();
                 transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,bilgisayar);
+                transaction.replace(R.id.context_main,hikaye2);
                 transaction.commit();
             }
         });

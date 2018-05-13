@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.Game_Result"
+    tools:context=".Views.Game.Game2_Result"
     android:orientation="vertical"
     android:background="@color/colorAccent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:padding="24dp"
         android:gravity="center">
         <ImageView
@@ -31,17 +31,27 @@
             android:id="@+id/txtYorum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="23sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"/>
+            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"
+            android:paddingBottom="10dp"/>
 
         <TextView
-            android:paddingTop="25dp"
+            android:id="@+id/txtSkorGoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Tebrikler Oyunu \n Başarılı bir şekilde geçtiniz.\n"/>
+
+
+        <TextView
             android:id="@+id/txtSure_Sonuc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23sp"
+            android:textSize="22sp"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="Süre : 00 : 00 : 00"/>
@@ -51,7 +61,7 @@
             android:id="@+id/txtPuan_Sonuc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23sp"
+            android:textSize="22sp"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="Kazanılan Puan : 100"/>

@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.travellingsalesmangame.Models.Game.Result;
 import com.travellingsalesmangame.R;
 
-public class Game_Result extends Fragment {
+public class Game2_Result extends Fragment {
 
     private View view;
     private ImageView imgView;
-    private TextView txtYorum,txtSure_Sonuc,txtPuan_Sonuc;
+    private TextView txtYorum,txtSure_Sonuc,txtPuan_Sonuc,txtSkorGoster;
     private int levelSaved,levelClicked;
 
     private FragmentManager fragmentManager;
@@ -36,18 +36,24 @@ public class Game_Result extends Fragment {
         txtYorum=view.findViewById(R.id.txtYorum);
         txtPuan_Sonuc=view.findViewById(R.id.txtPuan_Sonuc);
         txtSure_Sonuc=view.findViewById(R.id.txtSure_Sonuc);
+        txtSkorGoster=view.findViewById(R.id.txtSkorGoster);
+
 
         Bundle bundle =getArguments();
         result= (Result) bundle.getSerializable("result");
 
         if(result.getUser_skor()>result.getPc_skor())
-            txtYorum.setText("Üzgünüm! Görev tamamlanmadı.");
+            txtYorum.setText("Üzgünüm! Bilgisayarın skorunu geçemediniz.");
+
+        else if(result.getUser_skor()==result.getPc_skor())
+            txtYorum.setText("Beraber! Bilgisayar ile aynı skoru buldunuz.");
 
         else
-            txtYorum.setText("Tebrikler! Görevi başarılı bir şekilde tamamladınız");
+            txtYorum.setText("Tebrikler! Bilgisayarın skorundan daha iyi bir yol buldunuz");
 
         txtSure_Sonuc.setText("Süre :  "+result.getSureTxt());
         txtPuan_Sonuc.setText("Kazanılan Puan : "+String.valueOf(result.getPuan()));
+        txtSkorGoster.setText("Bilgisayarın Skoru : "+result.getPc_skor()+"\n\nKullanıcının Skoru : "+result.getUser_skor()+"\n\n");
 
         levelClicked=result.getLevelClicked();
         levelSaved=result.getLevelSaved();
@@ -68,7 +74,7 @@ public class Game_Result extends Fragment {
             public void onClick(View v) {
 
                 if(result.isLevel_state_durum()==true){
-                    StateMenu_Fragment state=new StateMenu_Fragment();
+                    StateMenu2_Fragment state=new StateMenu2_Fragment();
 
                     Bundle bundle=new Bundle();
                     bundle.putInt("levelSaved",levelSaved);
@@ -81,7 +87,7 @@ public class Game_Result extends Fragment {
                     transaction.commit();
                 }
                 else {
-                    LevelMenu_Fragment level=new LevelMenu_Fragment();
+                    LevelMenu2_Fragment level=new LevelMenu2_Fragment();
                     fragmentManager=getFragmentManager();
                     transaction=fragmentManager.beginTransaction();
                     transaction.replace(R.id.context_main,level);
@@ -94,7 +100,7 @@ public class Game_Result extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_game_result,container,false);
+        view=inflater.inflate(R.layout.activity_game2_result,container,false);
         init();
         return view;
     }
