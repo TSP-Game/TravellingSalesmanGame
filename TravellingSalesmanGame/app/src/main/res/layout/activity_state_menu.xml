@@ -9,4 +9,4 @@
     android:id="@+id/stateMenuActivity"
     android:paddingTop="30dp"
     android:alpha=".9"
-    android:background="@drawable/level_state"/>
+    android:background="@drawable/image_background"/>

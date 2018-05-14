@@ -14,13 +14,16 @@
         android:layout_height="200dp"
         android:paddingTop="20dp"
         android:orientation="vertical"
-        android:background="@drawable/profile_background">
-        <ImageView
+        android:background="@drawable/image_background">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/imgProfil"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/profil_icon"/>
+            android:src="@drawable/profil_icon"
+            app:siBorderWidth="6dp"
+            app:siBorderColor="@color/white"
+            android:layout_gravity="center"/>
         <Button
             android:id="@+id/btnChoose"
             android:layout_marginTop="10dp"
@@ -39,7 +42,8 @@
         android:paddingRight="20dp"
         android:paddingTop="15dp"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:background="@color/white">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

@@ -70,7 +70,7 @@ public class ButtonCreater {
             ImageButton button = new ImageButton(context);
             buttonSetter.setView(1,button);
             button.setVisibility(View.INVISIBLE);
-            button.setImageResource(R.mipmap.home0);
+            button.setImageResource(R.mipmap.home4);
             button.setBackground(null);
             button.setPadding(0,0,0,0);
             button.setElevation(24);

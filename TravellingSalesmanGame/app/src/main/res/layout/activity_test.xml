@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@drawable/image_background"
     android:orientation="vertical"
     tools:context=".Test"
     android:padding="15dp">
@@ -31,6 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             android:layout_marginTop="3dp"
             android:text="0/60" />
 
@@ -40,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="Skor  : 0"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
 
@@ -49,7 +52,7 @@
 
     <TextView
         android:id="@+id/txtSoru"
-
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -67,32 +70,34 @@
 
     <Button
         android:id="@+id/A"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="5dp"
         android:background="@drawable/shape"
-        android:gravity="start"
         android:padding="10dp"
         android:text="Button"
         android:onClick="A_btn_click"
         android:textAllCaps="false"
+        android:gravity="center|left"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        tools:ignore="OnClick" />
+        tools:ignore="OnClick"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/B"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:gravity="center|left"
         android:background="@drawable/shape"
         android:onClick="B_btn_click"
         android:text="Button"
+        android:padding="10dp"
         android:textAllCaps="false"
+        android:gravity="center|left"
         android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/C"
@@ -104,9 +109,10 @@
         android:onClick="C_btn_click"
         android:textSize="15sp"
         android:text="Button"
-        android:gravity="start"
+        android:gravity="center|left"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/D"
@@ -115,12 +121,13 @@
         android:layout_margin="4dp"
         android:background="@drawable/shape"
         android:onClick="D_btn_click"
-        android:gravity="start"
         android:text="Button"
         android:padding="10dp"
+        android:gravity="center|left"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"

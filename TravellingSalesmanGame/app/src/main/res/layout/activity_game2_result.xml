@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Views.Game.Game2_Result"
     android:orientation="vertical"
-    android:background="@color/colorAccent">
+    android:background="@drawable/image_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,19 +29,20 @@
 
         <TextView
             android:id="@+id/txtYorum"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"
-            android:paddingBottom="10dp"/>
+            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"/>
 
         <TextView
             android:id="@+id/txtSkorGoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="Tebrikler Oyunu \n Başarılı bir şekilde geçtiniz.\n"/>
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:text="Süre : 00 : 00 : 00"/>
 
@@ -63,6 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:text="Kazanılan Puan : 100"/>
 

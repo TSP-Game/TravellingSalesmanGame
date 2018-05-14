@@ -1,14 +1,19 @@
 package com.travellingsalesmangame;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.travellingsalesmangame.Views.Game.Hikaye;
 import com.travellingsalesmangame.Views.Game.Hikaye2;
@@ -41,11 +46,45 @@ public class Oyun_Turu extends Fragment {
         btn_bilgisayar_karsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Hikaye2 hikaye2=new Hikaye2();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,hikaye2);
-                transaction.commit();
+
+                final CharSequence[] choice = {"Kolay","Orta","Zor"};
+
+                final int[] from = new int[1]; //This must be declared as global !
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setTitle("Seviye Seçiniz ");
+                alert.setSingleChoiceItems(choice, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (choice[which] == "Kolay") {
+                            from[0] = 0;
+                        } else if (choice[which] == "Orta") {
+                            from[0] = 1;
+                        }
+                         else if (choice[which] == "Zor") {
+                            from[0] = 2;
+                        }
+                    }
+                });
+                alert.setPositiveButton("Başla", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(view.getContext());
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putInt("seviye",from[0]);
+                        editor.apply();
+
+                        Hikaye2 hikaye2=new Hikaye2();
+                        fragmentManager=getFragmentManager();
+                        transaction=fragmentManager.beginTransaction();
+                        transaction.replace(R.id.context_main,hikaye2);
+                        transaction.commit();
+                    }
+                });
+                alert.show();
+
+
             }
         });
     }

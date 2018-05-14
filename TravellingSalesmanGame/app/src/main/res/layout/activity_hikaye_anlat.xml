@@ -7,50 +7,39 @@
     android:layout_height="match_parent"
     tools:context=".Views.Game.Hikaye"
     android:orientation="vertical"
-    android:background="@color/pale_violet_red">
+    android:gravity="right"
+    android:background="@drawable/shape_konuanlatimi">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="24dp"
+        android:layout_height="350dp"
+        android:orientation="vertical"
         android:gravity="center">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/star"/>
+            android:src="@drawable/cloud" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:src="@drawable/girl" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="22dp">
-
-        <TextView
-            android:id="@+id/txtYorum"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_Oyun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:text="Hikaye kısmı buraya yazılacak\n"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:background="@drawable/shape_background"
-                android:id="@+id/btn_Oyun"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:padding="25dp"
-                android:text="Oyuna Başlamak İçin Tıklayınız "/>
-        </LinearLayout>
-
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_background"
+            android:padding="15dp"
+            android:text="Oyuna Başlamak İçin Tıklayınız " />
     </LinearLayout>
-
-
 
 </LinearLayout>

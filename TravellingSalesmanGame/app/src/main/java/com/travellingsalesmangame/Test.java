@@ -237,14 +237,14 @@ public class Test extends Fragment implements View.OnClickListener{
                 setTitle("Uyarı").
                 setMessage("Soru Çözmediniz! Bir sonraki soruya geçmek istediğinize emin misiniz?").
                 setNegativeButton("Evet", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                suspended = false;
-                Soru++;
-                oyunuBaslat();
-                cozme=false;
-            }
-            })
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        suspended = false;
+                        Soru++;
+                        oyunuBaslat();
+                        cozme=false;
+                    }
+                })
                 .setPositiveButton("Hayır", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.Istatistik">
+    tools:context=".Views.Game.Istatistik"
+    android:background="@drawable/image_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content"
             android:text="İstatistikler"
             android:gravity="center"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="26sp"/>
 

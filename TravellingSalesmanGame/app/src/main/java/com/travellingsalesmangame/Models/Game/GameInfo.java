@@ -9,26 +9,32 @@ public class GameInfo{
     private int level,state;
 
     private List<Integer> testScores;
-    private List<List<List<Integer>>> gameScores;
+    private List<List<List<Integer>>> gameSingleScores;
+    private List<List<List<List<Integer>>>> gamePcScores;
 
     private void init() {
 
         level = 0;
         state = 0;
         testScores = new ArrayList<>();
-        gameScores = new ArrayList<>();
+        gameSingleScores = new ArrayList<>();
+        gamePcScores = new ArrayList<>();
+
 
         for(int i=0; i<Examples.getCores().length; i++)
-            gameScores.add(new ArrayList<List<Integer>>());
+            gameSingleScores.add(new ArrayList<List<Integer>>());
 
-        List<Integer> temp = new ArrayList();
-        for(int i=0; i<gameScores.size(); i++)
+        for(int i=0; i<3; i++)                              //3 zorluk derecesi olacak
+            gamePcScores.add(new ArrayList<>(gameSingleScores));
+
+        List<Integer> temp;
+        for(int i=0; i<gameSingleScores.size(); i++)
             for(int j=0; j<Examples.getCores()[i].length; j++){
 
                 temp = new ArrayList<>();
                 temp.add(0);
                 temp.add(0);
-                gameScores.get(i).add(new ArrayList<>(temp));
+                gameSingleScores.get(i).add(new ArrayList<>(temp));
             }
     }
 
@@ -42,7 +48,8 @@ public class GameInfo{
         level = gameInfo.getLevel();
         state = gameInfo.getState();
         testScores = gameInfo.getTestScores();
-        gameScores = gameInfo.getGameScores();
+        gameSingleScores = gameInfo.getGameSingleScores();
+        gamePcScores = gameInfo.getGamePcScores();
 
     }
 
@@ -70,11 +77,19 @@ public class GameInfo{
         this.testScores = testScores;
     }
 
-    public List<List<List<Integer>>> getGameScores() {
-        return gameScores;
+    public List<List<List<Integer>>> getGameSingleScores() {
+        return gameSingleScores;
     }
 
-    public void setGameScores(List<List<List<Integer>>> gameScores) {
-        this.gameScores = gameScores;
+    public void setGameSingleScores(List<List<List<Integer>>> gameSingleScores) {
+        this.gameSingleScores = gameSingleScores;
+    }
+
+    public List<List<List<List<Integer>>>> getGamePcScores() {
+        return gamePcScores;
+    }
+
+    public void setGamePcScores(List<List<List<List<Integer>>>> gamePcScores) {
+        this.gamePcScores = gamePcScores;
     }
 }

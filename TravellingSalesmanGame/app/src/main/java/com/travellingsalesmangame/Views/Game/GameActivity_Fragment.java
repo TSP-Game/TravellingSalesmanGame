@@ -3,6 +3,7 @@ package com.travellingsalesmangame.Views.Game;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -107,7 +108,7 @@ public class GameActivity_Fragment extends Fragment {
 
             if(oldButton==null){
                 showLayoutCosts(button);
-                button.setImageResource(R.mipmap.home1);
+                button.setImageResource(R.mipmap.home2);
                 oldButton=button;
                 selectedButtons.add(button);
                 click_count++;
@@ -120,7 +121,7 @@ public class GameActivity_Fragment extends Fragment {
                     totalScore+=pathCost;
                     click_count++;
 
-                    DrawView drawView = new DrawView(getActivity(),oldButton,button, R.color.dark_orchid,10);
+                    DrawView drawView = new DrawView(getActivity(),oldButton,button, Color.GREEN,10);
                     layoutDraw.addView(drawView);
 
                     if(click_count==core.getCities().length)
@@ -251,9 +252,9 @@ public class GameActivity_Fragment extends Fragment {
 
                 layoutDraw.removeView(draw.drawView);
                 layoutDraw.removeView(draw.textView);
-                draw.drawView.setColor(getResources().getColor(R.color.deep_pink));
+                draw.drawView.setColor(getResources().getColor(R.color.red));
                 draw.drawView.setWidth(10);
-                draw.textView.setTextColor(getResources().getColor(R.color.black));
+                draw.textView.setTextColor(getResources().getColor(R.color.white));
                 draw.textView.setTextSize(20);
                 draw.textView.setTypeface(null, Typeface.BOLD);
                 layoutDraw.addView(draw.drawView);

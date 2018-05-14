@@ -6,8 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Test_sonuc"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/image_background">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,11 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Skor : "
-            android:textSize="20dp"
-            />
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/txtView"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -33,18 +42,36 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Çözülen Soru Sayısı : "
-            android:textSize="20dp"
-            />
+            android:textSize="20dp"/>
         <TextView
             android:id="@+id/txtCozulen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textColor="@color/white"
             android:textSize="20dp"
             />
+    </LinearLayout>
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_Oyun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_background"
+            android:padding="15dp"
+            android:text="Oyuna Başlamak İçin Tıklayınız " />
     </LinearLayout>
 
 </LinearLayout>

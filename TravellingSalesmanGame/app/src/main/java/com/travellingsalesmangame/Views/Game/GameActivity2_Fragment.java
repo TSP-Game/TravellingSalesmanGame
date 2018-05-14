@@ -5,9 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,8 +62,12 @@ public class GameActivity2_Fragment extends Fragment {
     private double totalScore=0,user_skor=0,pc_skor=0;
     private boolean bilgisayarOyna=false;
     private long milisaniye=0;
+    private int seviye;
 
     private void init() {
+
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        seviye=pref.getInt("seviye",-1);
 
         getActivity().setTitle("İyi Eğlenceler");
         Bundle bundle=getArguments();
@@ -107,7 +113,12 @@ public class GameActivity2_Fragment extends Fragment {
     private void computerPlay(){
 
         final ComPlay comPlay = new ComPlay(core);
-        comPlay.learn(200000);
+        switch (seviye){
+            case 0:comPlay.learn(50000);break;
+            case 1:comPlay.learn(80000);break;
+            case 2:comPlay.learn(120000);break;
+        }
+
         new Thread(new Runnable() {
 
             public void run() {
@@ -124,7 +135,7 @@ public class GameActivity2_Fragment extends Fragment {
                                action(buttons.get(core.getCities()[i]));
                                int maliyet= (int) (core.getSolution()-totalScore);
                                progressBar.setProgress(maliyet);
-                               txtSkorPuan.setText(String.valueOf("Benzin Miktarı : "+maliyet));
+                               txtSkorPuan.setText(String.valueOf("Mesafe : "+maliyet));
                            }
                        });
                        try {
@@ -275,7 +286,10 @@ public class GameActivity2_Fragment extends Fragment {
                                         totalScore=0;
                                         progressBar.setMax(core.getSolution());
                                         for (int i:core.getCities())
+                                        {
                                             buttons.get(i).setImageResource(R.mipmap.home0);
+                                            buttons.get(i).setClickable(false);
+                                        }
 
                                         computerPlay();
                                     }
@@ -295,7 +309,6 @@ public class GameActivity2_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
         timeStart();
-        //computerPlay();
     }
 
     @Override @Nullable

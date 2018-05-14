@@ -3,7 +3,6 @@ package com.travellingsalesmangame.Views.Game;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -65,7 +64,7 @@ public class Game_Result extends Fragment {
         levelClicked=result.getLevelClicked();
         levelSaved=result.getLevelSaved();
 
-        if(result.getPuan()>0)
+        if(result.getUser_skor()<=result.getPc_skor())
             imgView.setImageResource(R.drawable.prize);
 
         else
@@ -113,10 +112,10 @@ public class Game_Result extends Fragment {
         User user = new User(gson.fromJson(json,User.class));
 
         String time=String.valueOf(result.getSure());
-        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+        games.child(Encode.encode(user.getEmail())).child("gameSingleScores").child(String.valueOf(result.getLevelClicked()))
                 .child(String.valueOf(result.getStateClicked())).child("0").setValue(Integer.valueOf(time));
 
-        games.child(Encode.encode(user.getEmail())).child("gameScores").child(String.valueOf(result.getLevelClicked()))
+        games.child(Encode.encode(user.getEmail())).child("gameSingleScores").child(String.valueOf(result.getLevelClicked()))
                 .child(String.valueOf(result.getStateClicked())).child("1").setValue(result.getPuan());
     }
 
