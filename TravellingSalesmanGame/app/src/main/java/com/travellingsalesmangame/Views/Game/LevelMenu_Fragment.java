@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
 import com.travellingsalesmangame.Models.Game.Examples;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
+import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 
 public class LevelMenu_Fragment extends Fragment {
@@ -35,7 +38,11 @@ public class LevelMenu_Fragment extends Fragment {
         screenSettings=new ScreenSettings(getActivity());
         levelMenuActivity=view.findViewById(R.id.levelMenuActivity);
         prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        level=prefs.getInt("level",0);
+
+        Gson gson=new Gson();
+        String json=prefs.getString("gameinfo","");
+        GameInfo gameInfo = new GameInfo(gson.fromJson(json,GameInfo.class));
+        level =gameInfo.getLevelSingle();
     }
 
     private void setMenu(){

@@ -61,11 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor prefsEditor = prefs.edit();
 
-                    prefsEditor.putInt("state",gameInfo.getState());
-                    prefsEditor.putInt("level",gameInfo.getLevel());
+                    Gson gson=new Gson();
+                    String json=gson.toJson(gameInfo);
+                    prefsEditor.putString("gameinfo",json);
                     prefsEditor.apply();
-
-
                 }
             }
 

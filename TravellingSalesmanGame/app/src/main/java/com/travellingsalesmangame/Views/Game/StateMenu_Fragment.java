@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
 import com.travellingsalesmangame.Models.Game.Examples;
+import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
 import com.travellingsalesmangame.R;
 
@@ -76,7 +78,11 @@ public class StateMenu_Fragment extends Fragment {
         levelSaved=bundle.getInt("levelSaved",0);   //kayıtlı level
         levelClicked=bundle.getInt("levelClicked",0);   //tiklanan level
 
-        stateSaved=prefs.getInt("state",0);
+        Gson gson=new Gson();
+        String json=prefs.getString("gameinfo","");
+        GameInfo gameInfo = new GameInfo(gson.fromJson(json,GameInfo.class));
+
+        stateSaved=gameInfo.getStateSingle();
 
         int seviye=levelClicked+1;
         getActivity().setTitle("Level : "+ seviye);

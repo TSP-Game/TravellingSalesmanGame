@@ -1,12 +1,47 @@
 package com.travellingsalesmangame.Models.Game;
 
 
+import com.travellingsalesmangame.Models.Login.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameInfo{
 
-    private int level,state;
+    public int getLevelSingle() {
+        return levelSingle;
+    }
+
+    public void setLevelSingle(int levelSingle) {
+        this.levelSingle = levelSingle;
+    }
+
+    public int getStateSingle() {
+        return stateSingle;
+    }
+
+    public void setStateSingle(int stateSingle) {
+        this.stateSingle = stateSingle;
+    }
+
+    public int getLevelPc() {
+        return levelPc;
+    }
+
+    public void setLevelPc(int levelPc) {
+        this.levelPc = levelPc;
+    }
+
+    public int getStatePc() {
+        return statePc;
+    }
+
+    public void setStatePc(int statePc) {
+        this.statePc = statePc;
+    }
+
+    private int levelSingle,stateSingle;
+    private int levelPc,statePc;
 
     private List<Integer> testScores;
     private List<List<List<Integer>>> gameSingleScores;
@@ -14,8 +49,9 @@ public class GameInfo{
 
     private void init() {
 
-        level = 0;
-        state = 0;
+        levelSingle = 0;levelPc=0;
+        statePc = 0;stateSingle=0;
+
         testScores = new ArrayList<>();
         gameSingleScores = new ArrayList<>();
         gamePcScores = new ArrayList<>();
@@ -42,33 +78,18 @@ public class GameInfo{
         init();
     }
 
-
     public GameInfo(GameInfo gameInfo) {
 
-        level = gameInfo.getLevel();
-        state = gameInfo.getState();
+        levelSingle = gameInfo.getLevelSingle();
+        stateSingle = gameInfo.getStateSingle();
+        levelPc = gameInfo.getLevelPc();
+        statePc = gameInfo.getStatePc();
+
         testScores = gameInfo.getTestScores();
         gameSingleScores = gameInfo.getGameSingleScores();
         gamePcScores = gameInfo.getGamePcScores();
 
     }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
     public List<Integer> getTestScores() {
         return testScores;
     }

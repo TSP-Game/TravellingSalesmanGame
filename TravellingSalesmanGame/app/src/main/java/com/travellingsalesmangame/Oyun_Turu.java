@@ -27,7 +27,6 @@ public class Oyun_Turu extends Fragment {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
-
     private void init(){
         btn_bilgisayar_karsi=view.findViewById(R.id.btn_bilgisayar_karsi);
         btn_tek_oyna=view.findViewById(R.id.btn_tek_oyna);
@@ -46,6 +45,7 @@ public class Oyun_Turu extends Fragment {
         btn_bilgisayar_karsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 final CharSequence[] choice = {"Kolay","Orta","Zor"};
 
@@ -70,10 +70,10 @@ public class Oyun_Turu extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-                        SharedPreferences.Editor editor=pref.edit();
-                        editor.putInt("seviye",from[0]);
-                        editor.apply();
+                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
+                        SharedPreferences.Editor prefsEditor=prefs.edit();
+                        prefsEditor.putInt("seviye", from[0]);
+                        prefsEditor.apply();
 
                         Hikaye2 hikaye2=new Hikaye2();
                         fragmentManager=getFragmentManager();

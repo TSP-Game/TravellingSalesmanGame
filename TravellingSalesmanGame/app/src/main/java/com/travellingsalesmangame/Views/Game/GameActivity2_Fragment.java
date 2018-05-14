@@ -315,7 +315,7 @@ public class GameActivity2_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.activity_game,container,false);
         init();
-        stage=new Stage(view.getContext());
+        stage=new Stage(view.getContext(),false);
         return view;
     }
 
