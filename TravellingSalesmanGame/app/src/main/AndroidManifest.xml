@@ -40,6 +40,8 @@
         <activity android:name=".Profil" />
         <activity android:name=".Views.Game.Hikaye" />
         <activity android:name=".Oyun_Turu" />
+        <activity android:name=".single_score" />
+        <activity android:name=".pc_score"></activity>
     </application>
 
 </manifest>

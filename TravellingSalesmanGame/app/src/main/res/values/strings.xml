@@ -2,6 +2,13 @@
     <string name="app_name">TravellingSalesmanGame</string>
     <string name="app_title_name">Oyun</string>
 
+    <string-array name="secenekler">
+        <item>Seçim Yapınız</item>
+        <item>Tek Kişilik Skor</item>
+        <item>Bilgisayara Karşı Skor</item>
+    </string-array>
+
+
     <!-- UI About-->
     <string name="email">E-mail Giriniz</string>
     <string name="password">Şifrenizi Giriniz</string>
