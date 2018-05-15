@@ -5,20 +5,20 @@
     <item
         android:id="@+id/anasayfa"
         android:title="Anasayfa"
-        android:icon="@drawable/ic_home_black_24dp"/>
+        android:icon="@drawable/ic_home_black_24dp" />
 
     <item
         android:id="@+id/profil"
         android:title="Profil Görüntüle"
-        android:icon="@drawable/ic_account_circle_black_24dp"/>
+        android:icon="@drawable/ic_account_circle_black_24dp" />
 
     <item
         android:id="@+id/istatistik"
         android:title="İstatistikler"
-        android:icon="@drawable/ic_trending_up_black_24dp"/>
+        android:icon="@drawable/ic_trending_up_black_24dp" />
 
     <item
         android:id="@+id/cikis"
         android:title="Çıkış"
-        android:icon="@drawable/ic_exit_to_app_black_24dp"/>
+        android:icon="@drawable/ic_exit_to_app_black_24dp" />
 </menu>

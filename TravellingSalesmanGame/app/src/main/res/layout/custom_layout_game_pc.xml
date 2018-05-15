@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/linearRoot">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:paddingTop="10dp"
-       android:id="@+id/linearSeviye">
-       <TextView
-           android:gravity="center"
-           android:textSize="20dp"
-           android:textColor="@color/red"
-           android:id="@+id/txtSeviye"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textStyle="bold"
-           android:text="Seviye  :  0 "
-           android:paddingBottom="10dp"/>
-   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:id="@+id/linearSeviye">
+
+        <TextView
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/red"
+            android:id="@+id/txtSeviye"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Seviye  :  0 "
+            android:paddingBottom="10dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="Level  :  0 "
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
 
     </LinearLayout>
 
@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/linearView">
+
         <TextView
             android:layout_weight="1"
             android:id="@+id/txtState"
@@ -59,7 +60,7 @@
             android:textStyle="bold"
             android:text="State  :  0 "
             android:textSize="16dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
 
         <TextView
             android:layout_weight="1"
@@ -69,7 +70,7 @@
             android:textStyle="bold"
             android:text="Puan  :  0 "
             android:textSize="16dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
 
         <TextView
             android:layout_weight="1"
@@ -79,7 +80,7 @@
             android:textStyle="bold"
             android:text="Süre  :  0 "
             android:textSize="16dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
     </LinearLayout>
 
     <ProgressBar

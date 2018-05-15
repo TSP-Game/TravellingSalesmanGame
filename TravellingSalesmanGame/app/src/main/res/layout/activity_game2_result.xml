@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,11 +12,12 @@
         android:layout_height="150dp"
         android:padding="24dp"
         android:gravity="center">
+
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/odul_kayip"/>
+            android:src="@drawable/odul_kayip" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +34,7 @@
             android:textSize="23sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n"/>
+            android:text="Tebrikler Oyunu Başarılı bir şekilde geçtiniz.\n" />
 
         <TextView
             android:id="@+id/txtSkorGoster"
@@ -45,7 +44,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Tebrikler Oyunu \n Başarılı bir şekilde geçtiniz.\n"/>
+            android:text="Tebrikler Oyunu \n Başarılı bir şekilde geçtiniz.\n" />
 
 
         <TextView
@@ -56,7 +55,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:text="Süre : 00 : 00 : 00"/>
+            android:text="Süre : 00 : 00 : 00" />
 
         <TextView
             android:paddingTop="10dp"
@@ -67,7 +66,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:text="Kazanılan Puan : 100"/>
+            android:text="Kazanılan Puan : 100" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:padding="25dp"
-                android:text="Oyuna Dönmek İçin Tıklayınız "/>
+                android:text="Oyuna Dönmek İçin Tıklayınız " />
         </LinearLayout>
 
     </LinearLayout>

@@ -17,7 +17,7 @@
         android:layout_marginTop="30dp"
         android:src="@drawable/profil_icon"
         app:siBorderColor="@color/white"
-        app:siBorderWidth="4dp"/>
+        app:siBorderWidth="4dp" />
 
     <TextView
         android:id="@+id/nameTxt"
@@ -27,7 +27,8 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/emailTxt"
         android:text=""
@@ -36,7 +37,7 @@
         android:textColor="@color/white"
         android:layout_marginTop="5dp"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
 </LinearLayout>
