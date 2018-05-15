@@ -17,7 +17,6 @@ import com.travellingsalesmangame.Controllers.Game.ButtonCreater;
 import com.travellingsalesmangame.Models.Game.Examples;
 import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
-import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
 
 public class LevelMenu_Fragment extends Fragment {

@@ -1,8 +1,6 @@
 package com.travellingsalesmangame.Models.Game;
 
 
-import com.travellingsalesmangame.Models.Login.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

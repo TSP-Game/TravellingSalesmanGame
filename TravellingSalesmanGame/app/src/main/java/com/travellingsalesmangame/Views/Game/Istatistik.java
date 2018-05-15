@@ -19,7 +19,6 @@ import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Models.Login.User;
 import com.travellingsalesmangame.R;
-import com.travellingsalesmangame.Views.Login.LoginActivity;
 
 public class Istatistik extends Fragment {
 

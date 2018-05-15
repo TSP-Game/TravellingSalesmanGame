@@ -9,16 +9,15 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,11 +37,10 @@ import com.travellingsalesmangame.Controllers.Login.Encode;
 import com.travellingsalesmangame.Istatistik;
 import com.travellingsalesmangame.Master_Acilis;
 import com.travellingsalesmangame.Models.Game.GameInfo;
-import com.travellingsalesmangame.Profil;
-import com.travellingsalesmangame.Views.Login.LoginActivity;
 import com.travellingsalesmangame.Models.Login.User;
+import com.travellingsalesmangame.Profil;
 import com.travellingsalesmangame.R;
-
+import com.travellingsalesmangame.Views.Login.LoginActivity;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

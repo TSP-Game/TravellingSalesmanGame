@@ -43,7 +43,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
-
 import static android.app.Activity.RESULT_OK;
 
 public class Profil extends Fragment{

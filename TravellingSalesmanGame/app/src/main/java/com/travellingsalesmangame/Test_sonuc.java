@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.travellingsalesmangame.Views.Game.PopActivity;
-
 public class Test_sonuc extends Fragment {
 
     private View view;

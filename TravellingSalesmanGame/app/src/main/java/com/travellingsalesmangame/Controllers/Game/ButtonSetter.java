@@ -3,6 +3,7 @@ package com.travellingsalesmangame.Controllers.Game;
 
 import android.graphics.Point;
 import android.view.View;
+
 import com.travellingsalesmangame.Models.Game.ScreenSettings;
 
 public class ButtonSetter {
