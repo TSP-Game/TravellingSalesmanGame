@@ -37,6 +37,7 @@ public class Istatistik extends Fragment {
 
     private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
     private ValueEventListener listenerGameInfo;
+    AdapterView.OnItemSelectedListener listenerSpinner;
     private GameInfo gameInfo;
     private User user;
     private SharedPreferences prefs;
@@ -55,6 +56,25 @@ public class Istatistik extends Fragment {
         user=new User(gson.fromJson(json,User.class));
 
 
+        listenerSpinner = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==1){
+                    //games.addValueEventListener(listenerGameInfo);
+                    gameScorelistele();
+                    getActivity().setTitle("Kullanıcı Skorları");
+                }
+                else if(position==2){
+                    //games.addValueEventListener(listenerGameInfo);
+                    gamePcScorelistele();
+                    getActivity().setTitle("Bilgisayar Skorları");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        };
 
         listenerGameInfo=new ValueEventListener() {       //veri tabanı dinleyicisi
             @Override
@@ -62,43 +82,21 @@ public class Istatistik extends Fragment {
 
                 if(dataSnapshot.exists()){
 
-                    gameInfo = new GameInfo();
-                    gameInfo = dataSnapshot.getValue(GameInfo.class);
-                    if (gameInfo==null)
+                    gameInfo = new GameInfo(dataSnapshot.getValue(GameInfo.class));
+
+                    if (gameInfo==null) {
+                        spinner.setOnItemSelectedListener(null);
+                        gameInfo = null;
                         Toast.makeText(getActivity(), "Sunucu Hatası (Listener)", Toast.LENGTH_SHORT).show();
-else{
-                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-//                if (gameInfo==null)
-                                //                  Toast.makeText(getActivity(), "Sunucu Hatası (Spinner)", Toast.LENGTH_SHORT).show();
-
-                                {
-                                    if(position==1){
-                                        //games.addValueEventListener(listenerGameInfo);
-                                        gameScorelistele();
-                                        getActivity().setTitle("Kullanıcı Skorları");
-                                    }
-                                    else if(position==2){
-                                        //games.addValueEventListener(listenerGameInfo);
-                                        gamePcScorelistele();
-                                        getActivity().setTitle("Bilgisayar Skorları");
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {}
-                        });
-
+                    }
+                    else{
+                        spinner.setOnItemSelectedListener(listenerSpinner);
                     }
                 }
             }
             @Override
             public void onCancelled(DatabaseError error) {}
         };
-        games.addValueEventListener(listenerGameInfo);
     }
 
     private void gameScorelistele(){
@@ -122,9 +120,16 @@ else{
     @Override
     public void onResume() {
         super.onResume();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-
+        try {
+            games.removeEventListener(listenerGameInfo);
+            spinner.setOnItemSelectedListener(listenerSpinner);
+        }catch (Exception ignored){}
     }
 
     @Nullable
@@ -133,6 +138,7 @@ else{
         view=inflater.inflate(R.layout.activity_istatistik,container,false);
         spinner=view.findViewById(R.id.spinner);
         init();
+        games.child(Encode.encode(user.getEmail())).addValueEventListener(listenerGameInfo);
         return view;
     }
 

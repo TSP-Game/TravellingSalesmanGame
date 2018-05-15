@@ -153,6 +153,7 @@ public class GameActivity2_Fragment extends Fragment {
                 result.setLevel_state_durum(level_state_belirle);
                 result.setPc_skor((int) totalScore);
                 result.setUser_skor((int) user_skor);
+                result.setStateClicked(stateClicked);
 
                 totalScore=core.getSolution(); //gerçek yol
 
