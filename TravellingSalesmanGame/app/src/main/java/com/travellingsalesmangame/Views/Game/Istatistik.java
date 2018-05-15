@@ -46,7 +46,6 @@ public class Istatistik extends Fragment {
 
                     gameInfo = new GameInfo();
                     gameInfo = dataSnapshot.getValue(GameInfo.class);
-
                 }
             }
 

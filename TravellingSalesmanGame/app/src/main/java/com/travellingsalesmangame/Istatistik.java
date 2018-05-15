@@ -82,12 +82,13 @@ public class Istatistik extends Fragment {
 
                 if(dataSnapshot.exists()){
 
-                    gameInfo = new GameInfo(dataSnapshot.getValue(GameInfo.class));
+                    gameInfo = new GameInfo();
+                    gameInfo =  dataSnapshot.getValue(GameInfo.class);
 
                     if (gameInfo==null) {
                         spinner.setOnItemSelectedListener(null);
                         gameInfo = null;
-                        Toast.makeText(getActivity(), "Sunucu Hatası (Listener)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Sunucu Hatası!", Toast.LENGTH_SHORT).show();
                     }
                     else{
                         spinner.setOnItemSelectedListener(listenerSpinner);

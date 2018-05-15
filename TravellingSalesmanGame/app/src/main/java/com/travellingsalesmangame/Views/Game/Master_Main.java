@@ -102,7 +102,6 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
                         !dataSnapshot.child("password").getValue(String.class).equals(user.getPassword()))
                     login_in();
                 else{
-
                     games.child(Encode.encode(user.getEmail())).addValueEventListener(listenerGameInfo);
                 }
             }
@@ -203,6 +202,16 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try{
+            users.child(Encode.encode(user.getEmail())).removeEventListener(listenerCookie);
+            games.child(Encode.encode(user.getEmail())).removeEventListener(listenerGameInfo);
+        }catch (Exception ignored){}
     }
 
     @Override

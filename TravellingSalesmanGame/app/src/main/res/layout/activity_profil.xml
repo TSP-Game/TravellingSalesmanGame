@@ -93,7 +93,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/txtYeniParola"
+                android:id="@+id/txtParolaYeni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -104,6 +104,8 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+
+            android:id="@+id/btnUpdate"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                     String json=gson.toJson(gameInfo);
                     prefsEditor.putString("gameinfo",json);
                     prefsEditor.apply();
+
+                    games.child(Encode.encode(email)).removeEventListener(listenerGameInfo);
                 }
             }
 
@@ -84,8 +86,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     salt = dataSnapshot.getValue(String.class);
 
-                    if(salt != null && salt.length() == 48)
+                    if(salt != null && salt.length() == 48) {
                         users.child(Encode.encode(email)).addValueEventListener(listenerUser);
+                        salts.child(Encode.encode(email)).removeEventListener(listenerSalt);
+                    }
                     else
                         login_error.setText(R.string.error_wrong_password);
                 }
@@ -135,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
 
+                        users.child(Encode.encode(email)).removeEventListener(listenerUser);
                     }
                     else{
                         login_error.setText(R.string.error_wrong_password);
