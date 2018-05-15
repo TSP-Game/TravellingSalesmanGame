@@ -25,11 +25,11 @@ public class ButtonCreater {
     public ButtonCreater(Context context,
                          RelativeLayout layout,
                          View.OnClickListener onClickListener,
-                         ScreenSettings settings){
-        this.context=context;
-        this.layout=layout;
-        this.onClickListener=onClickListener;
-        this.settings=settings;
+                         ScreenSettings settings) {
+        this.context = context;
+        this.layout = layout;
+        this.onClickListener = onClickListener;
+        this.settings = settings;
 
         this.layout.setClipToPadding(false);
     }
@@ -65,18 +65,18 @@ public class ButtonCreater {
     }
 
     @SuppressLint("NewApi") /////game aktivitesi icin methot
-    public void create(int size, int[] cities){
+    public void create(int size, int[] cities) {
 
-        gameButonList=new ArrayList<>();
-        ButtonSetter buttonSetter=new ButtonSetter(1,settings);
-        for(int i=0;i<size+5;i++) {
+        gameButonList = new ArrayList<>();
+        ButtonSetter buttonSetter = new ButtonSetter(1, settings);
+        for (int i = 0; i < size + 5; i++) {
 
             ImageButton button = new ImageButton(context);
-            buttonSetter.setView(1,button);
+            buttonSetter.setView(1, button);
             button.setVisibility(View.INVISIBLE);
             button.setImageResource(R.mipmap.home5);
             button.setBackground(null);
-            button.setPadding(0,0,0,0);
+            button.setPadding(0, 0, 0, 0);
             button.setElevation(24);
             button.setOnClickListener(onClickListener);
             layout.addView(button);
@@ -90,7 +90,7 @@ public class ButtonCreater {
 
 
     //Oyun sırasında oluşan imageButonların Listesini gönderiyorum.
-    public List<ImageButton> getGameButonList(){
+    public List<ImageButton> getGameButonList() {
         return gameButonList;
     }
 

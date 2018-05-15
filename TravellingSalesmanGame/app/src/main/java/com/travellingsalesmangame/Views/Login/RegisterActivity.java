@@ -27,7 +27,7 @@ import java.util.Random;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText et_userName,et_email,et_password,et_passwordConfirm;   //veri girisi yapilan editText'ler
+    private EditText et_userName, et_email, et_password, et_passwordConfirm;   //veri girisi yapilan editText'ler
     private TextView reg_error;    //tv_error = hata mesaji, err_* = ilgili verinin yanlis oldugunu gosteren isaret.
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private User new_user;
     private String passwordConfirm;
 
-    private void init(){
+    private void init() {
 
         et_userName = findViewById(R.id.reg_userName);
         et_email = findViewById(R.id.reg_email);
@@ -49,17 +49,16 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()) {                                               //kayit olmak istenilen email adresin zaten kullanilmis olma durumu
+                if (dataSnapshot.exists()) {                                               //kayit olmak istenilen email adresin zaten kullanilmis olma durumu
                     reg_error.setText(R.string.error_registered_email);
-                }
-                else {
+                } else {
 
                     String salt = createRandomSalt(); //rastgele 48 karakter tuz uretiyoruz
                     MyHash myHash = new MyHash();
 
                     //Asagida once parolanin hashini aliyoruz, sonra tuzu ile hashlenmis parolaya ekliyoruz, sonra birlestirilmis bu verinin bir daha hash'ini aliyoruz
                     //Bu bizim veri tabaninda gorunecek parolamiz oluyor
-                    new_user.setPassword(myHash.hash(myHash.hash(new_user.getPassword())+salt));
+                    new_user.setPassword(myHash.hash(myHash.hash(new_user.getPassword()) + salt));
                     GameInfo gameInfo = new GameInfo();
 
                     users.child(Encode.encode(new_user.getEmail())).setValue(new_user);
@@ -72,8 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
                     new_user = new User();
                     salt = null;
 
-                    Toast.makeText(RegisterActivity.this,"Kayıt Başarılı", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                    Toast.makeText(RegisterActivity.this, "Kayıt Başarılı", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -98,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String createRandomSalt() {
 
         Random rand = new Random();
-        StringBuilder salt=new StringBuilder();
-        for(int i=0; i<48; i++)
+        StringBuilder salt = new StringBuilder();
+        for (int i = 0; i < 48; i++)
             salt.append(Integer.toHexString(rand.nextInt(16)));
 
         return salt.toString();
@@ -111,34 +110,32 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean result = true;
 
-        if(cm.getActiveNetworkInfo() == null) {
+        if (cm.getActiveNetworkInfo() == null) {
 
             reg_error.setText(R.string.error_network);
             result = false;
-        }
-        else{
+        } else {
 
-            if(new_user.getPassword() == null || new_user.getPassword().equals("")) { //sifrenin bos olma durumu
+            if (new_user.getPassword() == null || new_user.getPassword().equals("")) { //sifrenin bos olma durumu
 
                 reg_error.setText(getString(R.string.error_no_password));
                 result = false;
-            }
-            else {
+            } else {
 
-                if(!UserRules.check_password(new_user.getPassword())){ //sifrenin kurallara uymama durumu
+                if (!UserRules.check_password(new_user.getPassword())) { //sifrenin kurallara uymama durumu
                     reg_error.setText(getString(R.string.error_invalid_password));
                     result = false;
                 }
-                if(!new_user.getPassword().equals(passwordConfirm)) {     //parola ve parolaonaylanin farkli olma durumu
+                if (!new_user.getPassword().equals(passwordConfirm)) {     //parola ve parolaonaylanin farkli olma durumu
                     reg_error.setText(R.string.error_wrong_passwordConfirm);
                     result = false;
                 }
             }
-            if(!UserRules.check_email(new_user.getEmail())) { //girilen mail adresin desteklenmemesi olma durumu
+            if (!UserRules.check_email(new_user.getEmail())) { //girilen mail adresin desteklenmemesi olma durumu
                 reg_error.setText(R.string.error_invalid_email);
                 result = false;
             }
-            if(!UserRules.check_name(new_user.getUserName())) {     //kullanici adinin kurallara uymama durumu
+            if (!UserRules.check_name(new_user.getUserName())) {     //kullanici adinin kurallara uymama durumu
                 reg_error.setText(R.string.error_invalid_username);
             }
         }
@@ -150,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordConfirm = String.valueOf(et_passwordConfirm.getText());
         new_user = new User(String.valueOf(et_userName.getText()), String.valueOf(et_email.getText()), String.valueOf(et_password.getText()));
 
-        if(ruleChecker()){
+        if (ruleChecker()) {
 
             reg_error.setText("");
             users.child(Encode.encode(new_user.getEmail())).addValueEventListener(listenerUser);  //emaile girilen degere ait veritabanındaki referansa giris kosullarini iceren listener'ı atıyoruz. email yoksa null donuyor
@@ -158,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void cancel_onclick(View view) {
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

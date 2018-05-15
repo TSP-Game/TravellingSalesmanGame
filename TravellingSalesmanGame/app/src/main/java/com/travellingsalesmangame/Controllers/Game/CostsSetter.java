@@ -23,14 +23,14 @@ public class CostsSetter {
                                          List<ImageButton> buttons,
                                          int[][] costs) {
 
-        drawList=new ArrayList<>();
+        drawList = new ArrayList<>();
         for (int[] cost : costs) {
 
             TextView textView = new TextView(context);
             textView.setText(String.valueOf(cost[2]));
             textView.setTextSize(15);
             textView.setTextColor(Color.WHITE);
-            textView.setPadding(30,18,0,0);
+            textView.setPadding(30, 18, 0, 0);
             textView.setBackground(null);
             textView.setElevation(24);
             textView.setX((buttons.get(cost[0]).getX() + buttons.get(cost[1]).getX()) / 2);

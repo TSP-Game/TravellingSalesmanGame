@@ -4,7 +4,7 @@ package com.travellingsalesmangame.Models.Game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameInfo{
+public class GameInfo {
 
     public int getLevelSingle() {
         return levelSingle;
@@ -38,8 +38,8 @@ public class GameInfo{
         this.statePc = statePc;
     }
 
-    private int levelSingle,stateSingle;
-    private int levelPc,statePc;
+    private int levelSingle, stateSingle;
+    private int levelPc, statePc;
 
     private List<Integer> testScores;
     private List<List<List<Integer>>> gameSingleScores;
@@ -47,23 +47,25 @@ public class GameInfo{
 
     private void init() {
 
-        levelSingle = 0;levelPc=0;
-        statePc = 0;stateSingle=0;
+        levelSingle = 0;
+        levelPc = 0;
+        statePc = 0;
+        stateSingle = 0;
 
         testScores = new ArrayList<>();
         gameSingleScores = new ArrayList<>();
         gamePcScores = new ArrayList<>();
 
 
-        for(int i=0; i<Examples.getCores().length; i++)
+        for (int i = 0; i < Examples.getCores().length; i++)
             gameSingleScores.add(new ArrayList<List<Integer>>());
 
-        for(int i=0; i<3; i++)                              //3 zorluk derecesi olacak
+        for (int i = 0; i < 3; i++)                              //3 zorluk derecesi olacak
             gamePcScores.add(new ArrayList<>(gameSingleScores));
 
         List<Integer> temp;
-        for(int i=0; i<gameSingleScores.size(); i++)
-            for(int j=0; j<Examples.getCores()[i].length; j++){
+        for (int i = 0; i < gameSingleScores.size(); i++)
+            for (int j = 0; j < Examples.getCores()[i].length; j++) {
 
                 temp = new ArrayList<>();
                 temp.add(0);
@@ -88,6 +90,7 @@ public class GameInfo{
         gamePcScores = gameInfo.getGamePcScores();
 
     }
+
     public List<Integer> getTestScores() {
         return testScores;
     }

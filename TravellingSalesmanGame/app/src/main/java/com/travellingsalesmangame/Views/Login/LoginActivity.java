@@ -28,10 +28,10 @@ import com.travellingsalesmangame.Views.Game.Master_Main;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText et_email,et_password;
+    private EditText et_email, et_password;
     private TextView login_error;
-    private String email,password;
-    private ValueEventListener listenerUser,listenerSalt,listenerGameInfo;
+    private String email, password;
+    private ValueEventListener listenerUser, listenerSalt, listenerGameInfo;
     private String salt;
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private User user;
     private GameInfo gameInfo;
 
-    private void init(){
+    private void init() {
 
         et_email = findViewById(R.id.login_email);
         et_password = findViewById(R.id.login_password);
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     gameInfo = new GameInfo();
                     gameInfo = dataSnapshot.getValue(GameInfo.class);
@@ -61,9 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor prefsEditor = prefs.edit();
 
-                    Gson gson=new Gson();
-                    String json=gson.toJson(gameInfo);
-                    prefsEditor.putString("gameinfo",json);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(gameInfo);
+                    prefsEditor.putString("gameinfo", json);
                     prefsEditor.apply();
 
                     games.child(Encode.encode(email)).removeEventListener(listenerGameInfo);
@@ -82,18 +82,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     salt = dataSnapshot.getValue(String.class);
 
-                    if(salt != null && salt.length() == 48) {
+                    if (salt != null && salt.length() == 48) {
                         users.child(Encode.encode(email)).addValueEventListener(listenerUser);
                         salts.child(Encode.encode(email)).removeEventListener(listenerSalt);
-                    }
-                    else
+                    } else
                         login_error.setText(R.string.error_wrong_password);
-                }
-                else
+                } else
                     login_error.setText(R.string.error_wrong_password);
             }
 
@@ -109,18 +107,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String saltedHashedPassword = myHash.hash(myHash.hash(password)+salt);
+                String saltedHashedPassword = myHash.hash(myHash.hash(password) + salt);
 
-                if(dataSnapshot.child("password").exists()
+                if (dataSnapshot.child("password").exists()
                         && dataSnapshot.child("password").getValue() != null
                         && dataSnapshot.child("password").getValue(String.class).length() == 48
-                        ){                                                                          //geçerli kullanıcı olup olmama durumu
+                        ) {                                                                          //geçerli kullanıcı olup olmama durumu
 
                     user = new User();
 
                     user = dataSnapshot.getValue(User.class);
 
-                    if(user.getPassword().equals(saltedHashedPassword)) {//şifrelerin eşleşmeme durumu
+                    if (user.getPassword().equals(saltedHashedPassword)) {//şifrelerin eşleşmeme durumu
 
                         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                         SharedPreferences.Editor preEditor = pref.edit();
@@ -140,13 +138,11 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
 
                         users.child(Encode.encode(email)).removeEventListener(listenerUser);
-                    }
-                    else{
+                    } else {
                         login_error.setText(R.string.error_wrong_password);
                         user = new User();
                     }
-                }
-                else {
+                } else {
                     login_error.setText(R.string.error_wrong_password);
                 }
             }
@@ -172,23 +168,21 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean result = true;
 
-        if(cm.getActiveNetworkInfo() == null) {
+        if (cm.getActiveNetworkInfo() == null) {
 
             login_error.setText(R.string.error_network);
             result = false;
-        }
-        else{
+        } else {
 
-            if(password == null || password.equals("")) {                   //sifrenin bos olma durumu
+            if (password == null || password.equals("")) {                   //sifrenin bos olma durumu
 
                 login_error.setText(getString(R.string.error_no_password));
                 result = false;
-            }
-            else if(!UserRules.check_password(password)){                        //sifrenin kurallara uymama durumu (kurala uymuyorsa veri tabanına gitmesine gerek yok)
+            } else if (!UserRules.check_password(password)) {                        //sifrenin kurallara uymama durumu (kurala uymuyorsa veri tabanına gitmesine gerek yok)
                 login_error.setText(getString(R.string.error_wrong_password));
                 result = false;
             }
-            if(!UserRules.check_email(email)) {                                 //girilen mail adresin desteklenmemesi olma durumu
+            if (!UserRules.check_email(email)) {                                 //girilen mail adresin desteklenmemesi olma durumu
                 login_error.setText(R.string.error_invalid_email);
                 result = false;
             }
@@ -198,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login_sign_onclick(View view) {
 
-        Intent intent = new Intent(this,RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         finish();
     }
@@ -208,7 +202,7 @@ public class LoginActivity extends AppCompatActivity {
         email = String.valueOf(et_email.getText());
         password = String.valueOf(et_password.getText());
 
-        if(ruleChecker()){
+        if (ruleChecker()) {
 
             login_error.setText("");
             salts.child(Encode.encode(email)).addValueEventListener(listenerSalt);

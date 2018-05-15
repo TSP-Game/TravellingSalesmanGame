@@ -10,9 +10,9 @@ import com.travellingsalesmangame.R;
 public class DisplayMessage extends Fragment {
 
     //Oyun bitince level menuye dönmeye yarayacak methot
-    public void show(final RelativeLayout context, String title, String text){
+    public void show(final RelativeLayout context, String title, String text) {
 
-        AlertDialog alertMessage = new AlertDialog.Builder(context.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).create();
+        AlertDialog alertMessage = new AlertDialog.Builder(context.getContext(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).create();
         alertMessage.setTitle(title);
         alertMessage.setMessage(text);
         alertMessage.setCancelable(false);

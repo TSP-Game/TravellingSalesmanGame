@@ -16,25 +16,25 @@ import com.travellingsalesmangame.Views.Game.PopActivity;
 public class Kategori_Secimi extends Fragment {
 
     private View view;
-    private Button btn_Konu,btn_Test,btn_Oyun;
+    private Button btn_Konu, btn_Test, btn_Oyun;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
-    private void init(){
+    private void init() {
 
         getActivity().setTitle("Kategori");
-        btn_Konu=view.findViewById(R.id.btn_Konu);
-        btn_Oyun=view.findViewById(R.id.btn_Oyun);
-        btn_Test=view.findViewById(R.id.btn_Test);
+        btn_Konu = view.findViewById(R.id.btn_Konu);
+        btn_Oyun = view.findViewById(R.id.btn_Oyun);
+        btn_Test = view.findViewById(R.id.btn_Test);
 
         btn_Konu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopActivity konu=new PopActivity();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,konu);
+                PopActivity konu = new PopActivity();
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, konu);
                 transaction.commit();
             }
         });
@@ -42,10 +42,10 @@ public class Kategori_Secimi extends Fragment {
         btn_Test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Test test=new Test();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,test);
+                Test test = new Test();
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, test);
                 transaction.commit();
             }
         });
@@ -54,10 +54,10 @@ public class Kategori_Secimi extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Oyun_Turu oyunTuru=new Oyun_Turu();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,oyunTuru);
+                Oyun_Turu oyunTuru = new Oyun_Turu();
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, oyunTuru);
                 transaction.commit();
             }
         });
@@ -67,7 +67,7 @@ public class Kategori_Secimi extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_kategori_secimi,container,false);
+        view = inflater.inflate(R.layout.activity_kategori_secimi, container, false);
         getActivity().setTitle("Kategotiler");
         init();
         return view;

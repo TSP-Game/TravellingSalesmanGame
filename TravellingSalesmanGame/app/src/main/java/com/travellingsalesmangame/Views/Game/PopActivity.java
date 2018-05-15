@@ -27,19 +27,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopActivity extends Fragment implements View.OnClickListener{
+public class PopActivity extends Fragment implements View.OnClickListener {
 
     private View view;
     private TextView textView;
     private List<String[]> list;
-    private int sayac=0;
+    private int sayac = 0;
 
     private FragmentManager manager;
     private FragmentTransaction transaction;
 
-    private void init(){
+    private void init() {
 
-        textView=view.findViewById(R.id.textView);
+        textView = view.findViewById(R.id.textView);
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -49,8 +49,8 @@ public class PopActivity extends Fragment implements View.OnClickListener{
 
         FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         param.width = (int) (width * .8);
-        param.height=(int) (height * .7);
-        param.gravity=Gravity.CENTER;
+        param.height = (int) (height * .7);
+        param.gravity = Gravity.CENTER;
 
         this.getView().setLayoutParams(param);
 
@@ -64,7 +64,7 @@ public class PopActivity extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_pop,container,false);
+        view = inflater.inflate(R.layout.activity_pop, container, false);
         view.findViewById(R.id.btn_ileri).setOnClickListener(this);
         view.findViewById(R.id.btn_geri).setOnClickListener(this);
         return view;
@@ -97,47 +97,47 @@ public class PopActivity extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        int id=v.getId();
-        if(id== R.id.btn_ileri) {
-            if(sayac==5){
+        int id = v.getId();
+        if (id == R.id.btn_ileri) {
+            if (sayac == 5) {
 
-                AlertDialog.Builder alertMessage = new AlertDialog.Builder(getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                AlertDialog.Builder alertMessage = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                 alertMessage.setTitle("Bilgi").
-                             setMessage("Eğitiminiz tamamlanmıştır. Test kısmına geçerek puan kazanmak ister misiniz?").
-                             setCancelable(false).
-                             setIcon(R.mipmap.information); // icon atanacak
+                        setMessage("Eğitiminiz tamamlanmıştır. Test kısmına geçerek puan kazanmak ister misiniz?").
+                        setCancelable(false).
+                        setIcon(R.mipmap.information); // icon atanacak
                 alertMessage.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        manager=getFragmentManager();
-                        transaction=manager.beginTransaction();
-                        transaction.replace(R.id.context_main,new Test());
+                        manager = getFragmentManager();
+                        transaction = manager.beginTransaction();
+                        transaction.replace(R.id.context_main, new Test());
                         transaction.commit();
                     }
                 });
                 alertMessage.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        manager=getFragmentManager();
-                        transaction=manager.beginTransaction();
-                        transaction.replace(R.id.context_main,new Kategori_Secimi());
+                        manager = getFragmentManager();
+                        transaction = manager.beginTransaction();
+                        transaction.replace(R.id.context_main, new Kategori_Secimi());
                         transaction.commit();
                     }
                 });
                 alertMessage.show();
-            }
-            else{
+            } else {
                 sayac++;
                 textView.setText(list.get(sayac)[0].toString());
             }
         }
 
-        if(id== R.id.btn_geri){
-            if(sayac==0){
-                textView.setText(list.get(sayac)[0].toString());}
-            else{
+        if (id == R.id.btn_geri) {
+            if (sayac == 0) {
+                textView.setText(list.get(sayac)[0].toString());
+            } else {
                 sayac--;
-                textView.setText(list.get(sayac)[0].toString());}
+                textView.setText(list.get(sayac)[0].toString());
+            }
         }
 
     }

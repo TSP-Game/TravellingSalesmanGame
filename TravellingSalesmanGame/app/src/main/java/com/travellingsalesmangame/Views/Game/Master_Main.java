@@ -62,8 +62,8 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
 
     private User user;
     private GameInfo gameInfo;
-    private ValueEventListener listenerCookie ;                          //Tablo adı
-    private ValueEventListener listenerGameInfo ;
+    private ValueEventListener listenerCookie;                          //Tablo adı
+    private ValueEventListener listenerGameInfo;
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference games = FirebaseDatabase.getInstance().getReference("Game_eee653b64ab2ff1051e13c092396179e9d29bbc7ed6aa4a8");
 
@@ -71,14 +71,14 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
 
     private FirebaseStorage fStorage;
 
-    private void init(){
+    private void init() {
 
-        manager=getFragmentManager();
+        manager = getFragmentManager();
 
-        nav_view=findViewById(R.id.nav_view);
-        master_layout=findViewById(R.id.drawer_master);
+        nav_view = findViewById(R.id.nav_view);
+        master_layout = findViewById(R.id.drawer_master);
 
-        toggle=new ActionBarDrawerToggle(this,master_layout,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, master_layout, R.string.open, R.string.close);
         master_layout.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,20 +86,20 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
         nav_view.setNavigationItemSelectedListener(this);
     }
 
-    private void initListener(){
+    private void initListener() {
 
-        prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        listenerCookie=new ValueEventListener() {
+        listenerCookie = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(!dataSnapshot.exists() ||
+                if (!dataSnapshot.exists() ||
                         !dataSnapshot.child("password").exists() ||
                         dataSnapshot.child("password").getValue(String.class) == null ||
                         !dataSnapshot.child("password").getValue(String.class).equals(user.getPassword()))
                     login_in();
-                else{
+                else {
                     games.child(Encode.encode(user.getEmail())).addValueEventListener(listenerGameInfo);
                 }
             }
@@ -110,13 +110,13 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
             }
         };
 
-        listenerGameInfo=new ValueEventListener() {
+        listenerGameInfo = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(!dataSnapshot.exists())
+                if (!dataSnapshot.exists())
                     login_in();
-                else{
+                else {
                     gameInfo = dataSnapshot.getValue(GameInfo.class);
                 }
             }
@@ -128,15 +128,14 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
         };
     }
 
-    private void readIfAlreadyLogin(){
-        Gson gson=new Gson();
-        String json=prefs.getString("user","");
-        if(json.equals(""))
+    private void readIfAlreadyLogin() {
+        Gson gson = new Gson();
+        String json = prefs.getString("user", "");
+        if (json.equals(""))
             login_in();
 
-        else
-        {
-            user=new User(gson.fromJson(json,User.class));
+        else {
+            user = new User(gson.fromJson(json, User.class));
             users.child(Encode.encode(user.getEmail())).addValueEventListener(listenerCookie);
         }
     }
@@ -151,9 +150,9 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
         readIfAlreadyLogin();
         init();
 
-        Master_Acilis fragmentA= new Master_Acilis();
-        transaction=manager.beginTransaction();
-        transaction.replace(R.id.context_main,fragmentA);
+        Master_Acilis fragmentA = new Master_Acilis();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.context_main, fragmentA);
         transaction.commit();
 
 
@@ -163,17 +162,17 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
     protected void onResume() {
         super.onResume();
 
-        Gson gson=new Gson();
-        String json=prefs.getString("user","");
-        user=new User(gson.fromJson(json,User.class));
+        Gson gson = new Gson();
+        String json = prefs.getString("user", "");
+        user = new User(gson.fromJson(json, User.class));
 
-        View view = View.inflate(this,R.layout.nav_header_item,nav_view);
+        View view = View.inflate(this, R.layout.nav_header_item, nav_view);
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
         nameTxt.setText(user.getUserName());
         emailTxt.setText(user.getEmail());
 
-        profileImageView=view.findViewById(R.id.profileImageView);
+        profileImageView = view.findViewById(R.id.profileImageView);
         fStorage = FirebaseStorage.getInstance();
         StorageReference storageRef = fStorage.getReference().child("images").child(user.getEmail());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -185,8 +184,7 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
                     URL url = new URL(uri.toString());
                     Bitmap bitImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     profileImageView.setImageBitmap(bitImage);
-                }
-                catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -206,10 +204,11 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
     protected void onDestroy() {
         super.onDestroy();
 
-        try{
+        try {
             users.child(Encode.encode(user.getEmail())).removeEventListener(listenerCookie);
             games.child(Encode.encode(user.getEmail())).removeEventListener(listenerGameInfo);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -222,28 +221,28 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        int id=item.getItemId();
-        if (id== R.id.anasayfa){
-            Master_Acilis fragmentA= new Master_Acilis();
-            transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,fragmentA);
+        int id = item.getItemId();
+        if (id == R.id.anasayfa) {
+            Master_Acilis fragmentA = new Master_Acilis();
+            transaction = manager.beginTransaction();
+            transaction.replace(R.id.context_main, fragmentA);
             transaction.commit();
         }
 
-        if(id== R.id.cikis)
+        if (id == R.id.cikis)
             login_out();
 
-        if(id== R.id.istatistik){
-            Istatistik istatistik=new Istatistik();
-            transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,istatistik);
+        if (id == R.id.istatistik) {
+            Istatistik istatistik = new Istatistik();
+            transaction = manager.beginTransaction();
+            transaction.replace(R.id.context_main, istatistik);
             transaction.commit();
         }
 
-        if (id== R.id.profil){
-            Profil profil=new Profil();
-            transaction=manager.beginTransaction();
-            transaction.replace(R.id.context_main,profil);
+        if (id == R.id.profil) {
+            Profil profil = new Profil();
+            transaction = manager.beginTransaction();
+            transaction.replace(R.id.context_main, profil);
             transaction.commit();
         }
 
@@ -251,21 +250,21 @@ public class Master_Main extends AppCompatActivity implements NavigationView.OnN
         return false;
     }
 
-    private void login_in(){
+    private void login_in() {
 
-        prefs=PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefEditor=prefs.edit();
-        prefEditor.putString("user","");
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefEditor = prefs.edit();
+        prefEditor.putString("user", "");
         prefEditor.apply();
 
-        Intent intent=new Intent(Master_Main.this, LoginActivity.class);
+        Intent intent = new Intent(Master_Main.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void login_out() {
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setTitle(R.string.logout).setMessage(R.string.login_msg).setIcon(R.mipmap.information);
         builder.setNegativeButton(R.string.login_hayir, new DialogInterface.OnClickListener() {
             @Override

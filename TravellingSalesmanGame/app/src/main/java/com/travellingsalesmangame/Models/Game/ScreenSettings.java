@@ -17,6 +17,7 @@ public class ScreenSettings {
     public Point getPoint() {
         return point;
     }
+
     public void setPoint(Point point) {
         this.point = point;
     }
@@ -25,16 +26,17 @@ public class ScreenSettings {
     public float getDensity() {
         return density;
     }
+
     public void setDensity(float density) {
         this.density = density;
     }
 
 
-    public ScreenSettings(Activity context){
+    public ScreenSettings(Activity context) {
 
-        Point point=new Point();//Ekranın genişliğini ve yüksekliğini alıyorum.
+        Point point = new Point();//Ekranın genişliğini ve yüksekliğini alıyorum.
 
-        Display display=context.getWindowManager().getDefaultDisplay();
+        Display display = context.getWindowManager().getDefaultDisplay();
         display.getSize(point);
 
         this.setDensity(context.getResources().getDisplayMetrics().density);

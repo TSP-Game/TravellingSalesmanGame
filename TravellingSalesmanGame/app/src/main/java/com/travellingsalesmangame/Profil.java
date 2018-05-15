@@ -45,7 +45,7 @@ import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Profil extends Fragment{
+public class Profil extends Fragment {
 
     private final DatabaseReference users = FirebaseDatabase.getInstance().getReference("User_b327a12217d490250cc533b28ddf2be79d3e6c5591a96ec3");
     private final DatabaseReference salts = FirebaseDatabase.getInstance().getReference("Salt_8ff2ba9c135413f689dc257d70a4a75091110497a69c5b3c");
@@ -54,40 +54,40 @@ public class Profil extends Fragment{
     private SharedPreferences prefs;
     private User user;
     private Gson gson;
-    private EditText txtKullaniciAdi,txtEmail,txtParola,txtParolaYeni;
+    private EditText txtKullaniciAdi, txtEmail, txtParola, txtParolaYeni;
 
-    private Button btnChose,btnUpdate;
+    private Button btnChose, btnUpdate;
     private Uri filePath;
     private ImageView profileImageView;
     private final int PICK_IMAGE_REQUEST = 71;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private ValueEventListener listenerSalt,listenerUser;
-    private String salt,paswordInput;
+    private ValueEventListener listenerSalt, listenerUser;
+    private String salt, paswordInput;
     private MyHash myHash;
 
     private FirebaseStorage fStorage;
 
 
-    private void init(){
-        gson=new Gson();
+    private void init() {
+        gson = new Gson();
         getActivity().setTitle("Profil Bilgileri");
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        txtKullaniciAdi=view.findViewById(R.id.txtKullaniciAdi);
-        txtEmail=view.findViewById(R.id.txtEmail);
-        txtParola=view.findViewById(R.id.txtParola);
-        txtParolaYeni=view.findViewById(R.id.txtParolaYeni);
-        btnChose=view.findViewById(R.id.btnChoose);
-        btnUpdate=view.findViewById(R.id.btnUpdate);
-        profileImageView=view.findViewById(R.id.imgProfil);
+        txtKullaniciAdi = view.findViewById(R.id.txtKullaniciAdi);
+        txtEmail = view.findViewById(R.id.txtEmail);
+        txtParola = view.findViewById(R.id.txtParola);
+        txtParolaYeni = view.findViewById(R.id.txtParolaYeni);
+        btnChose = view.findViewById(R.id.btnChoose);
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+        profileImageView = view.findViewById(R.id.imgProfil);
 
-        prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        String json=prefs.getString("user","");
+        prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        String json = prefs.getString("user", "");
 
-        user=new User(gson.fromJson(json,User.class));
+        user = new User(gson.fromJson(json, User.class));
         txtKullaniciAdi.setText(user.getUserName());
         txtEmail.setText(user.getEmail());
         txtEmail.setEnabled(false);
@@ -100,18 +100,16 @@ public class Profil extends Fragment{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     salt = dataSnapshot.getValue(String.class);
 
-                    if(salt != null && salt.length() == 48) {
+                    if (salt != null && salt.length() == 48) {
                         users.child(Encode.encode(user.getEmail())).addValueEventListener(listenerUser);
                         salts.child(Encode.encode(user.getEmail())).removeEventListener(listenerSalt);
-                    }
-                    else
+                    } else
                         Toast.makeText(getActivity(), "Hatalı parola", Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else
                     Toast.makeText(getActivity(), "Hatalı parola", Toast.LENGTH_SHORT).show();
             }
 
@@ -128,20 +126,20 @@ public class Profil extends Fragment{
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 paswordInput = String.valueOf(txtParola.getText());
-                paswordInput = myHash.hash(myHash.hash(paswordInput)+salt);
+                paswordInput = myHash.hash(myHash.hash(paswordInput) + salt);
 
-                if(dataSnapshot.child("password").exists()
+                if (dataSnapshot.child("password").exists()
                         && dataSnapshot.child("password").getValue() != null
                         && dataSnapshot.child("password").getValue(String.class).length() == 48
-                        ){                                                                          //geçerli kullanıcı olup olmama durumu
+                        ) {                                                                          //geçerli kullanıcı olup olmama durumu
 
                     String parola = (dataSnapshot.child("password").getValue(String.class));
 
-                    if(parola.equals(paswordInput)) {//şifrelerin eşleşme durumu
+                    if (parola.equals(paswordInput)) {//şifrelerin eşleşme durumu
 
                         salt = createRandomSalt();
                         paswordInput = String.valueOf(txtParolaYeni.getText());
-                        paswordInput = myHash.hash(myHash.hash(paswordInput)+salt);
+                        paswordInput = myHash.hash(myHash.hash(paswordInput) + salt);
                         user.setPassword(paswordInput);
                         user.setUserName(String.valueOf(txtKullaniciAdi.getText()));
 
@@ -161,12 +159,10 @@ public class Profil extends Fragment{
                         Toast.makeText(getActivity(), "Bilgileriniz Güncellendi!", Toast.LENGTH_SHORT).show();
 
                         users.child(Encode.encode(user.getEmail())).removeEventListener(listenerUser);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getActivity(), "Hatalı parola", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), "Hatalı parola", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -205,8 +201,7 @@ public class Profil extends Fragment{
                     URL url = new URL(uri.toString());
                     Bitmap bitImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     profileImageView.setImageBitmap(bitImage);
-                }
-                catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -226,21 +221,20 @@ public class Profil extends Fragment{
     private String createRandomSalt() {
 
         Random rand = new Random();
-        StringBuilder salt=new StringBuilder();
-        for(int i=0; i<48; i++)
+        StringBuilder salt = new StringBuilder();
+        for (int i = 0; i < 48; i++)
             salt.append(Integer.toHexString(rand.nextInt(16)));
 
         return salt.toString();
     }
 
     private void uploadImage() {
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ user.getEmail());
+            StorageReference ref = storageReference.child("images/" + user.getEmail());
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -250,15 +244,16 @@ public class Profil extends Fragment{
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) { progressDialog.dismiss();
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
         }
@@ -274,20 +269,17 @@ public class Profil extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 profileImageView.setImageBitmap(bitmap);
-                Toast.makeText(getActivity(),"Resim alındı",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Resim alındı", Toast.LENGTH_SHORT).show();
                 uploadImage();
-                Intent intent=new Intent(getActivity(), Master_Main.class);
+                Intent intent = new Intent(getActivity(), Master_Main.class);
                 startActivity(intent);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -298,7 +290,7 @@ public class Profil extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        view=inflater.inflate(R.layout.activity_profil,container,false);
+        view = inflater.inflate(R.layout.activity_profil, container, false);
         return view;
     }
 
@@ -315,6 +307,7 @@ public class Profil extends Fragment{
         try {
             salts.child(Encode.encode(user.getEmail())).removeEventListener(listenerSalt);
             users.child(Encode.encode(user.getEmail())).removeEventListener(listenerUser);
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 }

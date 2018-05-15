@@ -22,7 +22,7 @@ import com.travellingsalesmangame.R;
 
 public class StateMenu2_Fragment extends Fragment {
 
-    private int levelSaved,levelClicked,stateSaved;
+    private int levelSaved, levelClicked, stateSaved;
     private RelativeLayout stateMenuActivity;
     private SharedPreferences prefs;
     private View view;
@@ -33,34 +33,34 @@ public class StateMenu2_Fragment extends Fragment {
     private ScreenSettings screenSettings;
 
     private void setMenu() {
-        View.OnClickListener onClickListener=new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                GameActivity2_Fragment game=new GameActivity2_Fragment();
+                GameActivity2_Fragment game = new GameActivity2_Fragment();
 
-                Bundle bundle=new Bundle();
-                bundle.putInt("levelSaved",levelSaved);
-                bundle.putInt("stateSaved",stateSaved);
-                bundle.putInt("levelClicked",levelClicked);
-                bundle.putInt("stateClicked",v.getId());
+                Bundle bundle = new Bundle();
+                bundle.putInt("levelSaved", levelSaved);
+                bundle.putInt("stateSaved", stateSaved);
+                bundle.putInt("levelClicked", levelClicked);
+                bundle.putInt("stateClicked", v.getId());
 
                 game.setArguments(bundle);
 
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,game);
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, game);
                 transaction.commit();
             }
         };
 
-        ButtonCreater buttonCreater=new ButtonCreater(view.getContext(),
-                                                        stateMenuActivity,
-                                                        onClickListener,
-                                                        screenSettings);
+        ButtonCreater buttonCreater = new ButtonCreater(view.getContext(),
+                stateMenuActivity,
+                onClickListener,
+                screenSettings);
 
         //kayıtlı level, secili levele esit ise statemenu aktivitisinin butonlarını kayıtlı state degerine gore olustur(renk,enable)
-        if(levelSaved == levelClicked)
+        if (levelSaved == levelClicked)
             buttonCreater.create(Examples.getCores()[levelClicked].length, stateSaved);
         else
             buttonCreater.create(Examples.getCores()[levelClicked].length, Examples.getCores()[levelClicked].length); //, değil ise hepsi yeşil ve enabled, dizi aşılıyor**
@@ -69,30 +69,30 @@ public class StateMenu2_Fragment extends Fragment {
 
     private void init() {
 
-        Bundle bundle=getArguments();
+        Bundle bundle = getArguments();
 
-        stateMenuActivity=view.findViewById(R.id.state2MenuActivity);
-        prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        screenSettings=new ScreenSettings(getActivity());
+        stateMenuActivity = view.findViewById(R.id.state2MenuActivity);
+        prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        screenSettings = new ScreenSettings(getActivity());
 
-        levelSaved=bundle.getInt("levelSaved",0);   //kayıtlı level
-        levelClicked=bundle.getInt("levelClicked",0);   //tiklanan level
+        levelSaved = bundle.getInt("levelSaved", 0);   //kayıtlı level
+        levelClicked = bundle.getInt("levelClicked", 0);   //tiklanan level
 
-        Gson gson=new Gson();
-        String json=prefs.getString("gameinfo","");
-        GameInfo gameInfo = new GameInfo(gson.fromJson(json,GameInfo.class));
+        Gson gson = new Gson();
+        String json = prefs.getString("gameinfo", "");
+        GameInfo gameInfo = new GameInfo(gson.fromJson(json, GameInfo.class));
 
-        stateSaved=gameInfo.getStatePc();
+        stateSaved = gameInfo.getStatePc();
 
-        int seviye=levelClicked+1;
-        getActivity().setTitle("Level : "+ seviye);
+        int seviye = levelClicked + 1;
+        getActivity().setTitle("Level : " + seviye);
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_state2_menu,container,false);
+        view = inflater.inflate(R.layout.activity_state2_menu, container, false);
         return view;
     }
 

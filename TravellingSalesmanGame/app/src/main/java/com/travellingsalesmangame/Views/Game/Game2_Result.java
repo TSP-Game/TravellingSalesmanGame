@@ -28,8 +28,8 @@ public class Game2_Result extends Fragment {
 
     private View view;
     private ImageView imgView;
-    private TextView txtYorum,txtSure_Sonuc,txtPuan_Sonuc,txtSkorGoster;
-    private int levelSaved,levelClicked;
+    private TextView txtYorum, txtSure_Sonuc, txtPuan_Sonuc, txtSkorGoster;
+    private int levelSaved, levelClicked;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -38,42 +38,42 @@ public class Game2_Result extends Fragment {
     private Result result;
     private int seviye;
 
-    private void init(){
+    private void init() {
 
         getActivity().setTitle("Oyun Skorunuz");
-        imgView=view.findViewById(R.id.imgView);
-        btn_Oyun=view.findViewById(R.id.btn_Oyun);
+        imgView = view.findViewById(R.id.imgView);
+        btn_Oyun = view.findViewById(R.id.btn_Oyun);
 
-        txtYorum=view.findViewById(R.id.txtYorum);
-        txtPuan_Sonuc=view.findViewById(R.id.txtPuan_Sonuc);
-        txtSure_Sonuc=view.findViewById(R.id.txtSure_Sonuc);
-        txtSkorGoster=view.findViewById(R.id.txtSkorGoster);
+        txtYorum = view.findViewById(R.id.txtYorum);
+        txtPuan_Sonuc = view.findViewById(R.id.txtPuan_Sonuc);
+        txtSure_Sonuc = view.findViewById(R.id.txtSure_Sonuc);
+        txtSkorGoster = view.findViewById(R.id.txtSkorGoster);
 
-        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        seviye=pref.getInt("seviye",-1);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        seviye = pref.getInt("seviye", -1);
 
-        Bundle bundle =getArguments();
-        result= (Result) bundle.getSerializable("result");
+        Bundle bundle = getArguments();
+        result = (Result) bundle.getSerializable("result");
 
         writeDatabase();
 
-        if(result.getUser_skor()>result.getPc_skor())
+        if (result.getUser_skor() > result.getPc_skor())
             txtYorum.setText("Üzgünüm! Bilgisayarın skorunu geçemediniz.\n");
 
-        else if(result.getUser_skor()==result.getPc_skor())
+        else if (result.getUser_skor() == result.getPc_skor())
             txtYorum.setText("Berabere! Bilgisayar ile aynı skoru buldunuz.\n");
 
         else
             txtYorum.setText("Tebrikler! Bilgisayarın skorunu geçtiniz.\n");
 
-        txtSure_Sonuc.setText("Süre :  "+result.getSureTxt());
-        txtPuan_Sonuc.setText("Kazanılan Puan : "+String.valueOf(result.getPuan()));
-        txtSkorGoster.setText("Bilgisayarın Bulduğu Yol : "+result.getPc_skor()+"\nKullanıcının Bulduğu Yol : "+result.getUser_skor()+"\n");
+        txtSure_Sonuc.setText("Süre :  " + result.getSureTxt());
+        txtPuan_Sonuc.setText("Kazanılan Puan : " + String.valueOf(result.getPuan()));
+        txtSkorGoster.setText("Bilgisayarın Bulduğu Yol : " + result.getPc_skor() + "\nKullanıcının Bulduğu Yol : " + result.getUser_skor() + "\n");
 
-        levelClicked=result.getLevelClicked();
-        levelSaved=result.getLevelSaved();
+        levelClicked = result.getLevelClicked();
+        levelSaved = result.getLevelSaved();
 
-        if(result.getUser_skor()<=result.getPc_skor())
+        if (result.getUser_skor() <= result.getPc_skor())
             imgView.setImageResource(R.drawable.prize);
 
         else
@@ -88,24 +88,23 @@ public class Game2_Result extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(result.isLevel_state_durum()==true){
-                    StateMenu2_Fragment state=new StateMenu2_Fragment();
+                if (result.isLevel_state_durum() == true) {
+                    StateMenu2_Fragment state = new StateMenu2_Fragment();
 
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("levelSaved",levelSaved);
-                    bundle.putInt("levelClicked",levelClicked);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("levelSaved", levelSaved);
+                    bundle.putInt("levelClicked", levelClicked);
 
                     state.setArguments(bundle);
-                    fragmentManager=getFragmentManager();
-                    transaction=fragmentManager.beginTransaction();
-                    transaction.replace(R.id.context_main,state);
+                    fragmentManager = getFragmentManager();
+                    transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.context_main, state);
                     transaction.commit();
-                }
-                else {
-                    LevelMenu2_Fragment level=new LevelMenu2_Fragment();
-                    fragmentManager=getFragmentManager();
-                    transaction=fragmentManager.beginTransaction();
-                    transaction.replace(R.id.context_main,level);
+                } else {
+                    LevelMenu2_Fragment level = new LevelMenu2_Fragment();
+                    fragmentManager = getFragmentManager();
+                    transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.context_main, level);
                     transaction.commit();
                 }
             }
@@ -115,7 +114,7 @@ public class Game2_Result extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_game2_result,container,false);
+        view = inflater.inflate(R.layout.activity_game2_result, container, false);
         init();
         return view;
     }
@@ -123,12 +122,12 @@ public class Game2_Result extends Fragment {
     private void writeDatabase() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        Gson gson=new Gson();
-        String json=prefs.getString("user","");
+        Gson gson = new Gson();
+        String json = prefs.getString("user", "");
 
-        User user = new User(gson.fromJson(json,User.class));
+        User user = new User(gson.fromJson(json, User.class));
 
-        String time=String.valueOf(result.getSure());
+        String time = String.valueOf(result.getSure());
         games.child(Encode.encode(user.getEmail())).child("gamePcScores").child(String.valueOf(seviye)).child(String.valueOf(result.getLevelClicked()))
                 .child(String.valueOf(result.getStateClicked())).child("0").setValue(Integer.valueOf(time));
 

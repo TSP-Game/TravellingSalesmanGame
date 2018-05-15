@@ -21,21 +21,21 @@ public class Oyun_Turu extends Fragment {
 
 
     private View view;
-    private Button btn_bilgisayar_karsi,btn_tek_oyna;
+    private Button btn_bilgisayar_karsi, btn_tek_oyna;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
-    private void init(){
-        btn_bilgisayar_karsi=view.findViewById(R.id.btn_bilgisayar_karsi);
-        btn_tek_oyna=view.findViewById(R.id.btn_tek_oyna);
+    private void init() {
+        btn_bilgisayar_karsi = view.findViewById(R.id.btn_bilgisayar_karsi);
+        btn_tek_oyna = view.findViewById(R.id.btn_tek_oyna);
 
         btn_tek_oyna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Hikaye hikaye=new Hikaye();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,hikaye);
+                Hikaye hikaye = new Hikaye();
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, hikaye);
                 transaction.commit();
             }
         });
@@ -45,7 +45,7 @@ public class Oyun_Turu extends Fragment {
             public void onClick(View v) {
 
 
-                final CharSequence[] choice = {"Kolay","Orta","Zor"};
+                final CharSequence[] choice = {"Kolay", "Orta", "Zor"};
 
                 final int[] from = new int[1]; //This must be declared as global !
 
@@ -58,8 +58,7 @@ public class Oyun_Turu extends Fragment {
                             from[0] = 0;
                         } else if (choice[which] == "Orta") {
                             from[0] = 1;
-                        }
-                         else if (choice[which] == "Zor") {
+                        } else if (choice[which] == "Zor") {
                             from[0] = 2;
                         }
                     }
@@ -68,15 +67,15 @@ public class Oyun_Turu extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
-                        SharedPreferences.Editor prefsEditor=prefs.edit();
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+                        SharedPreferences.Editor prefsEditor = prefs.edit();
                         prefsEditor.putInt("seviye", from[0]);
                         prefsEditor.apply();
 
-                        Hikaye2 hikaye2=new Hikaye2();
-                        fragmentManager=getFragmentManager();
-                        transaction=fragmentManager.beginTransaction();
-                        transaction.replace(R.id.context_main,hikaye2);
+                        Hikaye2 hikaye2 = new Hikaye2();
+                        fragmentManager = getFragmentManager();
+                        transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.context_main, hikaye2);
                         transaction.commit();
                     }
                 });
@@ -90,7 +89,7 @@ public class Oyun_Turu extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_oyun_turu,container,false);
+        view = inflater.inflate(R.layout.activity_oyun_turu, container, false);
         init();
         return view;
     }

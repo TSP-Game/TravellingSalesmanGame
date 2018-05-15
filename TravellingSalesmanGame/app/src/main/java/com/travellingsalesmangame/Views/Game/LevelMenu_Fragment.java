@@ -31,49 +31,49 @@ public class LevelMenu_Fragment extends Fragment {
 
     private int level;
 
-    private void init(){
+    private void init() {
 
         getActivity().setTitle("Level");
-        screenSettings=new ScreenSettings(getActivity());
-        levelMenuActivity=view.findViewById(R.id.levelMenuActivity);
-        prefs= PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        screenSettings = new ScreenSettings(getActivity());
+        levelMenuActivity = view.findViewById(R.id.levelMenuActivity);
+        prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
 
-        Gson gson=new Gson();
-        String json=prefs.getString("gameinfo","");
-        GameInfo gameInfo = new GameInfo(gson.fromJson(json,GameInfo.class));
-        level =gameInfo.getLevelSingle();
+        Gson gson = new Gson();
+        String json = prefs.getString("gameinfo", "");
+        GameInfo gameInfo = new GameInfo(gson.fromJson(json, GameInfo.class));
+        level = gameInfo.getLevelSingle();
     }
 
-    private void setMenu(){
-        View.OnClickListener onClickListener=new View.OnClickListener() {
+    private void setMenu() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                StateMenu_Fragment stateMenuFragment=new StateMenu_Fragment();
+                StateMenu_Fragment stateMenuFragment = new StateMenu_Fragment();
 
-                Bundle bundle=new Bundle();
-                bundle.putInt("levelSaved",level);
-                bundle.putInt("levelClicked",v.getId());
+                Bundle bundle = new Bundle();
+                bundle.putInt("levelSaved", level);
+                bundle.putInt("levelClicked", v.getId());
 
                 stateMenuFragment.setArguments(bundle);
 
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,stateMenuFragment);
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, stateMenuFragment);
                 transaction.commit();
 
             }
         };
 
-        ButtonCreater buttonCreater=new ButtonCreater(view.getContext(),levelMenuActivity,onClickListener,screenSettings);
-        buttonCreater.create(Examples.getCores().length,level);
+        ButtonCreater buttonCreater = new ButtonCreater(view.getContext(), levelMenuActivity, onClickListener, screenSettings);
+        buttonCreater.create(Examples.getCores().length, level);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-       view=inflater.inflate(R.layout.activity_level_menu,container,false);
-       return view;
+        view = inflater.inflate(R.layout.activity_level_menu, container, false);
+        return view;
     }
 
     @Override

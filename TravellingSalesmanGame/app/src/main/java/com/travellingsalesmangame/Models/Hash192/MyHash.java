@@ -15,13 +15,13 @@ public class MyHash {
             -334035833, -87191247, 2055493528, -1351983033, -1870778435, -499902894, 627536653, 251663435, -1057617990,
             1701807347, 1640816190, -1793579980, 452748357, -34591231, 104898579, -1832716584};
 
-    public String hash(String value){
+    public String hash(String value) {
 
         ConvertBlocks192 convertBlocks192 = new ConvertBlocks192();         //hash'lenecek veriyi integer blocklari haline cevirecek nesene
 
         int[][] blocks192;
 
-        if(value == null || value.equals(""))                            //hash'lenecek veri null veya bos ise byte'a cerilmiyor, bizde bosluk geri atarak bu durmdan kurtuluyoruz
+        if (value == null || value.equals(""))                            //hash'lenecek veri null veya bos ise byte'a cerilmiyor, bizde bosluk geri atarak bu durmdan kurtuluyoruz
             blocks192 = convertBlocks192.convert(" ");                 //ve sayi bloklarini olusturuyoruz. her biri 6 adet 32 bitlik veri tutan 192 bitlik bloklar
         else
             blocks192 = convertBlocks192.convert(value);
@@ -31,8 +31,8 @@ public class MyHash {
 
         for (int i = 0; i < blocks192.length; i++) {    //her 192bitlik block icin...
 
-            if(i != 0)                                //192btlik blogumuz ilk degil ise yedege atiyoruz, hash isleminde kullanilacak
-                temp192 = blocks192[i-1];
+            if (i != 0)                                //192btlik blogumuz ilk degil ise yedege atiyoruz, hash isleminde kullanilacak
+                temp192 = blocks192[i - 1];
             else
                 temp192 = blocks192[i];             //ilk ise kendisini kullanacagiz.
 
@@ -53,7 +53,7 @@ public class MyHash {
 
 
                 //32 bitlik blocklar arasi islemler..
-                blocks192[i][5] ^= temp192[j%6];                            //eski 192bitlik blogun islenmesi sonucu cikan veri ile xor islemi (6 adet 32 bit var o yuzden %6)
+                blocks192[i][5] ^= temp192[j % 6];                            //eski 192bitlik blogun islenmesi sonucu cikan veri ile xor islemi (6 adet 32 bit var o yuzden %6)
                 blocks192[i][0] = shift(blocks192[i][0], 7);            //ilk 32 bitlik blogu dairesel olarak 7 kere sola kaydiriyoruz
                 blocks192[i][5] ^= blocks192[i][0];                         //son blok ile ilk blogu xor islemi yaptirip son bloga atiyoruz
                 blocks192[i][5] ^= k[i];                                //son blogu sabit kdizisinin ilgi elemani ile xor luyoruz.
@@ -61,7 +61,7 @@ public class MyHash {
 
                 //bu kisimda 6 adet 32 bitlik blocu saga dogru 1 kere kaydiriyoruz.
                 blocks192[i][2] = blocks192[i][1];
-                blocks192[i][1] = shift(blocks192[i][0],3);
+                blocks192[i][1] = shift(blocks192[i][0], 3);
                 blocks192[i][0] = blocks192[i][5];
                 blocks192[i][5] = blocks192[i][4];
                 blocks192[i][4] = blocks192[i][3];
@@ -69,33 +69,38 @@ public class MyHash {
             }
         }
 
-        StringBuilder result=new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
         //elde edilen veriyi 16lik tabana (hexedecimal) cevirip bir string'e ekliyoruz
-        for(int i=0; i < blocks192[0].length; i++)
+        for (int i = 0; i < blocks192[0].length; i++)
             result.append(String.format("%8s", (Integer.toHexString(blocks192[blocks192.length - 1][i]))).replace(' ', '0'));
 
         return result.toString();
     }
 
     //32 bitlik blocklarrın bitlerinin sola dairesel kaydirma islemi
-    private int shift(int A, int count){ return Integer.rotateLeft(A, count); }
+    private int shift(int A, int count) {
+        return Integer.rotateLeft(A, count);
+    }
 
 
     //her 24 turda değişecek olan fonksiyonlar
-    private int f1(int B, int C, int D, int E){
+    private int f1(int B, int C, int D, int E) {
 
         return (B & C) | (D & E);
     }
-    private int f2(int B, int C, int D, int E){
+
+    private int f2(int B, int C, int D, int E) {
 
         return (B | C) | (~D ^ E);
     }
-    private int f3(int B, int C, int D, int E){
+
+    private int f3(int B, int C, int D, int E) {
 
         return (B | D) ^ (C & E);
     }
-    private int f4(int B, int C, int D, int E){
+
+    private int f4(int B, int C, int D, int E) {
 
         return (B ^ ~C) ^ (D | E);
     }

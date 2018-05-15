@@ -17,18 +17,18 @@ public class Master_Acilis extends Fragment {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
-    private void init(){
+    private void init() {
 
         getActivity().setTitle("Anasayfa");
-        btn_Basla=view.findViewById(R.id.btn_Basla);
+        btn_Basla = view.findViewById(R.id.btn_Basla);
 
         btn_Basla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Kategori_Secimi change=new Kategori_Secimi();
-                fragmentManager=getFragmentManager();
-                transaction=fragmentManager.beginTransaction();
-                transaction.replace(R.id.context_main,change);
+                Kategori_Secimi change = new Kategori_Secimi();
+                fragmentManager = getFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.context_main, change);
                 transaction.commit();
             }
         });
@@ -37,9 +37,9 @@ public class Master_Acilis extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_master_acilis,container,false);
+        view = inflater.inflate(R.layout.activity_master_acilis, container, false);
         init();
-        return  view;
+        return view;
     }
 
 

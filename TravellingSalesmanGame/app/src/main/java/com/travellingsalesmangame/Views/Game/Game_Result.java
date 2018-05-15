@@ -28,8 +28,8 @@ public class Game_Result extends Fragment {
 
     private View view;
     private ImageView imgView;
-    private TextView txtYorum,txtSure_Sonuc,txtPuan_Sonuc;
-    private int levelSaved,levelClicked;
+    private TextView txtYorum, txtSure_Sonuc, txtPuan_Sonuc;
+    private int levelSaved, levelClicked;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -37,34 +37,34 @@ public class Game_Result extends Fragment {
     private Button btn_Oyun;
     private Result result;
 
-    private void init(){
+    private void init() {
 
         getActivity().setTitle("Oyun Skorunuz");
-        imgView=view.findViewById(R.id.imgView);
-        btn_Oyun=view.findViewById(R.id.btn_Oyun);
+        imgView = view.findViewById(R.id.imgView);
+        btn_Oyun = view.findViewById(R.id.btn_Oyun);
 
-        txtYorum=view.findViewById(R.id.txtYorum);
-        txtPuan_Sonuc=view.findViewById(R.id.txtPuan_Sonuc);
-        txtSure_Sonuc=view.findViewById(R.id.txtSure_Sonuc);
+        txtYorum = view.findViewById(R.id.txtYorum);
+        txtPuan_Sonuc = view.findViewById(R.id.txtPuan_Sonuc);
+        txtSure_Sonuc = view.findViewById(R.id.txtSure_Sonuc);
 
-        Bundle bundle =getArguments();
-        result= (Result) bundle.getSerializable("result");
+        Bundle bundle = getArguments();
+        result = (Result) bundle.getSerializable("result");
 
         writeDatabase();
 
-        if(result.getUser_skor()>result.getPc_skor())
+        if (result.getUser_skor() > result.getPc_skor())
             txtYorum.setText("Üzgünüm! Görev tamamlanmadı.");
 
         else
             txtYorum.setText("Tebrikler! Görevi başarılı bir şekilde tamamladınız");
 
-        txtSure_Sonuc.setText("Süre :  "+result.getSureTxt());
-        txtPuan_Sonuc.setText("Kazanılan Puan : "+String.valueOf(result.getPuan()));
+        txtSure_Sonuc.setText("Süre :  " + result.getSureTxt());
+        txtPuan_Sonuc.setText("Kazanılan Puan : " + String.valueOf(result.getPuan()));
 
-        levelClicked=result.getLevelClicked();
-        levelSaved=result.getLevelSaved();
+        levelClicked = result.getLevelClicked();
+        levelSaved = result.getLevelSaved();
 
-        if(result.getUser_skor()<=result.getPc_skor())
+        if (result.getUser_skor() <= result.getPc_skor())
             imgView.setImageResource(R.drawable.prize);
 
         else
@@ -79,24 +79,23 @@ public class Game_Result extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(result.isLevel_state_durum()==true){
-                    StateMenu_Fragment state=new StateMenu_Fragment();
+                if (result.isLevel_state_durum() == true) {
+                    StateMenu_Fragment state = new StateMenu_Fragment();
 
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("levelSaved",levelSaved);
-                    bundle.putInt("levelClicked",levelClicked);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("levelSaved", levelSaved);
+                    bundle.putInt("levelClicked", levelClicked);
 
                     state.setArguments(bundle);
-                    fragmentManager=getFragmentManager();
-                    transaction=fragmentManager.beginTransaction();
-                    transaction.replace(R.id.context_main,state);
+                    fragmentManager = getFragmentManager();
+                    transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.context_main, state);
                     transaction.commit();
-                }
-                else {
-                    LevelMenu_Fragment level=new LevelMenu_Fragment();
-                    fragmentManager=getFragmentManager();
-                    transaction=fragmentManager.beginTransaction();
-                    transaction.replace(R.id.context_main,level);
+                } else {
+                    LevelMenu_Fragment level = new LevelMenu_Fragment();
+                    fragmentManager = getFragmentManager();
+                    transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.context_main, level);
                     transaction.commit();
                 }
             }
@@ -106,12 +105,12 @@ public class Game_Result extends Fragment {
     private void writeDatabase() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        Gson gson=new Gson();
-        String json=prefs.getString("user","");
+        Gson gson = new Gson();
+        String json = prefs.getString("user", "");
 
-        User user = new User(gson.fromJson(json,User.class));
+        User user = new User(gson.fromJson(json, User.class));
 
-        String time=String.valueOf(result.getSure());
+        String time = String.valueOf(result.getSure());
         games.child(Encode.encode(user.getEmail())).child("gameSingleScores").child(String.valueOf(result.getLevelClicked()))
                 .child(String.valueOf(result.getStateClicked())).child("0").setValue(Integer.valueOf(time));
 
@@ -122,7 +121,7 @@ public class Game_Result extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_game_result,container,false);
+        view = inflater.inflate(R.layout.activity_game_result, container, false);
         init();
         return view;
     }

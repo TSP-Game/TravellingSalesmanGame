@@ -29,19 +29,19 @@ public class Istatistik extends Fragment {
     private SharedPreferences prefs;
     private View view;
 
-    private void init(){
+    private void init() {
         getActivity().setTitle("İstatistikler");
 
-        Gson gson=new Gson();
-        prefs=PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String json=prefs.getString("user","");
-        user=new User(gson.fromJson(json,User.class));
+        Gson gson = new Gson();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String json = prefs.getString("user", "");
+        user = new User(gson.fromJson(json, User.class));
 
         listenerGameInfo = new ValueEventListener() {       //veri tabanı dinleyicisi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
                     gameInfo = new GameInfo();
                     gameInfo = dataSnapshot.getValue(GameInfo.class);
@@ -59,7 +59,7 @@ public class Istatistik extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.activity_istatistik,container,false);
+        view = inflater.inflate(R.layout.activity_istatistik, container, false);
         init();
         return view;
     }
