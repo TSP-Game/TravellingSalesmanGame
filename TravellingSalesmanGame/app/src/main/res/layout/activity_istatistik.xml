@@ -15,13 +15,13 @@
        android:padding="10dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:entries="@array/secenekler"></Spinner>
+       android:entries="@array/secenekler" />
 
    <ListView
        android:id="@+id/lstView"
        android:layout_marginTop="10dp"
        android:padding="10dp"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"></ListView>
+       android:layout_height="match_parent" />
 
 </LinearLayout>

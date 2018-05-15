@@ -89,13 +89,15 @@
                 android:onClick="login_sign_onclick"/>
         </LinearLayout>
     </RelativeLayout>
-    <ImageButton
+    <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/user_profile_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/user_profile_image_background"
+        app:siBorderWidth="6dp"
+        app:siBorderColor="@color/white"
+        android:background="@drawable/profil_icon"
         android:elevation="4dp"
         android:src="@drawable/profil_icon" />
 </RelativeLayout>

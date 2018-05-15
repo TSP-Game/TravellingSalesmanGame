@@ -3,10 +3,11 @@
     <string name="app_title_name">Oyun</string>
 
     <string-array name="secenekler">
-        <item>Seçiniz</item>
+        <item>Seçim Yapınız</item>
         <item>Tek Kişilik Skor</item>
         <item>Bilgisayara Karşı Skor</item>
     </string-array>
+
 
 
     <!-- UI About-->
@@ -47,4 +48,6 @@
     <string name="reg_iptal">İptal</string>
     <string name="aciklama">\tEğlenerek öğrenebileceğiniz \"Gezgin Satıcı Problemi\" Oyununa Hoşgeldiniz.
                             \n\n\tHem konuyu öğrenebilecek hemde oyun oynayıp puan kazanabileceksiniz.</string>
+    <string name="bilgisayar_hikaye">Hoşgeldin! Hadi bilgisayara karşı hünerlerini görelim . Eminim yüksek skorlar yapacaksın .
+        Dikkatli ol başladığın yere tekrar dönmeyi unutma. Hadi başlayalım.  </string>
 </resources>

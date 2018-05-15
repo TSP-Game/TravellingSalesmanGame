@@ -2,7 +2,13 @@ package com.travellingsalesmangame.Controllers.Game;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +19,7 @@ import com.travellingsalesmangame.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ButtonCreater {
 
@@ -37,24 +44,29 @@ public class ButtonCreater {
 
 
     //level ve state menuleri icin methot
-    public void create(int size,int value){
+    @SuppressLint("ResourceAsColor")
+    public void create(int size, int value) {
 
-        ButtonSetter buttonSetter=new ButtonSetter(0,settings);
-        for(int i=0;i<size;i++) {
-
+        ButtonSetter buttonSetter = new ButtonSetter(0, settings);
+        for (int i = 0; i < size; i++) {
             Button button = new Button(context);
             button.setId(i);
-            button.setText(String.valueOf(i+1));
-            buttonSetter.setView(0,button);
+            button.setText(String.valueOf(i + 1));
+            button.setBackgroundResource(R.mipmap.circlegri);
+            buttonSetter.setView(0, button);
+            button.setMinimumHeight(150);
+            button.setMinimumWidth(200);
+
             button.setOnClickListener(onClickListener);
 
-            if(i<value)
-                button.setBackgroundColor(Color.GREEN);
-            else if(i==value)
-                button.setBackgroundColor(Color.YELLOW);
-            else {
-                button.setBackgroundColor(Color.LTGRAY);
+            if (i < value) {
+                button.setBackgroundResource(R.mipmap.circleyesil);
+            } else if (i == value) {
+                button.setBackgroundResource(R.mipmap.circleyellow);
+            } else {
+                button.setBackgroundResource(R.mipmap.circleyellow);
                 button.setEnabled(false);
+
             }
             layout.addView(button);
         }
@@ -70,7 +82,7 @@ public class ButtonCreater {
             ImageButton button = new ImageButton(context);
             buttonSetter.setView(1,button);
             button.setVisibility(View.INVISIBLE);
-            button.setImageResource(R.mipmap.home4);
+            button.setImageResource(R.mipmap.home5);
             button.setBackground(null);
             button.setPadding(0,0,0,0);
             button.setElevation(24);

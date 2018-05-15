@@ -13,10 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
-        android:text="TextView"
         android:padding="15dp"
+        android:text="TextView"
+        android:textAlignment="gravity"
         android:textColor="@android:color/white"
-        android:textSize="21dp" />
+        android:textSize="21dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_ileri"

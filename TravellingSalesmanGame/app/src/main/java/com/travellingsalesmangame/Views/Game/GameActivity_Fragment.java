@@ -121,7 +121,7 @@ public class GameActivity_Fragment extends Fragment {
                     totalScore+=pathCost;
                     click_count++;
 
-                    DrawView drawView = new DrawView(getActivity(),oldButton,button, Color.GREEN,10);
+                    DrawView drawView = new DrawView(getActivity(),oldButton,button, Color.GRAY,10);
                     layoutDraw.addView(drawView);
 
                     if(click_count==core.getCities().length)
@@ -131,7 +131,7 @@ public class GameActivity_Fragment extends Fragment {
                     showLayoutCosts(button);
 
                     oldButton=button;
-                    button.setImageResource(R.mipmap.home3);
+                    button.setImageResource(R.mipmap.home6);
                     selectedButtons.add(button);
 
                     //bütün butonlara tıklanma, yani oyunun bitiş durumu
@@ -252,7 +252,7 @@ public class GameActivity_Fragment extends Fragment {
 
                 layoutDraw.removeView(draw.drawView);
                 layoutDraw.removeView(draw.textView);
-                draw.drawView.setColor(getResources().getColor(R.color.red));
+                draw.drawView.setColor(getResources().getColor(R.color.black));
                 draw.drawView.setWidth(10);
                 draw.textView.setTextColor(getResources().getColor(R.color.white));
                 draw.textView.setTextSize(20);

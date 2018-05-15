@@ -7,18 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Views.Game.Hikaye2"
     android:orientation="vertical"
-    android:background="@color/pale_violet_red">
+    android:background="@drawable/shape_konuanlatimi">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="24dp"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/star"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,24 +19,26 @@
         <TextView
             android:id="@+id/txtYorum"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:layout_height="376dp"
             android:gravity="center"
+            android:text="@string/bilgisayar_hikaye"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:text="Hikaye kısmı buraya yazılacak (PC)\n"/>
+            android:textStyle="bold"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
-                android:background="@drawable/shape_background"
                 android:id="@+id/btn_Oyun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:background="@drawable/shape_background"
                 android:padding="25dp"
-                android:text="Oyuna Başlamak İçin Tıklayınız "/>
+                android:text="Oyuna Başlamak İçin Tıklayınız " />
         </LinearLayout>
 
     </LinearLayout>

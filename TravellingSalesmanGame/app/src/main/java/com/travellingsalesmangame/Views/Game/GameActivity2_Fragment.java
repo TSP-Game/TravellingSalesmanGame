@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -188,7 +189,7 @@ public class GameActivity2_Fragment extends Fragment {
 
             if(oldButton==null){
                 showLayoutCosts(button);
-                button.setImageResource(R.mipmap.home1);
+                button.setImageResource(R.mipmap.home2);
                 oldButton=button;
                 selectedButtons.add(button);
                 click_count++;
@@ -201,7 +202,7 @@ public class GameActivity2_Fragment extends Fragment {
                     totalScore+=pathCost;
                     click_count++;
 
-                    DrawView drawView = new DrawView(getActivity(),oldButton,button, R.color.dark_orchid,10);
+                    DrawView drawView = new DrawView(getActivity(),oldButton,button, Color.GRAY,10);
                     layoutDraw.addView(drawView);
 
                     if(click_count==core.getCities().length)
@@ -211,7 +212,7 @@ public class GameActivity2_Fragment extends Fragment {
                     showLayoutCosts(button);
 
                     oldButton=button;
-                    button.setImageResource(R.mipmap.home3);
+                    button.setImageResource(R.mipmap.home6);
                     selectedButtons.add(button);
 
                     //bütün butonlara tıklanma, yani oyunun bitiş durumu
@@ -288,7 +289,7 @@ public class GameActivity2_Fragment extends Fragment {
                                         progressBar.setMax(core.getSolution());
                                         for (int i:core.getCities())
                                         {
-                                            buttons.get(i).setImageResource(R.mipmap.home0);
+                                            buttons.get(i).setImageResource(R.mipmap.home5);
                                             buttons.get(i).setClickable(false);
                                         }
 
@@ -341,7 +342,7 @@ public class GameActivity2_Fragment extends Fragment {
 
                 layoutDraw.removeView(draw.drawView);
                 layoutDraw.removeView(draw.textView);
-                draw.drawView.setColor(getResources().getColor(R.color.deep_pink));
+                draw.drawView.setColor(getResources().getColor(R.color.black));
                 draw.drawView.setWidth(10);
                 draw.textView.setTextColor(getResources().getColor(R.color.white));
                 draw.textView.setTextSize(20);
