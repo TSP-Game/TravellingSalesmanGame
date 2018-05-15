@@ -36,7 +36,7 @@
         <activity android:name=".Views.Game.Game_Result" />
         <activity android:name=".Master_Acilis" />
         <activity android:name=".Kategori_Secimi" />
-        <activity android:name=".Views.Game.Istatistik" />
+        <activity android:name=".Istatistik" />
         <activity android:name=".Profil" />
         <activity android:name=".Views.Game.Hikaye" />
         <activity android:name=".Oyun_Turu" />

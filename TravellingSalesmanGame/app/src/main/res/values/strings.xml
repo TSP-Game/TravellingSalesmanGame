@@ -3,7 +3,7 @@
     <string name="app_title_name">Oyun</string>
 
     <string-array name="secenekler">
-        <item>Seçim Yapınız</item>
+        <item>Seçiniz</item>
         <item>Tek Kişilik Skor</item>
         <item>Bilgisayara Karşı Skor</item>
     </string-array>

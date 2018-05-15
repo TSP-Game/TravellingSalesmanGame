@@ -13,11 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.travellingsalesmangame.Views.Game.Hikaye;
 import com.travellingsalesmangame.Views.Game.Hikaye2;
-import com.travellingsalesmangame.Views.Game.LevelMenu2_Fragment;
 
 public class Oyun_Turu extends Fragment {
 

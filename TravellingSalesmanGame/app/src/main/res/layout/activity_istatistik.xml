@@ -5,17 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Game.Istatistik"
+    tools:context=".Istatistik"
     android:background="@color/white"
     android:orientation="vertical">
 
-   <LinearLayout
+   <Spinner
+       android:id="@+id/spinner"
+       android:layout_marginTop="10dp"
+       android:padding="10dp"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <Spinner
-           android:id="@+id/spinner"
-           android:entries="@array/secenekler"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
-   </LinearLayout>
+       android:layout_height="wrap_content"
+       android:entries="@array/secenekler"></Spinner>
+
+   <ListView
+       android:id="@+id/lstView"
+       android:layout_marginTop="10dp"
+       android:padding="10dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"></ListView>
+
 </LinearLayout>

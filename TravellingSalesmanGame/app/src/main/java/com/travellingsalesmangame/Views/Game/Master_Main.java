@@ -35,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.travellingsalesmangame.Controllers.Login.Encode;
+import com.travellingsalesmangame.Istatistik;
 import com.travellingsalesmangame.Master_Acilis;
 import com.travellingsalesmangame.Models.Game.GameInfo;
 import com.travellingsalesmangame.Profil;
