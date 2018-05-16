@@ -110,20 +110,31 @@ public class GameActivity2_Fragment extends Fragment {
         drawList = CostsSetter.getDrawList(getActivity(), buttons, core.getCosts());
     }
 
+    private int fac(int x){
+        int i,fact=1;;//It is the number to calculate factorial
+        for(i=1;i<=x;i++){
+            fact=fact*i;
+        }
+        return  fact;
+    }
+
     private void computerPlay() {
 
         final ComPlay comPlay = new ComPlay(core);
+        int iterasyon = 10000;
         switch (seviye) {
             case 0:
-                comPlay.learn(50000);
+                iterasyon = fac(core.getCities().length - 1);
                 break;
             case 1:
-                comPlay.learn(80000);
+                iterasyon = fac(core.getCities().length);
                 break;
             case 2:
-                comPlay.learn(120000);
+                iterasyon = fac(core.getCities().length + 1);
                 break;
         }
+
+        comPlay.learn(iterasyon);
 
         new Thread(new Runnable() {
 
