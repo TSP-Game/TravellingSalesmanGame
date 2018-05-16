@@ -46,8 +46,8 @@ public class ButtonCreater {
             button.setText(String.valueOf(i + 1));
             button.setBackgroundResource(R.mipmap.circlegri);
             buttonSetter.setView(0, button);
-            button.setMinimumHeight(150);
-            button.setMinimumWidth(200);
+            button.setMinimumHeight(250);
+            button.setMinimumWidth(300);
 
             button.setOnClickListener(onClickListener);
 
@@ -56,7 +56,7 @@ public class ButtonCreater {
             } else if (i == value) {
                 button.setBackgroundResource(R.mipmap.circleyellow);
             } else {
-                button.setBackgroundResource(R.mipmap.circleyellow);
+                button.setBackgroundResource(R.mipmap.circlegri);
                 button.setEnabled(false);
 
             }
