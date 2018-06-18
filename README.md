@@ -7,6 +7,7 @@ Gezgin Satıcı Problemini, kişilerin sıkılmadan eğlenerek öğrenebileceği
 3. Oyun : Bu kısmı 2 kategoriye ayırdık. 
 
 3.1. Kategoride kullanıcı kendi kendine oyun oynayabilecek.
+
 3.2. Kategoride kullanıcı bilgisayara karşı oyun oynayabilecek. Seviye olarak (Kolay - Orta - Zor) 
 şeklinde seviye seçip kullanıcıya karşı oynayabilecek.
 
